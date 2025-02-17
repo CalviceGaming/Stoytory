@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MovementComponent : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class MovementComponent : MonoBehaviour
     
     private bool grounded = false;
     
+    private bool collidingWithWall = false;
+    private GameObject wallCollidingWith;
+    
     [SerializeField] private List<GameObject> collectiblesList = new List<GameObject>();
     
     // Start is called before the first frame update
@@ -23,6 +27,54 @@ public class MovementComponent : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        PlayerMovement();
+        if (Input.GetButton("Jump") && availableJump && grounded)
+        {
+            rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
+            availableJump = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            availableJump = true;
+            grounded = true;
+        }
+        if (other.gameObject.tag == "Wall")
+        {
+            collidingWithWall = true;
+            wallCollidingWith = other.gameObject;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            grounded = false;
+        }
+        if (other.gameObject.tag == "Wall")
+        {
+            collidingWithWall = false;
+            wallCollidingWith = null;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Collectible")
+        {
+            if (other.gameObject.GetComponentInParent<CosmeticId>().Cosmetic)
+            {
+                collectiblesList[other.gameObject.GetComponentInParent<CosmeticId>().cosmeticId - 1].SetActive(true);
+                other.transform.parent.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void PlayerMovement()
     {
         int forward = 0;
         int sideways = 0;
@@ -54,46 +106,29 @@ public class MovementComponent : MonoBehaviour
         
         Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
         
-            rb.AddForce(movementDirection * acceleration, ForceMode.Acceleration);
+        rb.AddForce(movementDirection * acceleration, ForceMode.Force);
 
-            Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            if (flatVelocity.magnitude > maxSpeed) 
-            {
-                flatVelocity = flatVelocity.normalized * maxSpeed; 
-                rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
-            }
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        if (flatVelocity.magnitude > maxSpeed) 
+        {
+            flatVelocity = flatVelocity.normalized * maxSpeed; 
+            rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
+        }
         
-        if (Input.GetButton("Jump") && availableJump && grounded)
+        if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
         {
-            rb.AddForce(Vector3.up * 160, ForceMode.Impulse);
-            availableJump = false;
+            Vector3 direction = -flatVelocity.normalized;
+            rb.AddForce(direction * acceleration/2, ForceMode.Force);
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void WallRunning()
     {
-        if (other.gameObject.tag == "Ground")
+        if (collidingWithWall)
         {
-            availableJump = true;
-            grounded = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.tag == "Ground")
-        {
-            grounded = false;
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Collectible")
-        {
-            if (other.gameObject.GetComponentInParent<CosmeticId>().Cosmetic)
+            if (Input.GetButton("Jump"))
             {
-                collectiblesList[other.gameObject.GetComponentInParent<CosmeticId>().cosmeticId - 1].SetActive(true);
-                other.transform.parent.gameObject.SetActive(false);
+                
             }
         }
     }
