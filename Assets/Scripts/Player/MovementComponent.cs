@@ -7,8 +7,12 @@ using UnityEngine.UIElements;
 public class MovementComponent : MonoBehaviour
 {
     private float maxSpeed = 13.0f;
-    private float acceleration = 50.0f;
+    private float acceleration = 65.0f;
+    private Vector3 playerSpeed;
     private Rigidbody rb;
+    
+    private bool crouching = false;
+    private bool sliding = false;
 
     private bool availableJump = true;
     
@@ -29,7 +33,10 @@ public class MovementComponent : MonoBehaviour
     void Update()
     {
         PlayerMovement();
-        if (Input.GetButton("Jump") && availableJump && grounded)
+        
+        CrouchAndSlide();
+        
+        if (Input.GetButton("Jump") && availableJump && grounded && !crouching && !sliding)
         {
             rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
             availableJump = false;
@@ -103,22 +110,26 @@ public class MovementComponent : MonoBehaviour
         {
             sideways = 0;
         }
-        
-        Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
-        
-        rb.AddForce(movementDirection * acceleration, ForceMode.Force);
 
-        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        if (flatVelocity.magnitude > maxSpeed) 
+        if (!sliding)
         {
-            flatVelocity = flatVelocity.normalized * maxSpeed; 
-            rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
-        }
-        
-        if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
-        {
-            Vector3 direction = -flatVelocity.normalized;
-            rb.AddForce(direction * acceleration/2, ForceMode.Force);
+            Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
+
+            rb.AddForce(movementDirection * acceleration, ForceMode.Force);
+
+            Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            playerSpeed = flatVelocity;
+            if (flatVelocity.magnitude > maxSpeed)
+            {
+                flatVelocity = flatVelocity.normalized * maxSpeed;
+                rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
+            }
+
+            if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
+            {
+                Vector3 direction = -flatVelocity.normalized;
+                rb.AddForce(direction * acceleration / 2, ForceMode.Force);
+            }
         }
     }
 
@@ -130,6 +141,40 @@ public class MovementComponent : MonoBehaviour
             {
                 
             }
+        }
+    }
+
+    private void CrouchAndSlide()
+    {
+        if (grounded)
+        {
+            if (Input.GetButtonDown("Crouch"))
+            {
+                if (playerSpeed.magnitude >= maxSpeed*0.85)
+                {
+                    sliding = true;
+                    maxSpeed *= 2;
+                    gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
+                    rb.velocity = new Vector3(playerSpeed.x*1.7f, rb.velocity.y, playerSpeed.z*1.7f);
+                }
+                else
+                {
+                    gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
+                    maxSpeed = 2f;
+                    crouching = true;
+                }
+            }
+        }
+        if (Input.GetButtonUp("Crouch"))
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            if (sliding)
+            {
+                rb.velocity = new Vector3(rb.velocity.x*0.2f, rb.velocity.y, rb.velocity.z*0.2f);
+            }
+            crouching = false;
+            sliding = false;
+            maxSpeed = 13f;
         }
     }
 }
