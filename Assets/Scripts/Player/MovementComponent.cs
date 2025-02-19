@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class MovementComponent : MonoBehaviour
@@ -25,6 +26,8 @@ public class MovementComponent : MonoBehaviour
     private bool wallRunning = false;
     
     [SerializeField] private List<GameObject> collectiblesList = new List<GameObject>();
+
+    [SerializeField] private GameObject speedText;
     
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,8 @@ public class MovementComponent : MonoBehaviour
     void Update()
     {
         playerSpeed = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        
+        speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
         
         Checkifgrounded();
             
@@ -188,7 +193,6 @@ public class MovementComponent : MonoBehaviour
                     rb.velocity = new Vector3(playerSpeed.x, rb.velocity.y, playerSpeed.z);
                 }
             }
-            
         }
         else
         {
