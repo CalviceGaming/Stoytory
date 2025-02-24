@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 public class MovementComponent : MonoBehaviour
 {
     private float maxSpeed = 13.0f;
+    private float walkingMaxSpeed = 13.0f;
+    private bool slowed = false;
     private float acceleration = 65.0f;
     private Vector3 playerSpeed;
     private Rigidbody rb;
@@ -124,7 +126,11 @@ public class MovementComponent : MonoBehaviour
             if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
             {
                 Vector3 direction = -flatVelocity.normalized;
-                rb.AddForce(direction * acceleration / 2, ForceMode.Force);
+                rb.AddForce(direction * acceleration * 0.8f, ForceMode.Force);
+                if (rb.velocity.magnitude < 0.1f)
+                {
+                    rb.velocity = Vector3.zero;
+                }
             }
         }
         else if (!grounded && !wallRunning)
@@ -141,11 +147,7 @@ public class MovementComponent : MonoBehaviour
                 rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
             }
 
-            if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
-            {
-                Vector3 direction = -flatVelocity.normalized;
-                rb.AddForce(direction * acceleration / 2, ForceMode.Force);
-            }
+
         }
     }
 
@@ -154,37 +156,37 @@ public class MovementComponent : MonoBehaviour
         CheckifWall();
         if (collidingWithWall && !grounded)
         {
-            if (Input.GetButtonDown("Jump") && playerSpeed.magnitude > maxSpeed/2)
+            if (playerSpeed.magnitude >= maxSpeed *0.9f)
             {
                 if (lastWall != wallCollidingWith)
                 {
                     lastWall = wallCollidingWith;
                     wallRunning = true;
                     rb.useGravity = false;
-                    rb.velocity = new Vector3(0, 0, 0);
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                     rb.AddForce(Vector3.up * 30, ForceMode.Impulse);
                 }
             }
-            else if (Input.GetButtonUp("Jump"))
+            if (Input.GetButtonDown("Jump") && wallRunning)
             {
-                if (wallRunning)
-                {
-                    rb.AddForce(Camera.main.transform.forward * 140, ForceMode.Impulse);
-                    wallRunning = false;
-                    rb.useGravity = true;
-                }
+                //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
+                rb.AddForce(new Vector3(wallNormal.x, 0.2f, wallNormal.z) * 300, ForceMode.Impulse);
+                wallRunning = false;
+                rb.useGravity = true;
             }
 
             if (wallRunning)
             {
+                int cameraDir = -1;
                 Vector3 directionToGo = Vector3.Cross(wallNormal, Vector3.up).normalized;
-                if (Vector3.Dot(directionToGo, transform.forward) < 0)
+                if (Vector3.Dot(directionToGo, rb.velocity) < 0)
                 {
                     directionToGo = -directionToGo;
+                    cameraDir = 1;
                 }
                 rb.AddForce(directionToGo * acceleration, ForceMode.Force);
                 
-                rb.AddForce(-wallNormal * 10, ForceMode.Force);
+                rb.AddForce(-wallNormal * 5, ForceMode.Force);
                 
                 rb.AddForce(Vector3.up * -10, ForceMode.Force);
                 if (playerSpeed.magnitude > maxSpeed)
@@ -192,12 +194,17 @@ public class MovementComponent : MonoBehaviour
                     playerSpeed = playerSpeed.normalized * maxSpeed;
                     rb.velocity = new Vector3(playerSpeed.x, rb.velocity.y, playerSpeed.z);
                 }
+                
+                //Camera Rotation
+                LeanTween.rotateZ(Camera.main.gameObject, 35 * cameraDir, 0.1f);
             }
         }
         else
         {
             wallRunning = false;
             rb.useGravity = true;
+            //Camera Rotation
+            LeanTween.rotateZ(Camera.main.gameObject, 0, 0.1f);
         }
     }
 
@@ -207,20 +214,29 @@ public class MovementComponent : MonoBehaviour
         {
             if (Input.GetButtonDown("Crouch"))
             {
-                if (playerSpeed.magnitude >= maxSpeed*0.85)
+                if (playerSpeed.magnitude >= maxSpeed*0.85)//Slide
                 {
                     sliding = true;
                     maxSpeed *= 2;
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
                     rb.velocity = new Vector3(playerSpeed.x*1.7f, rb.velocity.y, playerSpeed.z*1.7f);
                 }
-                else
+                else//Crouch
                 {
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
                     maxSpeed = 2f;
                     crouching = true;
+                    slowed = true;
                 }
             }
+        }
+        if (playerSpeed.magnitude <= 1 && sliding)
+        {
+            //start crouch if too slow
+            sliding = false;
+            crouching = true;
+            maxSpeed = 2f;
+            slowed = true;
         }
         if (Input.GetButtonUp("Crouch"))
         {
@@ -232,12 +248,7 @@ public class MovementComponent : MonoBehaviour
             crouching = false;
             sliding = false;
             maxSpeed = 13f;
-        }
-        if (playerSpeed.magnitude <= 1 && sliding)
-        {
-            sliding = false;
-            crouching = true;
-            maxSpeed = 2f;
+            slowed = false;
         }
     }
 
@@ -268,7 +279,6 @@ public class MovementComponent : MonoBehaviour
     {
         RaycastHit hitright;
         RaycastHit hitleft;
-        RaycastHit hitbehing;
         if (Physics.Raycast(transform.position, transform.right, out hitright, gameObject.transform.lossyScale.x / 2 + 1f))
         {
             Debug.DrawRay(transform.position, transform.right * hitright.distance, Color.yellow);
@@ -286,42 +296,24 @@ public class MovementComponent : MonoBehaviour
             {
                 wallCollidingWith = hitleft.collider.gameObject;
                 collidingWithWall = true;
+                wallNormal = hitleft.normal;
             }
         }
+        if (Physics.Raycast(transform.position, -transform.right, out hitleft,gameObject.transform.lossyScale.x / 2 + 1f) 
+            || Physics.Raycast(transform.position, transform.right, out hitright, gameObject.transform.lossyScale.x / 2 + 1f))
+           {
+           }
+        else 
+        { 
+            collidingWithWall = false;   
+        }   
+    }
 
-        if (wallRunning)
+    private void maxSpeedCheck()
+    {
+        if (maxSpeed < walkingMaxSpeed && !slowed)
         {
-            if (Physics.Raycast(transform.position, -transform.forward, out hitbehing, gameObject.transform.lossyScale.x / 2 + 1f))
-            {
-                Debug.DrawRay(transform.position, -transform.forward * hitbehing.distance, Color.yellow); 
-                if (hitbehing.collider.gameObject.tag == "Wall")
-                {
-                    wallCollidingWith = hitbehing.collider.gameObject;
-                    collidingWithWall = true;
-                }
-            }
-            if (Physics.Raycast(transform.position, -transform.right, out hitleft,gameObject.transform.lossyScale.x / 2 + 1f) 
-                || Physics.Raycast(transform.position, transform.right, out hitright, gameObject.transform.lossyScale.x / 2 + 1f)
-                || Physics.Raycast(transform.position, -transform.forward, out hitbehing, gameObject.transform.lossyScale.x / 2 + 1f))
-            {
-            
-            }
-            else
-            {
-                collidingWithWall = false;   
-            }   
-        }
-        else
-        {
-            if (Physics.Raycast(transform.position, -transform.right, out hitleft,gameObject.transform.lossyScale.x / 2 + 1f) 
-                || Physics.Raycast(transform.position, transform.right, out hitright, gameObject.transform.lossyScale.x / 2 + 1f))
-            {
-            
-            }
-            else
-            {
-                collidingWithWall = false;   
-            }   
+            maxSpeed = walkingMaxSpeed;
         }
     }
 }
