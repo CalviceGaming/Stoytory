@@ -109,11 +109,6 @@ public class MovementComponent : MonoBehaviour
         {
             sideways = 0;
         }
-
-        if (LocalVelocity(rb.velocity).x > maxSpeed)
-        {
-            Debug.Log(LocalVelocity(rb.velocity).magnitude);
-        }
         
         forward = maxSpeedCheck(forward, LocalVelocity(rb.velocity).z);
         sideways = maxSpeedCheck(sideways, LocalVelocity(rb.velocity).x);
@@ -134,6 +129,15 @@ public class MovementComponent : MonoBehaviour
             }
 
             //Drag
+            
+            //if (Math.Abs(LocalVelocity(rb.velocity).x) > 0 && sideways < 0 || (LocalVelocity(rb.velocity).x < 0 && sideways > 0)) {
+            //    rb.AddForce(acceleration * transform.right * -LocalVelocity(rb.velocity).x * 0.15f);
+            //}
+            //if (Math.Abs(LocalVelocity(rb.velocity).z) > 0 && sideways < 0 || (LocalVelocity(rb.velocity).z < 0 && sideways > 0)) {
+            //    rb.AddForce(acceleration * transform.forward * -LocalVelocity(rb.velocity).z * 0.15f);
+            //}
+            
+            
             if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
             {
                 Vector3 direction = -flatVelocity.normalized;
@@ -183,7 +187,7 @@ public class MovementComponent : MonoBehaviour
             if (Input.GetButtonDown("Jump") && wallRunning)
             {
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.2f, wallNormal.z) * 100, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.4f, wallNormal.z) * 100, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }
