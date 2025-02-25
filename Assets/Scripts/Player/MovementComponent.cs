@@ -109,6 +109,16 @@ public class MovementComponent : MonoBehaviour
         {
             sideways = 0;
         }
+
+        if (LocalVelocity(rb.velocity).x > maxSpeed)
+        {
+            Debug.Log(LocalVelocity(rb.velocity).magnitude);
+        }
+        
+        forward = maxSpeedCheck(forward, LocalVelocity(rb.velocity).z);
+        sideways = maxSpeedCheck(sideways, LocalVelocity(rb.velocity).x);
+        
+        //On the Ground
         if (!sliding && grounded)
         {
             Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
@@ -119,10 +129,11 @@ public class MovementComponent : MonoBehaviour
             playerSpeed = flatVelocity;
             if (flatVelocity.magnitude > maxSpeed)
             {
-                flatVelocity = flatVelocity.normalized * maxSpeed;
-                rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
+                //flatVelocity = flatVelocity.normalized * maxSpeed;
+                //rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
             }
 
+            //Drag
             if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
             {
                 Vector3 direction = -flatVelocity.normalized;
@@ -133,6 +144,8 @@ public class MovementComponent : MonoBehaviour
                 }
             }
         }
+        
+        //In the air
         else if (!grounded && !wallRunning)
         {
             Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
@@ -143,8 +156,8 @@ public class MovementComponent : MonoBehaviour
             playerSpeed = flatVelocity;
             if (flatVelocity.magnitude > maxSpeed)
             {
-                flatVelocity = flatVelocity.normalized * maxSpeed;
-                rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
+                //flatVelocity = flatVelocity.normalized * maxSpeed;
+                //rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
             }
 
 
@@ -170,7 +183,7 @@ public class MovementComponent : MonoBehaviour
             if (Input.GetButtonDown("Jump") && wallRunning)
             {
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.2f, wallNormal.z) * 300, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.2f, wallNormal.z) * 100, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }
@@ -196,7 +209,7 @@ public class MovementComponent : MonoBehaviour
                 }
                 
                 //Camera Rotation
-                LeanTween.rotateZ(Camera.main.gameObject, 35 * cameraDir, 0.1f);
+                LeanTween.rotateZ(Camera.main.gameObject, 15 * cameraDir, 0.1f);
             }
         }
         else
@@ -309,11 +322,37 @@ public class MovementComponent : MonoBehaviour
         }   
     }
 
-    private void maxSpeedCheck()
+    private int maxSpeedCheck(int movement, float magnitude)
     {
-        if (maxSpeed < walkingMaxSpeed && !slowed)
+        if (movement > 0 && magnitude > maxSpeed)
         {
-            maxSpeed = walkingMaxSpeed;
+            return 0;
         }
+
+        if (movement < 0 && magnitude < -maxSpeed)
+        {
+           return 0;
+        }
+
+        return movement;
+    }
+
+    private Vector3 LocalVelocity(Vector3 velocity)
+    {
+        float angle = Mathf.Acos(Vector3.Dot(Vector3.forward, transform.forward));
+        if (Vector3.Cross(Vector3.forward, transform.forward).y > 0)
+        {
+            angle *= -1;
+        }
+        // [ cos(angle)   0   sin(angle) ]           [x]
+        // [     0        1       0      ]     *     [y]
+        // [ -sin(angle)  0   cos(angle) ]           [z]
+        float x = (Mathf.Cos(angle) * velocity.x) + (Mathf.Sin(angle) * velocity.z);
+        float z = -(Mathf.Sin(angle) * velocity.x) + (Mathf.Cos(angle) * velocity.z);
+        //Debug.DrawRay(transform.position, new Vector3(x, 0, z).normalized * 20, Color.red); 
+        //Debug.DrawRay(transform.position, velocity.normalized * 15, Color.green);       
+        //Debug.DrawRay(transform.position, transform.forward * 10, Color.yellow); 
+        //Debug.DrawRay(transform.position, Vector3.forward * 8, Color.blue); 
+        return new Vector3(x, velocity.y, z);
     }
 }
