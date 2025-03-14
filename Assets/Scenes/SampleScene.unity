@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: d6c22b88ec2481d4380f96743ec5e6be, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -683,7 +683,7 @@ Transform:
   m_GameObject: {fileID: 498302633}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 153.38, y: 83.13, z: -86.92}
+  m_LocalPosition: {x: 153.38, y: 83.13, z: -87.3}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2547,9 +2547,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a18c497a47aa44694deff16df49e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblesList:
-  - {fileID: 0}
+  acceleration: 150
   speedText: {fileID: 1839038933}
+  movementAction: {fileID: 6557180146471777187, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  jumpAction: {fileID: -7091023951973900325, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  crouchAction: {fileID: 4888991977259637826, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  jumpDown: 0
+  jumpUp: 0
+  crouchDown: 0
+  crouchUp: 0
 --- !u!1 &1594491120
 GameObject:
   m_ObjectHideFlags: 0
@@ -2576,7 +2582,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594491120}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 18474b2ba448c1c40ba8129246495fa5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

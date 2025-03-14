@@ -2,17 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 public class MovementComponent : MonoBehaviour
 {
     private float maxSpeed = 13.0f;
-    private float walkingMaxSpeed = 13.0f;
-    private bool slowed = false;
-    private float acceleration = 65.0f;
+    [SerializeField] private float acceleration = 200.0f;
     private Vector3 playerSpeed;
     private Rigidbody rb;
+    int forward = 0;
+    int sideways = 0;
     
     private bool crouching = false;
     private bool sliding = false;
@@ -26,34 +28,88 @@ public class MovementComponent : MonoBehaviour
     private GameObject lastWall;
     private Vector3 wallNormal;
     private bool wallRunning = false;
-    
-    [SerializeField] private List<GameObject> collectiblesList = new List<GameObject>();
 
     [SerializeField] private GameObject speedText;
+    
+    //Inputs
+    [SerializeField] InputActionReference movementAction;
+    private Vector2 movement;
+    private Vector2 realMovement;
+    [SerializeField] InputActionReference jumpAction;
+    [SerializeField] InputActionReference crouchAction;
+    public bool jumpDown = false;
+    public bool jumpUp = false;
+    public bool crouchDown = false;
+    public bool crouchUp = false;
+
+    private void OnEnable()
+    {
+        jumpAction.action.Enable();
+        movementAction.action.Enable();
+        crouchAction.action.Enable();
+    }
     
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        movementAction.action.performed += OnMovementPerformed;
+        movementAction.action.canceled += OnMovementCanceled;
+        jumpAction.action.started += OnJumpStarted;
+        crouchAction.action.started += OnCrouchStarted;
+        crouchAction.action.canceled += OnCrouchCanceled;
+    }
+
+    private void OnMovementPerformed(InputAction.CallbackContext callbackContext)
+    {
+        movement = callbackContext.ReadValue<Vector2>();
+    }
+
+    private void OnMovementCanceled(InputAction.CallbackContext callbackContext)
+    {
+        movement = Vector2.zero;
+    }
+
+    private void OnJumpStarted(InputAction.CallbackContext callbackContext)
+    {
+        jumpDown = true;
+    }
+    
+    private void OnCrouchStarted(InputAction.CallbackContext callbackContext)
+    {
+        crouchDown = true;
+    }
+    private void OnCrouchCanceled(InputAction.CallbackContext callbackContext)
+    {
+        crouchUp = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
+        
+        Checkifgrounded();
+    }
+
+    private void FixedUpdate()
+    {
+        realMovement = new Vector2(maxSpeedCheck(movement.x, LocalVelocity(rb.velocity).x),
+            maxSpeedCheck(movement.y, LocalVelocity(rb.velocity).z));
+        
         playerSpeed = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         
         speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
-        
-        Checkifgrounded();
-            
+
         PlayerMovement();
         
         CrouchAndSlide();
 
         WallRunning();
         
-        if (Input.GetButtonDown("Jump") && availableJump && grounded && !crouching && !sliding)
+        if (jumpDown && availableJump && grounded && !crouching && !sliding)
         {
+            jumpDown = false;
             rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
             availableJump = false;
         }
@@ -70,101 +126,52 @@ public class MovementComponent : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Collectible")
-        {
-            if (other.gameObject.GetComponentInParent<CosmeticId>().Cosmetic)
-            {
-                collectiblesList[other.gameObject.GetComponentInParent<CosmeticId>().cosmeticId - 1].SetActive(true);
-                other.transform.parent.gameObject.SetActive(false);
-            }
-        }
+
     }
 
     private void PlayerMovement()
     {
-        int forward = 0;
-        int sideways = 0;
-        if (Input.GetKey(KeyCode.W))
-        {
-            forward = 1;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            forward = -1;
-        }
-        else
-        {
-            forward = 0;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            sideways = -1;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            sideways = 1;
-        }
-        else
-        {
-            sideways = 0;
-        }
-        
-        forward = maxSpeedCheck(forward, LocalVelocity(rb.velocity).z);
-        sideways = maxSpeedCheck(sideways, LocalVelocity(rb.velocity).x);
-        
         //On the Ground
         if (!sliding && grounded)
         {
-            Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
-
-            rb.AddForce(movementDirection * acceleration, ForceMode.Force);
+            Vector3 movementDirection = (transform.right * realMovement.x + transform.forward * realMovement.y).normalized;
+            //Vector3 direction = new Vector3(realMovement.x * transform.right.x * acceleration , 0, realMovement.y * transform.forward.z * acceleration);
+            rb.AddForce(movementDirection * acceleration  , ForceMode.Force);
 
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
-            if (flatVelocity.magnitude > maxSpeed)
-            {
-                //flatVelocity = flatVelocity.normalized * maxSpeed;
-                //rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
-            }
 
             //Drag
+            // if (playerSpeed.magnitude > 0)
+            // {
+            //     Vector3 drag = -playerSpeed.normalized * acceleration;
+            //
+            //     if (realMovement.x < 0.1 && realMovement.x > -0.1)
+            //     {
+            //         rb.AddForce(new Vector3(drag.x, 0, 0), ForceMode.Force);
+            //     }
+            //     if (realMovement.y < 0.1 && realMovement.y > -0.1)
+            //     {
+            //         rb.AddForce(new Vector3(0, 0, drag.z), ForceMode.Force);
+            //     }
+            // }
             
-            //if (Math.Abs(LocalVelocity(rb.velocity).x) > 0 && sideways < 0 || (LocalVelocity(rb.velocity).x < 0 && sideways > 0)) {
-            //    rb.AddForce(acceleration * transform.right * -LocalVelocity(rb.velocity).x * 0.15f);
-            //}
-            //if (Math.Abs(LocalVelocity(rb.velocity).z) > 0 && sideways < 0 || (LocalVelocity(rb.velocity).z < 0 && sideways > 0)) {
-            //    rb.AddForce(acceleration * transform.forward * -LocalVelocity(rb.velocity).z * 0.15f);
-            //}
-            
-            
-            if (flatVelocity.magnitude > 0 && forward == 0 && sideways == 0 && grounded)
-            {
-                Vector3 direction = -flatVelocity.normalized;
-                rb.AddForce(direction * acceleration * 0.8f, ForceMode.Force);
-                if (rb.velocity.magnitude < 0.1f)
-                {
-                    rb.velocity = Vector3.zero;
-                }
-            }
+            // if (Math.Abs(LocalVelocity(rb.velocity).x) > 0 && realMovement.x < 0 || (LocalVelocity(rb.velocity).x < 0 && realMovement.x > 0)) {
+            //     rb.AddForce(acceleration * transform.right * -LocalVelocity(rb.velocity).x * 0.15f);
+            // }
+            // if (Math.Abs(LocalVelocity(rb.velocity).z) > 0 && realMovement.y < 0 || (LocalVelocity(rb.velocity).z < 0 && realMovement.y > 0)) {
+            //     rb.AddForce(acceleration * transform.forward * -LocalVelocity(rb.velocity).z * 0.15f);
+            // }
         }
         
         //In the air
         else if (!grounded && !wallRunning)
         {
-            Vector3 movementDirection = (transform.right * sideways + transform.forward * forward).normalized;
-
-            rb.AddForce(movementDirection * (0.3f * acceleration) , ForceMode.Force);
+            Vector3 movementDirection = (transform.right * realMovement.x + transform.forward * realMovement.y).normalized;
+            rb.AddForce(movementDirection * acceleration * 0.3f, ForceMode.Force);
 
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
-            if (flatVelocity.magnitude > maxSpeed)
-            {
-                //flatVelocity = flatVelocity.normalized * maxSpeed;
-                //rb.velocity = new Vector3(flatVelocity.x, rb.velocity.y, flatVelocity.z);
-            }
-
-
         }
     }
 
@@ -184,8 +191,9 @@ public class MovementComponent : MonoBehaviour
                     rb.AddForce(Vector3.up * 30, ForceMode.Impulse);
                 }
             }
-            if (Input.GetButtonDown("Jump") && wallRunning)
+            if (jumpDown && wallRunning)
             {
+                jumpDown = false;
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
                 rb.AddForce(new Vector3(wallNormal.x, 0.4f, wallNormal.z) * 100, ForceMode.Impulse);
                 wallRunning = false;
@@ -201,15 +209,16 @@ public class MovementComponent : MonoBehaviour
                     directionToGo = -directionToGo;
                     cameraDir = 1;
                 }
-                rb.AddForce(directionToGo * acceleration, ForceMode.Force);
+                
+                rb.AddForce(directionToGo * acceleration/2 , ForceMode.Force);
                 
                 rb.AddForce(-wallNormal * 5, ForceMode.Force);
                 
-                rb.AddForce(Vector3.up * -10, ForceMode.Force);
+                rb.AddForce(Vector3.up * -20, ForceMode.Force);
                 if (playerSpeed.magnitude > maxSpeed)
                 {
-                    playerSpeed = playerSpeed.normalized * maxSpeed;
-                    rb.velocity = new Vector3(playerSpeed.x, rb.velocity.y, playerSpeed.z);
+                    //playerSpeed = playerSpeed.normalized * maxSpeed;
+                    //rb.velocity = new Vector3(playerSpeed.x, rb.velocity.y, playerSpeed.z);
                 }
                 
                 //Camera Rotation
@@ -229,8 +238,10 @@ public class MovementComponent : MonoBehaviour
     {
         if (grounded)
         {
-            if (Input.GetButtonDown("Crouch"))
+            if (crouchDown)
             {
+                crouchDown = false;
+                //Debug.Log("down");
                 if (playerSpeed.magnitude >= maxSpeed*0.85)//Slide
                 {
                     sliding = true;
@@ -243,7 +254,6 @@ public class MovementComponent : MonoBehaviour
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
                     maxSpeed = 2f;
                     crouching = true;
-                    slowed = true;
                 }
             }
         }
@@ -253,10 +263,11 @@ public class MovementComponent : MonoBehaviour
             sliding = false;
             crouching = true;
             maxSpeed = 2f;
-            slowed = true;
         }
-        if (Input.GetButtonUp("Crouch"))
+        if (crouchUp)
         {
+            crouchUp = false;
+            //Debug.Log("up");
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             if (sliding)
             {
@@ -265,7 +276,6 @@ public class MovementComponent : MonoBehaviour
             crouching = false;
             sliding = false;
             maxSpeed = 13f;
-            slowed = false;
         }
     }
 
@@ -326,7 +336,7 @@ public class MovementComponent : MonoBehaviour
         }   
     }
 
-    private int maxSpeedCheck(int movement, float magnitude)
+    private float maxSpeedCheck(float movement, float magnitude)
     {
         if (movement > 0 && magnitude > maxSpeed)
         {
@@ -334,10 +344,9 @@ public class MovementComponent : MonoBehaviour
         }
 
         if (movement < 0 && magnitude < -maxSpeed)
-        {
-           return 0;
+        { 
+            return 0;
         }
-
         return movement;
     }
 
