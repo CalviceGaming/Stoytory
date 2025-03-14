@@ -22,6 +22,7 @@ public class MovementComponent : MonoBehaviour
     private bool availableJump = true;
     
     private bool grounded = false;
+    private Vector3 groundNormal;
     
     private bool collidingWithWall = false;
     private GameObject wallCollidingWith;
@@ -89,11 +90,13 @@ public class MovementComponent : MonoBehaviour
     {
         //speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
         
-        Checkifgrounded();
+        
     }
 
     private void FixedUpdate()
     {
+        groundNormal = Checkifgrounded();
+        
         realMovement = new Vector2(maxSpeedCheck(movement.x, LocalVelocity(rb.velocity).x),
             maxSpeedCheck(movement.y, LocalVelocity(rb.velocity).z));
         
@@ -135,8 +138,9 @@ public class MovementComponent : MonoBehaviour
         if (!sliding && grounded)
         {
             Vector3 movementDirection = (transform.right * realMovement.x + transform.forward * realMovement.y).normalized;
+            movementDirection = SlopeAngle(movementDirection);
             //Vector3 direction = new Vector3(realMovement.x * transform.right.x * acceleration , 0, realMovement.y * transform.forward.z * acceleration);
-            rb.AddForce(movementDirection * acceleration  , ForceMode.Force);
+            rb.AddForce(movementDirection * acceleration * 2, ForceMode.Force);
 
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
@@ -188,7 +192,7 @@ public class MovementComponent : MonoBehaviour
                     wallRunning = true;
                     rb.useGravity = false;
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    rb.AddForce(Vector3.up * 30, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * 35, ForceMode.Impulse);
                 }
             }
             if (jumpDown && wallRunning)
@@ -209,12 +213,15 @@ public class MovementComponent : MonoBehaviour
                     directionToGo = -directionToGo;
                     cameraDir = 1;
                 }
-                
-                rb.AddForce(directionToGo * acceleration/2 , ForceMode.Force);
+
+                if (playerSpeed.magnitude < maxSpeed)
+                {
+                    rb.AddForce(directionToGo * acceleration/2 , ForceMode.Force);
+                }
                 
                 rb.AddForce(-wallNormal * 5, ForceMode.Force);
                 
-                rb.AddForce(Vector3.up * -20, ForceMode.Force);
+                rb.AddForce(Vector3.up * -40, ForceMode.Force);
                 if (playerSpeed.magnitude > maxSpeed)
                 {
                     //playerSpeed = playerSpeed.normalized * maxSpeed;
@@ -271,7 +278,7 @@ public class MovementComponent : MonoBehaviour
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             if (sliding)
             {
-                rb.velocity = new Vector3(rb.velocity.x*0.2f, rb.velocity.y, rb.velocity.z*0.2f);
+                rb.velocity = new Vector3(rb.velocity.x*0.5f, rb.velocity.y, rb.velocity.z*0.5f);
             }
             crouching = false;
             sliding = false;
@@ -279,7 +286,7 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    private void Checkifgrounded()
+    private Vector3 Checkifgrounded()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 1f))
@@ -290,6 +297,7 @@ public class MovementComponent : MonoBehaviour
                 availableJump = true;
                 grounded = true;
                 lastWall = null;
+                return hit.normal;
                 //}
                 //else
                 //{
@@ -299,6 +307,7 @@ public class MovementComponent : MonoBehaviour
         else
         {
             grounded = false;
+            return Vector3.zero;
         }
     }
 
@@ -368,4 +377,34 @@ public class MovementComponent : MonoBehaviour
         //Debug.DrawRay(transform.position, Vector3.forward * 8, Color.blue); 
         return new Vector3(x, velocity.y, z);
     }
+
+    private Vector3 SlopeAngle(Vector3 velocity)
+    {
+        if (groundNormal != Vector3.zero && grounded)
+        {
+            float angle = Mathf.Acos(Vector3.Dot(Vector3.up, groundNormal));
+            //rotate on x axis
+            if (angle > 10 * Mathf.Deg2Rad)
+            {
+                float y = Mathf.Cos(angle) * velocity.y + (-Mathf.Sin(angle) * velocity.z);
+                float z = Mathf.Sin(angle) * velocity.y + (Mathf.Cos(angle) * velocity.z);  
+                return new Vector3(velocity.x, y, z);  
+            }
+        }
+        return velocity;
+    }
+
+    // private Vector3 CheckGroundGoingToWalkOn()
+    // {
+    //     RaycastHit hit; 
+    //     float y = Mathf.Cos(70 * Mathf.Deg2Rad) * rb.velocity.normalized.y + (-Mathf.Sin(70 * Mathf.Deg2Rad) * rb.velocity.normalized.z);
+    //     float z = Mathf.Sin(70 * Mathf.Deg2Rad) * rb.velocity.normalized.y + (Mathf.Cos(70 * Mathf.Deg2Rad) * rb.velocity.normalized.z); 
+    //     Vector3 direction = new Vector3(rb.velocity.normalized.x, y, z).normalized;
+    //     if (Physics.Raycast(transform.position, direction, out hit, gameObject.transform.lossyScale.y / 2 + 10f))
+    //     {
+    //         Debug.DrawRay(transform.position, direction * hit.distance, Color.red); 
+    //         return hit.normal;
+    //     }
+    //     return Vector3.zero;
+    // }
 }
