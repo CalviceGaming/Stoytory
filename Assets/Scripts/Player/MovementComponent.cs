@@ -145,6 +145,7 @@ public class MovementComponent : MonoBehaviour
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
 
+            rb.drag = 3;
             //Drag
             // if (playerSpeed.magnitude > 0)
             // {
@@ -159,7 +160,7 @@ public class MovementComponent : MonoBehaviour
             //         rb.AddForce(new Vector3(0, 0, drag.z), ForceMode.Force);
             //     }
             // }
-            
+
             // if (Math.Abs(LocalVelocity(rb.velocity).x) > 0 && realMovement.x < 0 || (LocalVelocity(rb.velocity).x < 0 && realMovement.x > 0)) {
             //     rb.AddForce(acceleration * transform.right * -LocalVelocity(rb.velocity).x * 0.15f);
             // }
@@ -176,6 +177,15 @@ public class MovementComponent : MonoBehaviour
 
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
+        }
+
+        if (movement == Vector2.zero)
+        {
+            rb.drag = 5f;
+            if (playerSpeed.magnitude < 3)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
         }
     }
 
@@ -307,6 +317,7 @@ public class MovementComponent : MonoBehaviour
         else
         {
             grounded = false;
+            rb.drag = 0;
             return Vector3.zero;
         }
     }
@@ -382,13 +393,11 @@ public class MovementComponent : MonoBehaviour
     {
         if (groundNormal != Vector3.zero && grounded)
         {
-            float angle = Mathf.Acos(Vector3.Dot(Vector3.up, groundNormal));
+            float angle = Mathf.Acos(Vector3.Dot(Vector3.up, groundNormal.normalized));
             //rotate on x axis
-            if (angle > 10 * Mathf.Deg2Rad)
+            if (angle > 10 * Mathf.Deg2Rad && angle < 50 * Mathf.Deg2Rad)
             {
-                float y = Mathf.Cos(angle) * velocity.y + (-Mathf.Sin(angle) * velocity.z);
-                float z = Mathf.Sin(angle) * velocity.y + (Mathf.Cos(angle) * velocity.z);  
-                return new Vector3(velocity.x, y, z);  
+                Vector3.ProjectOnPlane(velocity, groundNormal); 
             }
         }
         return velocity;
