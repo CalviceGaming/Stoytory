@@ -167,6 +167,14 @@ public class MovementComponent : MonoBehaviour
             // if (Math.Abs(LocalVelocity(rb.velocity).z) > 0 && realMovement.y < 0 || (LocalVelocity(rb.velocity).z < 0 && realMovement.y > 0)) {
             //     rb.AddForce(acceleration * transform.forward * -LocalVelocity(rb.velocity).z * 0.15f);
             // }
+            if (movement == Vector2.zero)
+            {
+                rb.drag = 5f;
+                if (playerSpeed.magnitude < 3)
+                {
+                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                }
+            }
         }
         
         //In the air
@@ -177,15 +185,6 @@ public class MovementComponent : MonoBehaviour
 
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
-        }
-
-        if (movement == Vector2.zero)
-        {
-            rb.drag = 5f;
-            if (playerSpeed.magnitude < 3)
-            {
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            }
         }
     }
 
@@ -216,6 +215,12 @@ public class MovementComponent : MonoBehaviour
 
             if (wallRunning)
             {
+                if (rb.velocity.magnitude < 5)
+                {
+                    wallRunning = false;
+                    rb.useGravity = true;
+                }
+                
                 int cameraDir = -1;
                 Vector3 directionToGo = Vector3.Cross(wallNormal, Vector3.up).normalized;
                 if (Vector3.Dot(directionToGo, rb.velocity) < 0)
@@ -301,25 +306,23 @@ public class MovementComponent : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 1f))
         {
-            Debug.DrawRay(transform.position, Vector3.down * hit.distance, Color.yellow); 
+            Debug.DrawRay(transform.position, Vector3.down * hit.distance, Color.yellow);
             //if (hit.collider.CompareTag("Ground"))
             //{
-                availableJump = true;
-                grounded = true;
-                lastWall = null;
-                return hit.normal;
-                //}
-                //else
-                //{
-                //    grounded = false;
-                //}
+            availableJump = true;
+            grounded = true;
+            lastWall = null;
+            return hit.normal;
+            //}
+            //else
+            //{
+            //    grounded = false;
+            //}
         }
-        else
-        {
-            grounded = false;
-            rb.drag = 0;
-            return Vector3.zero;
-        }
+
+        grounded = false;
+        rb.drag = 0;
+        return Vector3.zero;
     }
 
     private void CheckifWall()
