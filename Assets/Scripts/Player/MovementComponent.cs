@@ -267,7 +267,6 @@ public class MovementComponent : MonoBehaviour
                 if (playerSpeed.magnitude >= maxSpeed*0.85)//Slide
                 {
                     sliding = true;
-                    maxSpeed *= 2;
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
                     rb.velocity = new Vector3(playerSpeed.x*1.7f, rb.velocity.y, playerSpeed.z*1.7f);
                 }
@@ -284,7 +283,7 @@ public class MovementComponent : MonoBehaviour
             //start crouch if too slow
             sliding = false;
             crouching = true;
-            maxSpeed = 2f;
+            maxSpeed = 4f;
         }
         if (crouchUp)
         {
