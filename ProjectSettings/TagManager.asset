@@ -8,6 +8,7 @@ TagManager:
   - Collectible
   - Wall
   - Weapon
+  - Enemy
   layers:
   - Default
   - TransparentFX

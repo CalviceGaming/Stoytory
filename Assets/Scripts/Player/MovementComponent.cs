@@ -118,20 +118,6 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-
-    }
-
     private void PlayerMovement()
     {
         //On the Ground
@@ -208,14 +194,14 @@ public class MovementComponent : MonoBehaviour
             {
                 jumpDown = false;
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.4f, wallNormal.z) * 75, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.7f, wallNormal.z) * 75, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }
 
             if (wallRunning)
             {
-                if (rb.velocity.magnitude < 5)
+                if (rb.velocity.magnitude < 0)
                 {
                     wallRunning = false;
                     rb.useGravity = true;
@@ -231,7 +217,7 @@ public class MovementComponent : MonoBehaviour
 
                 if (playerSpeed.magnitude < maxSpeed)
                 {
-                    rb.AddForce(directionToGo * acceleration/2 , ForceMode.Force);
+                    rb.AddForce(directionToGo * acceleration , ForceMode.Force);
                 }
                 
                 rb.AddForce(-wallNormal * 5, ForceMode.Force);
