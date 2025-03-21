@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class WeaponSelector : MonoBehaviour
 {
     [SerializeField] private InputActionReference pistolAction;
     [SerializeField] private GameObject pistol;
+    [SerializeField] private GameObject pistolMagazine;
     [SerializeField] private InputActionReference shotgunAction;
     [SerializeField] private InputActionReference rocketAction;
     private int swapIndex;
+    
+    
 
     private void OnEnable()
     {
@@ -44,9 +48,15 @@ public class WeaponSelector : MonoBehaviour
     {
         switch (swapIndex)
         {
-            case 1: pistol.SetActive(true); break;
-            case 2: pistol.SetActive(false); break;
-            case 3: pistol.SetActive(false); break;
+            case 1: pistolMagazine.SetActive(true);
+                pistol.SetActive(true);
+                break;
+            case 2: pistol.SetActive(false); 
+                pistolMagazine.SetActive(false);
+                break;
+            case 3: pistol.SetActive(false); 
+                pistolMagazine.SetActive(false);
+                break;
         }
     }
 }

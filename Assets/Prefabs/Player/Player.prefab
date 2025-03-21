@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 990121299559506410}
   - component: {fileID: 2302422290200328599}
   - component: {fileID: 3132442418542201596}
+  - component: {fileID: 4250688870070707129}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -273,9 +274,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!114 &3132442418542201596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +298,22 @@ MonoBehaviour:
   jumpUp: 0
   crouchDown: 0
   crouchUp: 0
+--- !u!114 &4250688870070707129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4837849668705728979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd52cf80cf31ce40a1897f33f616d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pistolAction: {fileID: -3696092617224877608, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  pistol: {fileID: 0}
+  shotgunAction: {fileID: 3771910746664833475, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  rocketAction: {fileID: 2341092251721067629, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
 --- !u!1001 &8556391049814825351
 PrefabInstance:
   m_ObjectHideFlags: 0

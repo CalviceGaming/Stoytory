@@ -13,8 +13,6 @@ public class MovementComponent : MonoBehaviour
     [SerializeField] private float acceleration = 200.0f;
     private Vector3 playerSpeed;
     private Rigidbody rb;
-    int forward = 0;
-    int sideways = 0;
     
     private bool crouching = false;
     private bool sliding = false;
@@ -155,7 +153,7 @@ public class MovementComponent : MonoBehaviour
             // }
             if (movement == Vector2.zero)
             {
-                rb.drag = 5f;
+                rb.drag = 10f;
                 if (playerSpeed.magnitude < 3)
                 {
                     rb.velocity = new Vector3(0, rb.velocity.y, 0);
@@ -194,14 +192,14 @@ public class MovementComponent : MonoBehaviour
             {
                 jumpDown = false;
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.7f, wallNormal.z) * 75, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.5f, wallNormal.z) * 75, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }
 
             if (wallRunning)
             {
-                if (rb.velocity.magnitude < 0)
+                if (rb.velocity.magnitude < 3)
                 {
                     wallRunning = false;
                     rb.useGravity = true;
@@ -259,7 +257,7 @@ public class MovementComponent : MonoBehaviour
                 else//Crouch
                 {
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
-                    maxSpeed = 2f;
+                    maxSpeed = 4f;
                     crouching = true;
                 }
             }

@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
-    [SerializeField] private int damage;
-    [SerializeField] private GameObject trail;
+    [SerializeField] private int speedForce = 100;
+    [SerializeField] private float damage;
+    [SerializeField] private GameObject breakEffect;
+    [SerializeField] private GameObject bulletObjects;
     
     private Rigidbody rb;
     float despawnTimer = 0f;
+    private bool toDestroy = false;
+    private float destroyTimer = 0f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -19,40 +23,66 @@ public class BulletMovement : MonoBehaviour
         Vector3 targetPoint;
         if (Physics.Raycast(ray, out hit))
         {
-            targetPoint = hit.point;  // Aim at the hit object
+            targetPoint = hit.point; 
         }
         else
         {
-            targetPoint = ray.origin + ray.direction * 1000;
+            targetPoint = ray.origin + ray.direction * 200;
         }
         Vector3 direction = targetPoint - transform.position;
 
-        rb.AddForce(direction.normalized * 30, ForceMode.Impulse);
+        rb.AddForce(direction.normalized * speedForce, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.tag != "Player" && other.tag != "Weapon")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon")
         {
-            Destroy(gameObject);
-            if (other.tag == "Enemy")
+            rb.velocity = Vector3.zero;
+            bulletObjects.SetActive(false);
+
+            if (other.gameObject.tag == "Enemy")
             {
-                other.GetComponent<EnemyHealthComponent>().DealDamage(damage);
+                other.gameObject.GetComponent<EnemyHealthComponent>().DealDamage(damage, transform.position);
             }
+            else
+            {
+                Instantiate(breakEffect).GetComponent<DestroyBulletParticle>().bullet = gameObject;
+            }
+
+            toDestroy = true;
         }
     }
+    
+    
 
     void Update()
     {
         BulletDespawn();
+        toDestroyBullet();
     }
 
     private void BulletDespawn()
     {
-        if (despawnTimer >= 10f)
+        if (!toDestroy)
         {
-            Destroy(gameObject);
+            if (despawnTimer >= 10f)
+            {
+                Destroy(gameObject);
+            }
+            despawnTimer += Time.deltaTime;   
         }
-        despawnTimer += Time.deltaTime;
+    }
+
+    private void toDestroyBullet()
+    {
+        if (toDestroy)
+        {
+            if (destroyTimer >= 0.6f)
+            {
+                Destroy(gameObject);
+            }
+            destroyTimer += Time.deltaTime;
+        }
     }
 }

@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class EnemyHealthComponent : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 10;
-    private int currentHealth;
+    [SerializeField] private float maxHealth = 10;
+    private float currentHealth;
+    [SerializeField] private GameObject damageText;
 
     void Start()
     {
         currentHealth = maxHealth;
     }
 
-    public void DealDamage(int damage)
+    public void DealDamage(float damage, Vector3 hitPoint)
     {
         currentHealth -= damage;
+        Instantiate(damageText).GetComponent<DamageTextScript>().DamageText(damage, hitPoint);
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
