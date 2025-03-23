@@ -127,85 +127,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2259197066308365144, guid: a746c793de30b084e89b2a6a31c31d6a, type: 3}
   m_PrefabInstance: {fileID: 2093998431}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &77051267
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 77051268}
-  - component: {fileID: 77051270}
-  - component: {fileID: 77051269}
-  m_Layer: 5
-  m_Name: PistolMagazine
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &77051268
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 77051267}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1594662863}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 318, y: -206}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &77051269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 77051267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 92
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 10/10
---- !u!222 &77051270
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 77051267}
-  m_CullTransparentMesh: 1
 --- !u!1 &120396062
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,32 +280,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2208786010496678401, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
-      propertyPath: m_Name
-      value: TestSpeed
-      objectReference: {fileID: 0}
-    - target: {fileID: 2302422290200328599, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4250688870070707129, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
       propertyPath: pistol
       value: 
       objectReference: {fileID: 800539135}
-    - target: {fileID: 4250688870070707129, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
-      propertyPath: pistolMagazine
-      value: 
-      objectReference: {fileID: 77051267}
     - target: {fileID: 4837849668705728979, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9024402418323460315, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 77051268}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
 --- !u!1 &226674222
@@ -2993,11 +2899,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2259197066308365144, guid: a746c793de30b084e89b2a6a31c31d6a, type: 3}
   m_PrefabInstance: {fileID: 1891638504}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1594662863 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9024402418323460315, guid: ea9fe547707e2f541985983b3b5bb625, type: 3}
-  m_PrefabInstance: {fileID: 125804941}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1621675570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3061,7 +2962,7 @@ PrefabInstance:
     - target: {fileID: 9137506699125525036, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
       propertyPath: magazineText
       value: 
-      objectReference: {fileID: 77051269}
+      objectReference: {fileID: 0}
     - target: {fileID: 9137506699125525036, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
       propertyPath: bulletsParent
       value: 

@@ -9,11 +9,14 @@ TagManager:
   - Wall
   - Weapon
   - Enemy
+  - Tile
+  - TileWall
+  - Bullets
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - TileLayer
   - Water
   - UI
   - 

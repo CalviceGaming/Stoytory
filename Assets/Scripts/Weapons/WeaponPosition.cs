@@ -24,7 +24,7 @@ public class WeaponPosition : MonoBehaviour
 
     private void GunRecoil()
     {
-        LeanTween.value(gameObject, Rotation, 0, -55, 0.1f).setLoopPingPong(1);
+        LeanTween.value(gameObject, Rotation, 0, -55, 0.08f).setLoopPingPong(1);
     }
 
     private void GunReload()
