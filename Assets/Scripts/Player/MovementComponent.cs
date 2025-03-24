@@ -16,6 +16,7 @@ public class MovementComponent : MonoBehaviour
     
     private bool crouching = false;
     private bool sliding = false;
+    public bool freeze;
 
     private bool availableJump = true;
     
@@ -40,6 +41,7 @@ public class MovementComponent : MonoBehaviour
     public bool jumpUp = false;
     public bool crouchDown = false;
     public bool crouchUp = false;
+    public bool activeGrapple;
 
     private void OnEnable()
     {
@@ -93,6 +95,11 @@ public class MovementComponent : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (freeze)
+        {
+           rb.velocity = Vector3.zero; 
+        }
+        
         groundNormal = Checkifgrounded();
         
         realMovement = new Vector2(maxSpeedCheck(movement.x, LocalVelocity(rb.velocity).x),
@@ -115,9 +122,13 @@ public class MovementComponent : MonoBehaviour
             availableJump = false;
         }
     }
+    
+    
 
     private void PlayerMovement()
     {
+        if (activeGrapple) return;
+        
         //On the Ground
         if (!sliding && grounded)
         {
@@ -342,6 +353,37 @@ public class MovementComponent : MonoBehaviour
         }   
     }
 
+    private bool enablemovementonNextTouch;
+    public void JumpToPosition(Vector3 Targetposition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+        VelocityToSet = CalculateJumpVelocity(transform.position, Targetposition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+    }
+
+    private Vector3 VelocityToSet;
+    public void SetVelocity()
+    {
+        enablemovementonNextTouch = true;
+        rb.velocity = VelocityToSet;
+        
+    }
+
+    public void ResetRestriction()
+    {
+        activeGrapple = false;
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (enablemovementonNextTouch)
+        {
+            enablemovementonNextTouch = false;
+            ResetRestriction();
+            GetComponent<Graplling>().StopGrappling();
+        }
+    }
+
     private float maxSpeedCheck(float movement, float magnitude)
     {
         if (movement > 0 && magnitude > maxSpeed)
@@ -388,6 +430,20 @@ public class MovementComponent : MonoBehaviour
         }
         return velocity;
     }
+    
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+                                               + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+
 
     // private Vector3 CheckGroundGoingToWalkOn()
     // {
