@@ -16,11 +16,11 @@ public GameObject start;
     private bool pathFound = false;
 
     [SerializeField] private LayerMask tileLayer;
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         //StartFindingPath();
         player.GetComponent<TilePlayerOn>().playerChangedTile.AddListener(StartFindingPath);
     }
@@ -179,7 +179,7 @@ public GameObject start;
 
     private float GetCost(GameObject obj)
     {
-        return obj.GetComponent<TileCost>().tileCost + GetDistance(obj);
+        return obj.GetComponent<TileCost>().ReturnCost() + GetDistance(obj);
     }
 
     private float GetDistance(GameObject obj)

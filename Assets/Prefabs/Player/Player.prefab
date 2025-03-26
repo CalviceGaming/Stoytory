@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 6801464428012193428}
   - component: {fileID: 6952482109266703423}
   - component: {fileID: 4397661026368514997}
+  - component: {fileID: 939839452863098275}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -584,6 +585,25 @@ MonoBehaviour:
   GrapplingCd: 2
   overshootYaxis: 0
   GrapplingKey: 324
+--- !u!114 &939839452863098275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169909987854160407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cf25058af937b418207c11cdbc882e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  tileOn: {fileID: 0}
+  playerChangedTile:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7019227671387284113
 PrefabInstance:
   m_ObjectHideFlags: 0
