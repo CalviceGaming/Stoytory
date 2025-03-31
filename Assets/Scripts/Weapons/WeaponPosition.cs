@@ -13,8 +13,16 @@ public class WeaponPosition : MonoBehaviour
 
     void Start()
     {
-        GetComponent<PistolShooting>().onShoot.AddListener(GunRecoil);
-        GetComponent<PistolShooting>().onReload.AddListener(GunReload);
+        if (GetComponent<PistolShooting>())
+        {
+            GetComponent<PistolShooting>().onShoot.AddListener(GunRecoil);
+            GetComponent<PistolShooting>().onReload.AddListener(GunReload);    
+        }
+        if (GetComponent<ShotgunShooting>())
+        {
+            GetComponent<ShotgunShooting>().onShootShootgun.AddListener(GunRecoil);
+            GetComponent<ShotgunShooting>().onReloadShootgun.AddListener(GunReload);    
+        }
     }
     private void Update()
     {

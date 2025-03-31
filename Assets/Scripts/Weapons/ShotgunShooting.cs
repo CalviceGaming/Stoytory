@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +5,16 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PistolShooting : MonoBehaviour
+public class ShotgunShooting : MonoBehaviour
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject bulletSpawn;
     [SerializeField] private GameObject bulletsParent;
     private float shootTimer = 3f;
-    public UnityEvent onShoot;
+    public UnityEvent onShootShootgun;
     [SerializeField] private float maxMagazine = 10;
     private float currentMagazine;
-    public UnityEvent onReload;
+    public UnityEvent onReloadShootgun;
     private bool reloadingAnimation = false;
     [SerializeField] private Text magazineText;
     
@@ -77,8 +76,8 @@ public class PistolShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-            Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
-            onShoot.Invoke();
+            GameObject bullet1 = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
+            onShootShootgun.Invoke();
         }
         shooting = false;
         shootTimer += Time.deltaTime;
@@ -90,7 +89,7 @@ public class PistolShooting : MonoBehaviour
         {
             if (currentMagazine < maxMagazine)
             {
-                onReload.Invoke();
+                onReloadShootgun.Invoke();
                 reloadingAnimation = true;
             }
             else

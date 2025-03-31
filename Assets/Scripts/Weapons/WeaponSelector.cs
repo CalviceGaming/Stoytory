@@ -9,6 +9,7 @@ public class WeaponSelector : MonoBehaviour
 {
     [SerializeField] private InputActionReference pistolAction;
     [SerializeField] private GameObject pistol;
+    [SerializeField] private GameObject shotgun;
     [SerializeField] private GameObject pistolMagazine;
     [SerializeField] private InputActionReference shotgunAction;
     [SerializeField] private InputActionReference rocketAction;
@@ -50,11 +51,14 @@ public class WeaponSelector : MonoBehaviour
         {
             case 1: pistolMagazine.SetActive(true);
                 pistol.SetActive(true);
+                shotgun.SetActive(false);
                 break;
             case 2: pistol.SetActive(false); 
+                shotgun.SetActive(true);
                 pistolMagazine.SetActive(false);
                 break;
             case 3: pistol.SetActive(false); 
+                shotgun.SetActive(false);
                 pistolMagazine.SetActive(false);
                 break;
         }
