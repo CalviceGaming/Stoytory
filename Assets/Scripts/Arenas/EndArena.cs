@@ -1,18 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TileWallChecker : MonoBehaviour
+public class EndArena : MonoBehaviour
 {
-    public bool wall;
+    public UnityEvent enemyDied;
 
-    public UnityEvent foundWall;
+    public UnityEvent allEnemiesDied;
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyDied.AddListener(CheckEnemies);
     }
 
     // Update is called once per frame
@@ -21,12 +20,11 @@ public class TileWallChecker : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CheckEnemies()
     {
-        if (other.tag == "Wall")
+        if (transform.childCount <= 1)
         {
-            wall = true;
-            foundWall.Invoke();
+            allEnemiesDied.Invoke();
         }
     }
 }

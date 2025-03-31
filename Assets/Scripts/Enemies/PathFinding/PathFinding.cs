@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PathFinding : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public GameObject start;
 
     [SerializeField] private LayerMask tileLayer;
     private GameObject player;
+    
+    public UnityEvent newTile;
 
     void Start()
     {
@@ -140,18 +143,15 @@ public GameObject start;
         priorityQueue.Enqueue(start, 0);
         cameFrom[start] = null;
         costSoFar[start] = 0;
-
-        int i = 0;
+        
 
         while (priorityQueue.Count > 0)
         {
             GameObject current = priorityQueue.Dequeue();
-
-            Debug.Log("CURRENT = " + current.name);
+            
 
             if (ReferenceEquals(current, finish))
             {
-                Debug.Log("Path Found!");
                 ReconstructPath(cameFrom, finish);
                 pathFound = true;
                 return;
@@ -197,12 +197,6 @@ public GameObject start;
         }
 
         path.Reverse(); // Reverse to get start -> goal order
-        
-        Debug.Log("Path Length: " + path.Count);
-        foreach (GameObject tile in path)
-        {
-            tile.GetComponent<Renderer>().material.color = Color.green; 
-        }
     }
 
     void MoveAlongPath()
@@ -221,6 +215,7 @@ public GameObject start;
 
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
+            newTile.Invoke();
             currentTargetIndex++; 
         }
     }
@@ -228,7 +223,7 @@ public GameObject start;
     void FindStart()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 1f, tileLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10, tileLayer))
         {
             start = hit.collider.gameObject;
         }

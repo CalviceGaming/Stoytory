@@ -40,6 +40,7 @@ public class BulletMovement : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             bulletObjects.SetActive(false);
+            GetComponent<CapsuleCollider>().enabled = false;
 
             if (other.gameObject.tag == "Enemy")
             {

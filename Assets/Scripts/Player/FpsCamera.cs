@@ -25,6 +25,7 @@ public class FpsCamera : MonoBehaviour
     {
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //Debug.Log(Time.deltaTime);
         
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

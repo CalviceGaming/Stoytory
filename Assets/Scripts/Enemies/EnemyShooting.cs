@@ -17,11 +17,11 @@ public class EnemyShooting : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        GetComponent<PathFinding>().newTile.AddListener(IsPlayerInRange);
     }
 
     void Update()
     {
-        IsPlayerInRange();
         StartShooting();
     }
 
@@ -74,6 +74,7 @@ public class EnemyShooting : MonoBehaviour
 
             if (shootingTimer >= 1.5)
             {
+                IsPlayerInRange();
                 shootingTimer = 0;
                 for (int i = 0; i < shotAmount; i++)
                 {

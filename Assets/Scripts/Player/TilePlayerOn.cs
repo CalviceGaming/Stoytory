@@ -14,7 +14,6 @@ public class TilePlayerOn : MonoBehaviour
     void Start()
     {
         //playerChangedTile = new UnityEvent();
-        playerChangedTile.AddListener(Test);
     }
 
     // Update is called once per frame
@@ -30,9 +29,5 @@ public class TilePlayerOn : MonoBehaviour
             }
         }
     }
-
-    void Test()
-    {
-        Debug.Log("hi");
-    }
+    
 }

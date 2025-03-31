@@ -6,11 +6,13 @@ public class TileGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject ground;
     [SerializeField] private GameObject tilePrefab;
-    [SerializeField] private GameObject wallPrefab;
+    
+    [SerializeField] private GameObject enemies;
+    private List<GameObject> tiles = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemies.GetComponent<EndArena>().allEnemiesDied.AddListener(RemoveTiles);
     }
 
     public void GenerateTiles()
@@ -31,10 +33,19 @@ public class TileGenerator : MonoBehaviour
             {
                 Vector3 tilePosition = new Vector3((width/2 + tileWidth/2) - (i * tileWidth),-yPosistion, (height/2 + tileHeight/2) - (y * tileHeight));
                 GameObject tile = Instantiate(tilePrefab, ground.transform.position + tilePosition, Quaternion.identity, transform);
+                tiles.Add(tile);
                 tile.GetComponent<Renderer>().enabled = false;
                 tile.GetComponent<TileCost>().tileCost = 1;
                 tile.tag = "Tile";
             }
+        }
+    }
+
+    private void RemoveTiles()
+    {
+        foreach (GameObject tile in tiles)
+        {
+            Destroy(tile);
         }
     }
 }

@@ -21,7 +21,7 @@ public class EnemyBulletMovement : MonoBehaviour
 
 
         Vector3 direction = player.transform.position - transform.position;
-
+        transform.rotation = Quaternion.LookRotation(direction);
         rb.AddForce(direction.normalized * speedForce, ForceMode.Impulse);
     }
 
