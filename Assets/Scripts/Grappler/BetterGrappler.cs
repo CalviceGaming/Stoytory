@@ -14,6 +14,14 @@ public class BetterGrappler : MonoBehaviour
     private Vector3 Swingpoint;
     private SpringJoint Joint;
     private Vector3 currentGrapplePosition;
+
+
+    public Transform Orientation;
+    public Rigidbody rb;
+    public float horizontalThurtsForce;
+    public float forwordThurtsForce;
+    public float ExtendeCableSpeed;
+    public MovementComponent pm;
     
     void StartSwing()
     {
@@ -29,8 +37,8 @@ public class BetterGrappler : MonoBehaviour
             Joint.maxDistance = DistanceFromPoint * 0.8f;
             Joint.minDistance = DistanceFromPoint * 0.25f;
 
-            Joint.spring = 4.5f;
-            Joint.damper = 7f;
+            Joint.spring = 5;
+            Joint.damper = 3f;
             Joint.massScale = 4.5f;
             lineRenderer.positionCount = 2;
             currentGrapplePosition = guntip.position;
@@ -41,12 +49,38 @@ public class BetterGrappler : MonoBehaviour
         
     }
 
+    void GrapplePull()
+    {
+        if (Joint == null) return;
+        // Always apply force toward the Swingpoint
+        Vector3 directionToPoint = (Swingpoint - player.position).normalized;
+        float distance = Vector3.Distance(player.position, Swingpoint);
+
+        // Apply constant pulling force towards the swing point
+        rb.AddForce(directionToPoint * forwordThurtsForce * Time.deltaTime * 2f); // Increased force 
+       
+        Joint.maxDistance = Mathf.Lerp(Joint.maxDistance, 1f, Time.deltaTime * 0.5f);
+        Joint.minDistance = Mathf.Lerp(Joint.minDistance, 0.1f, Time.deltaTime * 0.5f);
+        
+        if (Input.GetKey(KeyCode.D)) rb.AddForce(Orientation.right * horizontalThurtsForce * Time.deltaTime);
+        if (Input.GetKey(KeyCode.A)) rb.AddForce(-Orientation.right * horizontalThurtsForce * Time.deltaTime); // -Orientation if i get problems
+        if (Input.GetKey(KeyCode.W)) rb.AddForce(Orientation.forward * horizontalThurtsForce * Time.deltaTime);
+        if (Input.GetKey(KeyCode.S)) rb.AddForce(-Orientation.forward * horizontalThurtsForce * Time.deltaTime);
+        
+        if (Input.GetKey((KeyCode.Q)))
+        {
+            float ExtendDistanceFromPoint = Vector3.Distance(transform.position, Swingpoint) * ExtendeCableSpeed;
+            Joint.maxDistance = ExtendDistanceFromPoint * 0.8f;
+            Joint.minDistance = ExtendDistanceFromPoint * 0.25f;
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(SwingKey))StartSwing();
         if (Input.GetKeyUp(SwingKey))StopSwing();
-        
-        
+        if (Joint != null) GrapplePull();
+
     }
     
     void DrawGrapple()

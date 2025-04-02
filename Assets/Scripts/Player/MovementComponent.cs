@@ -42,6 +42,8 @@ public class MovementComponent : MonoBehaviour
     public bool crouchDown = false;
     public bool crouchUp = false;
     public bool activeGrapple;
+    public bool activeSwing;
+    public float swingSpeed;
 
     private void OnEnable()
     {
