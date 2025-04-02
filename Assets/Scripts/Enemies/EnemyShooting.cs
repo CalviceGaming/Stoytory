@@ -18,6 +18,7 @@ public class EnemyShooting : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         GetComponent<PathFinding>().newTile.AddListener(IsPlayerInRange);
+        bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
 
     void Update()

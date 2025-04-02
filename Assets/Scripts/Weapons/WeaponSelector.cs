@@ -55,7 +55,7 @@ public class WeaponSelector : MonoBehaviour
                 break;
             case 2: pistol.SetActive(false); 
                 shotgun.SetActive(true);
-                pistolMagazine.SetActive(false);
+                pistolMagazine.SetActive(true);
                 break;
             case 3: pistol.SetActive(false); 
                 shotgun.SetActive(false);

@@ -14,29 +14,38 @@ public class BulletMovement : MonoBehaviour
     float despawnTimer = 0f;
     private bool toDestroy = false;
     private float destroyTimer = 0f;
+    
+    public Vector3 directionSet { private get; set; } = Vector3.zero;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        RaycastHit hit;
-
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (directionSet == Vector3.zero)
         {
-            targetPoint = hit.point; 
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+            if (Physics.Raycast(ray, out hit))
+            {
+                targetPoint = hit.point; 
+            }
+            else
+            {
+                targetPoint = ray.origin + ray.direction * 200;
+            }
+            Vector3 direction = targetPoint - transform.position;
+
+            rb.AddForce(direction.normalized * speedForce, ForceMode.Impulse);
         }
         else
         {
-            targetPoint = ray.origin + ray.direction * 200;
+            rb.AddForce(directionSet.normalized * speedForce, ForceMode.Impulse);
         }
-        Vector3 direction = targetPoint - transform.position;
-
-        rb.AddForce(direction.normalized * speedForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
         {
             rb.velocity = Vector3.zero;
             bulletObjects.SetActive(false);

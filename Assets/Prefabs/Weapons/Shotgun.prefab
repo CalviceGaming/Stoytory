@@ -99,7 +99,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -204,7 +204,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -309,7 +309,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -340,7 +340,7 @@ Transform:
   m_GameObject: {fileID: 2163536923860837950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.36, z: 6.443}
+  m_LocalPosition: {x: 0, y: 0.36, z: 7.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -445,7 +445,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -461,13 +461,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7169451332918480461}
   - component: {fileID: 4204178975456492293}
+  - component: {fileID: 5137879814335772475}
   m_Layer: 0
   m_Name: Shotgun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7169451332918480461
 Transform:
   m_ObjectHideFlags: 0
@@ -504,3 +505,30 @@ MonoBehaviour:
   endReload:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5137879814335772475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057687266591189504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93d4945e8d16c84ab825b85e461fa28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 4648460375401079700, guid: 6b7fd01abb531f84d85180f1e40bf91f, type: 3}
+  bulletSpawn: {fileID: 2163536923860837950}
+  bulletsParent: {fileID: 0}
+  onShootShootgun:
+    m_PersistentCalls:
+      m_Calls: []
+  maxMagazine: 2
+  onReloadShootgun:
+    m_PersistentCalls:
+      m_Calls: []
+  magazineText: {fileID: 0}
+  shootingAction: {fileID: -6323730704221808221, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  shooting: 0
+  reloadAction: {fileID: 348972326677774519, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  reloading: 0

@@ -12,6 +12,7 @@ TagManager:
   - Tile
   - TileWall
   - Bullets
+  - BulletParent
   layers:
   - Default
   - TransparentFX

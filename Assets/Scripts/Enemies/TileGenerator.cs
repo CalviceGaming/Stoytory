@@ -9,6 +9,8 @@ public class TileGenerator : MonoBehaviour
     
     [SerializeField] private GameObject enemies;
     private List<GameObject> tiles = new List<GameObject>();
+    
+    [SerializeField] private GameObject startEnemies;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,8 @@ public class TileGenerator : MonoBehaviour
                 tile.tag = "Tile";
             }
         }
+        startEnemies.GetComponent<EnemyWaves>().tiles = tiles;
+        startEnemies.SetActive(true);
     }
 
     private void RemoveTiles()

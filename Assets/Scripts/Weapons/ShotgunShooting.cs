@@ -12,7 +12,7 @@ public class ShotgunShooting : MonoBehaviour
     [SerializeField] private GameObject bulletsParent;
     private float shootTimer = 3f;
     public UnityEvent onShootShootgun;
-    [SerializeField] private float maxMagazine = 10;
+    [SerializeField] private float maxMagazine = 2;
     private float currentMagazine;
     public UnityEvent onReloadShootgun;
     private bool reloadingAnimation = false;
@@ -27,22 +27,24 @@ public class ShotgunShooting : MonoBehaviour
 
     private void OnEnable()
     {
+        magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
         shootingAction.action.Enable();
         reloadAction.action.Enable();
+        
+        shootingAction.action.started += OnShootingStarted;
+        reloadAction.action.started += OnReloadingStarted;
     }
     private void OnDisable()
     {
         shootingAction.action.started -= OnShootingStarted;
         reloadAction.action.started -= OnReloadingStarted;
 
-        shootingAction.action.Disable();
-        reloadAction.action.Disable();
+        //shootingAction.action.Disable();
+        //reloadAction.action.Disable();
     }
 
     private void Start()
     {
-        shootingAction.action.started += OnShootingStarted;
-        reloadAction.action.started += OnReloadingStarted;
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
@@ -76,7 +78,10 @@ public class ShotgunShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-            GameObject bullet1 = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
+            for (int i = 0; i < 5; i++)
+            {
+                Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform).GetComponent<BulletMovement>().directionSet = DirectionForBullet();
+            }
             onShootShootgun.Invoke();
         }
         shooting = false;
@@ -105,5 +110,25 @@ public class ShotgunShooting : MonoBehaviour
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
         reloading = false;
         reloadingAnimation = false;
+    }
+
+    private Vector3 DirectionForBullet()
+    {
+        Vector3 distancePoint = bulletSpawn.transform.position + bulletSpawn.transform.forward * 30;
+        
+        // [ cos(angle)   -sin(angle)   0 ]           [x]
+        // [ sin(angle)    cos(angle)   0 ]     *     [y]
+        // [     0             0        1 ]           [z]
+
+        float angle = Random.Range(0, 360) * Mathf.Deg2Rad;
+        
+        //Vector3 rotation = new Vector3((Mathf.Cos(angle) * bulletSpawn.transform.up.x) - (Mathf.Sin(angle) * bulletSpawn.transform.up.x), 
+        //    (Mathf.Sin(angle) * bulletSpawn.transform.up.y) - (Mathf.Cos(angle) * bulletSpawn.transform.up.y), 0);
+        
+        Vector3 rotation = (bulletSpawn.transform.right * Mathf.Cos(angle) + bulletSpawn.transform.up * Mathf.Sin(angle)) * 0.2f;
+
+
+        Vector3 finalPoint = distancePoint + (rotation.normalized * Random.Range(0, 10));
+        return finalPoint - bulletSpawn.transform.position;
     }
 }

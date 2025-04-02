@@ -24,26 +24,31 @@ public class PistolShooting : MonoBehaviour
     [SerializeField] private bool shooting;
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
-
-
+    
+    
     private void OnEnable()
     {
+        magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
         shootingAction.action.Enable();
         reloadAction.action.Enable();
+        
+        shootingAction.action.started += OnShootingStarted;
+        reloadAction.action.started += OnReloadingStarted;
+        
+        shooting = false;
+        reloading = false;
     }
     private void OnDisable()
     {
         shootingAction.action.started -= OnShootingStarted;
         reloadAction.action.started -= OnReloadingStarted;
 
-        shootingAction.action.Disable();
-        reloadAction.action.Disable();
+        // shootingAction.action.Disable();
+        // reloadAction.action.Disable();
     }
 
     private void Start()
     {
-        shootingAction.action.started += OnShootingStarted;
-        reloadAction.action.started += OnReloadingStarted;
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
@@ -77,7 +82,7 @@ public class PistolShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-            Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
+            Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform).GetComponent<BulletMovement>().directionSet = Vector3.zero;
             onShoot.Invoke();
         }
         shooting = false;
