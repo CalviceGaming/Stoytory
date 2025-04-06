@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 3745512021171743342}
   - component: {fileID: 7470190902515319661}
   m_Layer: 0
-  m_Name: EnemyPathfindingTest
+  m_Name: GreenSoldier
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {fileID: 0}
   finish: {fileID: 0}
+  moveSpeed: 7
   tileLayer:
     serializedVersion: 2
     m_Bits: 8
-  player: {fileID: 0}
+  newTile:
+    m_PersistentCalls:
+      m_Calls: []

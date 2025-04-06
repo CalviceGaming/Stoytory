@@ -14,7 +14,7 @@ public class TileGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemies.GetComponent<EndArena>().allEnemiesDied.AddListener(RemoveTiles);
+        enemies.GetComponent<EndArena>().endArena.AddListener(RemoveTiles);
     }
 
     public void GenerateTiles()

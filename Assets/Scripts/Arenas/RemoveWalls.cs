@@ -17,7 +17,7 @@ public class RemoveWalls : MonoBehaviour
                 walls.Add(child.gameObject);
             }
         }
-        enemies.GetComponent<EndArena>().allEnemiesDied.AddListener(DespawnWalls);
+        enemies.GetComponent<EndArena>().endArena.AddListener(DespawnWalls);
     }
 
 

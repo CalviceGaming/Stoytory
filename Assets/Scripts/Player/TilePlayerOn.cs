@@ -20,7 +20,7 @@ public class TilePlayerOn : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 1f, tileLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 20f, tileLayer))
         {
             if (!(hit.collider.gameObject == tileOn))
             {

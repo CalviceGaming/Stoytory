@@ -12,9 +12,8 @@ public GameObject start;
     
     List<GameObject> path = new List<GameObject>();
     private int currentTargetIndex = 0; 
-    private float moveSpeed = 10f; 
-    
-    private bool pathFound = false;
+    [SerializeField] private float moveSpeed = 10f; 
+
 
     [SerializeField] private LayerMask tileLayer;
     private GameObject player;
@@ -113,7 +112,6 @@ public GameObject start;
         new Vector3(0, -10, -10)  // Down slope backward
         };
 
-        float yTolerance = 2f; // Maximum allowed height difference
 
         foreach (Vector3 dir in directions)
         {
@@ -153,7 +151,6 @@ public GameObject start;
             if (ReferenceEquals(current, finish))
             {
                 ReconstructPath(cameFrom, finish);
-                pathFound = true;
                 return;
             }
 
@@ -223,7 +220,7 @@ public GameObject start;
     void FindStart()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10, tileLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, tileLayer))
         {
             start = hit.collider.gameObject;
         }
@@ -237,10 +234,16 @@ public GameObject start;
     // Update is called once per frame
     void Update()
     {
-        if (start && finish && !GetComponent<EnemyShooting>().shooting)
+        if (GetComponent<EnemyShooting>())
+        {
+            if (start && finish && !GetComponent<EnemyShooting>().shooting)
+            {
+                MoveAlongPath();
+            }   
+        }
+        else if (start && finish)
         {
             MoveAlongPath();
         }
-        
     }
 }
