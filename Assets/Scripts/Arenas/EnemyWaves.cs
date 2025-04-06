@@ -66,23 +66,26 @@ public class EnemyWaves : MonoBehaviour
 
     void Waves()
     {
-        for (int i = 0; i < AmountOfThisWave(amountOfSoldiers); i++)
+        int greenSoldiersThisWave = AmountOfThisWave(amountOfSoldiers);
+        int ballsThisWave = AmountOfThisWave(amountOfBalls);
+        int dynosThisWave = AmountOfThisWave(amountOfDinos);
+        for (int i = 0; i < greenSoldiersThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
             Instantiate(greenSoldierPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
             amountOfSoldiers--;
         }
-        for (int i = 0; i < AmountOfThisWave(amountOfBalls); i++)
+        for (int i = 0; i < ballsThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
             Instantiate(bouncyBallPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
             amountOfBalls--;
         }
-        for (int i = 0; i < AmountOfThisWave(amountOfBalls); i++)
+        for (int i = 0; i < dynosThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
             Instantiate(dinossaurPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
-            amountOfBalls--;
+            amountOfDinos--;
         }
         wave++;
     }

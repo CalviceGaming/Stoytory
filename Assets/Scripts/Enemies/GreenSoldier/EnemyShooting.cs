@@ -77,10 +77,7 @@ public class EnemyShooting : MonoBehaviour
             {
                 IsPlayerInRange();
                 shootingTimer = 0;
-                for (int i = 0; i < shotAmount; i++)
-                {
-                    Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity, bulletsParent.transform);
-                }
+                Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity, bulletsParent.transform);
             }
         }
         shootingTimer += Time.deltaTime;

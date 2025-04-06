@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBulletMovement : MonoBehaviour
 {
     [SerializeField] private int speedForce = 20;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage = 4;
     [SerializeField] private GameObject breakEffect;
     [SerializeField] private GameObject bulletObjects;
     private GameObject player;
@@ -27,12 +27,19 @@ public class EnemyBulletMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Enemy" && other.gameObject.tag != "Weapon")
+        if (other.gameObject.tag != "Enemy" && other.gameObject.tag != "Weapon" && toDestroy == false)
         {
             rb.velocity = Vector3.zero;
             bulletObjects.SetActive(false);
-            Instantiate(breakEffect).GetComponent<DestroyBulletParticle>().bullet = gameObject;
             toDestroy = true;
+            if (other.gameObject.tag == "Player")
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<HealthComponent>().DealDamage(damage);
+            }
+            else
+            {
+                Instantiate(breakEffect).GetComponent<DestroyBulletParticle>().bullet = gameObject;
+            }
         }
     }
     

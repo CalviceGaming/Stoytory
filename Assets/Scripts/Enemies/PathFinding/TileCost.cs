@@ -19,6 +19,7 @@ public class TileCost : MonoBehaviour
         {
             tileCost = 1000;
             wall = true;
+            Destroy(gameObject);
         }
     }
 

@@ -12,7 +12,7 @@ public class EnemyHealthComponent : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        endArena = FindObjectOfType<EndArena>();
+        endArena = gameObject.GetComponentInParent<EndArena>();
     }
 
     public void DealDamage(float damage, Vector3 hitPoint)
