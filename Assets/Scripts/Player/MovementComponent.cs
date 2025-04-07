@@ -183,6 +183,12 @@ public class MovementComponent : MonoBehaviour
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             playerSpeed = flatVelocity;
         }
+        
+        //Sliding
+        if (sliding)
+        {
+            rb.drag = 3f;
+        }
     }
 
     private void WallRunning()
@@ -265,7 +271,7 @@ public class MovementComponent : MonoBehaviour
                 {
                     sliding = true;
                     gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
-                    rb.velocity = new Vector3(playerSpeed.x*1.7f, rb.velocity.y, playerSpeed.z*1.7f);
+                    rb.velocity = new Vector3(playerSpeed.x*1.7f, rb.velocity.y, playerSpeed.z*2f);
                 }
                 else//Crouch
                 {
@@ -289,7 +295,7 @@ public class MovementComponent : MonoBehaviour
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             if (sliding)
             {
-                rb.velocity = new Vector3(rb.velocity.x*0.5f, rb.velocity.y, rb.velocity.z*0.5f);
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
             }
             crouching = false;
             sliding = false;

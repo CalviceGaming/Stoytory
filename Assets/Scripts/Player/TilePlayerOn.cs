@@ -19,6 +19,7 @@ public class TilePlayerOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, gameObject.transform.lossyScale.y / 2 + 20f, tileLayer))
         {

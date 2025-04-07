@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PathFinding : MonoBehaviour
 {
-public GameObject start;
+    public GameObject start;
     public GameObject finish;
 
     Dictionary<GameObject, int> floorTiles = new Dictionary<GameObject, int>();
@@ -102,20 +102,13 @@ public GameObject start;
         new Vector3(-10, 0, 0), // Left
         new Vector3(0, 0, 10),  // Forward
         new Vector3(0, 0, -10), // Backward
-        new Vector3(10, 10, 0),  // Up slope right
-        new Vector3(-10, 10, 0), // Up slope left
-        new Vector3(0, 10, 10),  // Up slope forward
-        new Vector3(0, 10, -10), // Up slope backward
-        new Vector3(10, -10, 0),  // Down slope right
-        new Vector3(-10, -10, 0), // Down slope left
-        new Vector3(0, -10, 10),  // Down slope forward
-        new Vector3(0, -10, -10)  // Down slope backward
         };
 
 
         foreach (Vector3 dir in directions)
         {
             //Vector3 neighborPos = RoundPosition(pos + dir, 5.0f);
+            
             RaycastHit hit;
             if (Physics.Raycast(pos, dir, out hit, 5))
             {
