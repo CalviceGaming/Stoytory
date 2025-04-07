@@ -198,7 +198,7 @@ public class MovementComponent : MonoBehaviour
                     wallRunning = true;
                     rb.useGravity = false;
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    rb.AddForce(Vector3.up * 15, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * 30, ForceMode.Impulse);
                 }
             }
             if (jumpDown && wallRunning)
