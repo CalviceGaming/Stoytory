@@ -39,7 +39,7 @@ public class Explosion : MonoBehaviour
             }
             
         }
-        
+        Debug.Log("im killing myself");
         Destroy(gameObject);
     }
 
