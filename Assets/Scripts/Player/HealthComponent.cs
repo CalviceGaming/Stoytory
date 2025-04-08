@@ -33,8 +33,9 @@ public class HealthComponent : MonoBehaviour
     {
         if (timeSinceLastDamage >= 10)
         {
-            if (timeForHeal >= 3)
+            if (timeForHeal >= 3 && currentHealth < maxHealth)
             {
+                timeForHeal = 0;
                 currentHealth++;
                 healthText.GetComponent<Text>().text = currentHealth.ToString();
             }

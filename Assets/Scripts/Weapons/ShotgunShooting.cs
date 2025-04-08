@@ -117,7 +117,21 @@ public class ShotgunShooting : MonoBehaviour
 
     private Vector3 DirectionForBullet()
     {
-        Vector3 distancePoint = bulletSpawn.transform.position + bulletSpawn.transform.forward * 30;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point; 
+        }
+        else
+        {
+            targetPoint = ray.origin + ray.direction * 200;
+        }
+        Vector3 direction = targetPoint - bulletSpawn.transform.position;
+
+        Vector3 distancePoint = bulletSpawn.transform.position + direction.normalized * 30;
         
         // [ cos(angle)   -sin(angle)   0 ]           [x]
         // [ sin(angle)    cos(angle)   0 ]     *     [y]
