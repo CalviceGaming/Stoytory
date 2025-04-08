@@ -6,7 +6,7 @@ using UnityEngine;
 public class BulletMovement : MonoBehaviour
 {
     [SerializeField] private int speedForce = 100;
-    [SerializeField] private float damage;
+    [SerializeField] public float damage{ private get; set; }
     [SerializeField] private GameObject breakEffect;
     [SerializeField] private GameObject bulletObjects;
     

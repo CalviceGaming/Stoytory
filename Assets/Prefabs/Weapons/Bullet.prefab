@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7792957336213016280
 Transform:
   m_ObjectHideFlags: 0
@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedForce: 1
-  damage: 4
   breakEffect: {fileID: 5794863881165464267, guid: 080e8c74eb0453d4594f23e842f0d0e0, type: 3}
   bulletObjects: {fileID: 5339905665611404670}
 --- !u!54 &9054024693238065641

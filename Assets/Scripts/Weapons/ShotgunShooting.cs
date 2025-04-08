@@ -80,7 +80,10 @@ public class ShotgunShooting : MonoBehaviour
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
             for (int i = 0; i < 5; i++)
             {
-                Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform).GetComponent<BulletMovement>().directionSet = DirectionForBullet();
+                GameObject bull = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
+                bull.GetComponent<BulletMovement>().directionSet = DirectionForBullet();
+                bull.GetComponent<BulletMovement>().damage = 2;
+                bull.SetActive(true);
             }
             onShootShootgun.Invoke();
         }

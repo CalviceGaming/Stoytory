@@ -82,7 +82,10 @@ public class PistolShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-            Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform).GetComponent<BulletMovement>().directionSet = Vector3.zero;
+            GameObject bull = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
+            bull.GetComponent<BulletMovement>().directionSet = Vector3.zero;
+            bull.GetComponent<BulletMovement>().damage = 4;
+            bull.SetActive(true);
             onShoot.Invoke();
         }
         shooting = false;
