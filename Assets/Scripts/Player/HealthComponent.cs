@@ -56,7 +56,6 @@ public class HealthComponent : MonoBehaviour
     public void DealDamage(int damage)
     {
         if (invincible == false)
-            Debug.Log(" Your Not that Guy");
         {
             currentHealth -= damage;
             timeSinceLastDamage = 0;
@@ -72,6 +71,8 @@ public class HealthComponent : MonoBehaviour
     {
         currentHealth = maxHealth;
         healthText.GetComponent<Text>().text = currentHealth.ToString();
+        
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         
         if (respawnPoint != null)
         {
@@ -95,7 +96,6 @@ public class HealthComponent : MonoBehaviour
             invincible = !invincible;
             currentHealth = maxHealth;
             healthText.GetComponent<Text>().text = currentHealth.ToString();
-            Debug.Log("Im Invincible");
         }
     }
 }

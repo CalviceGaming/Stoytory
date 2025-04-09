@@ -25,7 +25,7 @@ public class EnemyWaves : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel) * 3);
+        amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*3) * 3);
         amountOfWaves = amountOf/3;
             if (dificultyLevel > 7)
             {
@@ -37,7 +37,7 @@ public class EnemyWaves : MonoBehaviour
             }
             if (dificultyLevel > 3)
             {
-                for (int i = 0; i < amountOf-amountOf/2; i++)
+                for (int i = 0; i < amountOf-amountOf/1.5; i++)
                 {
                     amountOfBalls++;
                     amountOf--;
@@ -72,19 +72,19 @@ public class EnemyWaves : MonoBehaviour
         for (int i = 0; i < greenSoldiersThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(greenSoldierPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
+            Instantiate(greenSoldierPrefab, randomTile.transform.position + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
             amountOfSoldiers--;
         }
         for (int i = 0; i < ballsThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(bouncyBallPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
+            Instantiate(bouncyBallPrefab, randomTile.transform.position + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
             amountOfBalls--;
         }
         for (int i = 0; i < dynosThisWave; i++)
         {
             GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(dinossaurPrefab, randomTile.transform.position + Vector3.up, Quaternion.identity ,enemyParent.transform);
+            Instantiate(dinossaurPrefab, randomTile.transform.position + Vector3.up*4, Quaternion.identity ,enemyParent.transform);
             amountOfDinos--;
         }
         wave++;

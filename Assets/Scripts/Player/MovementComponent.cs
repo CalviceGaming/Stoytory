@@ -211,7 +211,7 @@ public class MovementComponent : MonoBehaviour
             {
                 jumpDown = false;
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.5f, wallNormal.z) * 75, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.4f, wallNormal.z) * 125, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }

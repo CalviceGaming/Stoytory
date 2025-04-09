@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 5267526803881691910}
   - component: {fileID: 7251795126194069774}
   - component: {fileID: 8272885316528936964}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cheackpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
