@@ -14,6 +14,7 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private GameObject healthText;
     
     private bool invincible = false;
+    public Transform respawnPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,15 +56,36 @@ public class HealthComponent : MonoBehaviour
     public void DealDamage(int damage)
     {
         if (invincible == false)
+            Debug.Log(" Your Not that Guy");
         {
             currentHealth -= damage;
             timeSinceLastDamage = 0;
             if (currentHealth <= 0)
             {
-                Destroy(gameObject);
+                Respawn();
             }
             healthText.GetComponent<Text>().text = currentHealth.ToString();   
         }
+    }
+    
+    void Respawn()
+    {
+        currentHealth = maxHealth;
+        healthText.GetComponent<Text>().text = currentHealth.ToString();
+        
+        if (respawnPoint != null)
+        {
+            Debug.Log("Respawning at: " + respawnPoint.position);
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            Debug.LogWarning("Respawn point is null. Using default position.");
+        }
+
+        // Reset timers
+        timeSinceLastDamage = 0;
+        timeForHeal = 0;
     }
 
     void InvinsibleCheat()
@@ -73,6 +95,7 @@ public class HealthComponent : MonoBehaviour
             invincible = !invincible;
             currentHealth = maxHealth;
             healthText.GetComponent<Text>().text = currentHealth.ToString();
+            Debug.Log("Im Invincible");
         }
     }
 }

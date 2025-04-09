@@ -1653,6 +1653,10 @@ PrefabInstance:
       propertyPath: shotgun
       value: 
       objectReference: {fileID: 90747873}
+    - target: {fileID: 3554300813897573790, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4733440906635647603, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
