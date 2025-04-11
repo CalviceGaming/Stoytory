@@ -18,6 +18,7 @@ public class Explosion : MonoBehaviour
 
     void Explode()
     {
+        if (hasExploded) return;
         hasExploded = true;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
@@ -35,6 +36,16 @@ public class Explosion : MonoBehaviour
                 else
                 {
                     Debug.Log("EnemyHealthComponent not found on " + hit.name);
+                }
+            }
+            
+            if (hit.CompareTag("Barrel"))
+            {
+                Explosion otherBarrel = hit.GetComponentInParent<Explosion>();
+                if (otherBarrel != null && !otherBarrel.hasExploded)
+                {
+                    otherBarrel.Explode(); 
+                    Debug.Log("im also exploding");
                 }
             }
             

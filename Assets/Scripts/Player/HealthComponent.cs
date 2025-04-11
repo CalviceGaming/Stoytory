@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HealthComponent : MonoBehaviour
@@ -12,6 +13,7 @@ public class HealthComponent : MonoBehaviour
     private float timeForHeal;
 
     [SerializeField] private GameObject healthText;
+    
     
     private bool invincible = false;
     public Transform respawnPoint;
@@ -56,6 +58,7 @@ public class HealthComponent : MonoBehaviour
     public void DealDamage(int damage)
     {
         if (invincible == false)
+            Debug.Log(" Your Not that Guy");
         {
             currentHealth -= damage;
             timeSinceLastDamage = 0;
@@ -72,8 +75,6 @@ public class HealthComponent : MonoBehaviour
         currentHealth = maxHealth;
         healthText.GetComponent<Text>().text = currentHealth.ToString();
         
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        
         if (respawnPoint != null)
         {
             Debug.Log("Respawning at: " + respawnPoint.position);
@@ -83,6 +84,7 @@ public class HealthComponent : MonoBehaviour
         {
             Debug.LogWarning("Respawn point is null. Using default position.");
         }
+       
 
         // Reset timers
         timeSinceLastDamage = 0;
@@ -96,6 +98,7 @@ public class HealthComponent : MonoBehaviour
             invincible = !invincible;
             currentHealth = maxHealth;
             healthText.GetComponent<Text>().text = currentHealth.ToString();
+            Debug.Log("Im Invincible");
         }
     }
 }
