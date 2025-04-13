@@ -25,6 +25,8 @@ public class PistolShooting : MonoBehaviour
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
     
+    private static GameObject instance;
+    
     
     private void OnEnable()
     {
@@ -45,6 +47,19 @@ public class PistolShooting : MonoBehaviour
 
         // shootingAction.action.Disable();
         // reloadAction.action.Disable();
+    }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = gameObject;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void Start()
@@ -79,6 +94,7 @@ public class PistolShooting : MonoBehaviour
         }
         if (shooting && shootTimer > 0.5f && !reloading)
         {
+            bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";

@@ -9,6 +9,10 @@ public class DestroyParticle : MonoBehaviour
         if (!GetComponent<ParticleSystem>().IsAlive())
         {
             Destroy(gameObject);
+            if (transform.parent)
+            {
+                Destroy(transform.parent.gameObject);
+            }
         }
     }
 }

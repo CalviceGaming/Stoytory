@@ -13,15 +13,30 @@ public class HealthComponent : MonoBehaviour
     private float timeForHeal;
 
     [SerializeField] private GameObject healthText;
+
+    [SerializeField] private GameObject instance;
+
+    private Rigidbody rb;
     
     
     private bool invincible = false;
     public Transform respawnPoint;
+
+    void Awake()
+    {
+        if (GameObject.FindGameObjectsWithTag("Player").Length > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         currentHealth = maxHealth;
         healthText.GetComponent<Text>().text = currentHealth.ToString();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -58,7 +73,6 @@ public class HealthComponent : MonoBehaviour
     public void DealDamage(int damage)
     {
         if (invincible == false)
-            Debug.Log(" Your Not that Guy");
         {
             currentHealth -= damage;
             timeSinceLastDamage = 0;
@@ -79,6 +93,8 @@ public class HealthComponent : MonoBehaviour
         {
             Debug.Log("Respawning at: " + respawnPoint.position);
             transform.position = respawnPoint.position;
+            rb.velocity = Vector3.zero;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
         {
@@ -98,7 +114,6 @@ public class HealthComponent : MonoBehaviour
             invincible = !invincible;
             currentHealth = maxHealth;
             healthText.GetComponent<Text>().text = currentHealth.ToString();
-            Debug.Log("Im Invincible");
         }
     }
 }

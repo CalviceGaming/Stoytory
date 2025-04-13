@@ -7,6 +7,7 @@ public class Explosion : MonoBehaviour
     public float explosionRadius = 5f;
     public float explosionDamage = 50f;
     private bool hasExploded = false;
+    [SerializeField] private GameObject explosionEffect;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -50,6 +51,7 @@ public class Explosion : MonoBehaviour
             }
             
         }
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
         Debug.Log("im killing myself");
         Destroy(gameObject);
     }

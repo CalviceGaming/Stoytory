@@ -25,7 +25,7 @@ public class EnemyWaves : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*3) * 3);
+        amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*2) * 3);
         amountOfWaves = amountOf/3;
             if (dificultyLevel > 7)
             {

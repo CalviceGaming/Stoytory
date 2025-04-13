@@ -23,6 +23,8 @@ public class ShotgunShooting : MonoBehaviour
     [SerializeField] private bool shooting;
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
+    
+    private static GameObject instance;
 
 
     private void OnEnable()
@@ -41,6 +43,19 @@ public class ShotgunShooting : MonoBehaviour
 
         //shootingAction.action.Disable();
         //reloadAction.action.Disable();
+    }
+    
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = gameObject;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void Start()
@@ -80,6 +95,7 @@ public class ShotgunShooting : MonoBehaviour
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
             for (int i = 0; i < 5; i++)
             {
+                bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
                 GameObject bull = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
                 bull.GetComponent<BulletMovement>().directionSet = DirectionForBullet();
                 bull.GetComponent<BulletMovement>().damage = 2;

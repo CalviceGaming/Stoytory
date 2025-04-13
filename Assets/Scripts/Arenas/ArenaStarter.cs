@@ -15,10 +15,14 @@ public class ArenaStarter : MonoBehaviour
     [SerializeField]private GameObject wallStarter;
     [SerializeField]private GameObject enemyStarter;
     [SerializeField]private GameObject tileStarter;
+    
+
+    private GameObject arenaSaver;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        arenaSaver = GameObject.FindGameObjectWithTag("ArenaSaver");
     }
 
     // Update is called once per frame
@@ -29,8 +33,11 @@ public class ArenaStarter : MonoBehaviour
         float distance = Vector3.Distance(middleGround, playerPos);
         if (playerOnArena && distance < 20 && !arenaStarted)
         {
-            arenaStarted = true;
-            startExtras();
+            if (!arenaSaver.GetComponent<SaveArenas>().CheckArenaComplete(gameObject.transform.parent.GetComponent<ArenaId>().arenaId))
+            {
+                arenaStarted = true;
+                startExtras();   
+            }
         }
     }
 
