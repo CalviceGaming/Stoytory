@@ -14,13 +14,13 @@ public class RocketMovement : MonoBehaviour
     private bool toDestroy = false;                            // Flag to track if rocket should be destroyed
     private float destroyTimer = 0f;
 
-    public Vector3 directionSet { private get; set; } = Vector3.zero; // Direction of rocket movement
+    public Vector3 directionSet { private get; set; } = Vector3.zero;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         
-        // Handle direction based on where the rocket is supposed to go
+       
         if (directionSet == Vector3.zero)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
@@ -49,11 +49,11 @@ public class RocketMovement : MonoBehaviour
     {
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
         {
-            rb.velocity = Vector3.zero;             // Stop rocket immediately upon collision
-            rocketObjects.SetActive(false);         // Disable the rocket object
-            GetComponent<CapsuleCollider>().enabled = false;  // Disable the collider to avoid further collisions
+            rb.velocity = Vector3.zero;             
+            rocketObjects.SetActive(false);         
+            GetComponent<CapsuleCollider>().enabled = false;  
 
-            // Handle the rocket's effects based on what it collided with
+          
             if (other.gameObject.tag == "Enemy")
             {
                 // Deal damage to enemy
@@ -63,7 +63,7 @@ public class RocketMovement : MonoBehaviour
             // Instantiate the break/explosion effect
             Instantiate(breakEffect, transform.position, Quaternion.identity);
 
-            toDestroy = true;  // Set the flag to destroy the rocket after some time
+            toDestroy = true;  
         }
     }
 
@@ -77,7 +77,7 @@ public class RocketMovement : MonoBehaviour
     {
         if (!toDestroy)
         {
-            // Destroy rocket after a certain amount of time if it didn't collide with anything
+            
             if (despawnTimer >= 10f)
             {
                 Destroy(gameObject);
