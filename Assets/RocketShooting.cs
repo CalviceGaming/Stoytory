@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -7,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class RocketShooting : MonoBehaviour
 {
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private GameObject bulletSpawn;
-    [SerializeField] private GameObject bulletsParent;
+    [SerializeField] private GameObject rocket;           
+    [SerializeField] private GameObject rocketSpawn;      
+    [SerializeField] private GameObject rocketsParent;
     private float shootTimer = 3f;                            
     public UnityEvent onShootRocket;                         
     [SerializeField] private float maxMagazine = 2;         
@@ -76,10 +75,10 @@ public class RocketShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-        //  GameObject rocketInstance = Instantiate(rocket, rocketSpawn.transform.position, rocketSpawn.transform.rotation, rocketsParent.transform);
-        //  rocketInstance.SetActive(true);
-       //   rocketInstance.GetComponent<RocketMovement>().damage = 10;   
-       //   rocketInstance.GetComponent<RocketMovement>().speed = 10;   
+            GameObject rocketInstance = Instantiate(rocket, rocketSpawn.transform.position, rocketSpawn.transform.rotation, rocketsParent.transform);
+            rocketInstance.SetActive(true);
+            rocketInstance.GetComponent<RocketMovement>().damage = 10;   
+            rocketInstance.GetComponent<RocketMovement>().speed = 10;   
 
             onShootRocket.Invoke();
         }

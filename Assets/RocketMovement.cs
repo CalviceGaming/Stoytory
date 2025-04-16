@@ -1,19 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class RocketMovement : MonoBehaviour
 {
-    [SerializeField] private int speedForce = 30;             // Slower than bullets, typical rocket speed
-    [SerializeField] private float damage;                    // Damage dealt by the rocket
-    [SerializeField] private GameObject breakEffect;          // Explosion effect when rocket hits
-    [SerializeField] private GameObject rocketObjects;        // The rocket object itself
+          
+    [SerializeField] public float damage;                   
+    [SerializeField] private GameObject breakEffect;         
+    [SerializeField] private GameObject rocketObjects;       
     
     private Rigidbody rb;
-    private float despawnTimer = 0f;                           // Time before rocket despawns if no collision
-    private bool toDestroy = false;                            // Flag to track if rocket should be destroyed
+    private float despawnTimer = 0f;                         
+    private bool toDestroy = false;                          
     private float destroyTimer = 0f;
-
+    [SerializeField] public float speed = 10f;
     public Vector3 directionSet { private get; set; } = Vector3.zero;
 
     void Start()
@@ -37,11 +36,11 @@ public class RocketMovement : MonoBehaviour
             }
 
             Vector3 direction = targetPoint - transform.position;
-            rb.AddForce(direction.normalized * speedForce, ForceMode.Impulse);
+            rb.AddForce(direction.normalized * speed, ForceMode.Impulse);
         }
         else
         {
-            rb.AddForce(directionSet.normalized * speedForce, ForceMode.Impulse);
+            rb.AddForce(directionSet.normalized * speed, ForceMode.Impulse);
         }
     }
 
@@ -49,7 +48,7 @@ public class RocketMovement : MonoBehaviour
     {
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
         {
-            rb.velocity = Vector3.zero;             
+            rb.velocity = Vector3.zero;
             rocketObjects.SetActive(false);         
             GetComponent<CapsuleCollider>().enabled = false;  
 
