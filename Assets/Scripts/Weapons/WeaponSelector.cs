@@ -10,6 +10,7 @@ public class WeaponSelector : MonoBehaviour
     [SerializeField] private InputActionReference pistolAction;
     [SerializeField] private GameObject pistol;
     [SerializeField] private GameObject shotgun;
+    [SerializeField] private GameObject rocketLauncher;
     [SerializeField] private GameObject pistolMagazine;
     [SerializeField] private InputActionReference shotgunAction;
     [SerializeField] private InputActionReference rocketAction;
@@ -26,6 +27,7 @@ public class WeaponSelector : MonoBehaviour
     
     private void Start()
     {
+        rocketLauncher.SetActive(false); 
         pistol.SetActive(false);
         pistolAction.action.started += OnPistolSwap;
         shotgunAction.action.started += OnShotgunSwap;
@@ -60,6 +62,7 @@ public class WeaponSelector : MonoBehaviour
             case 3: pistol.SetActive(false); 
                 shotgun.SetActive(false);
                 pistolMagazine.SetActive(false);
+                rocketLauncher.SetActive(true);
                 break;
         }
     }

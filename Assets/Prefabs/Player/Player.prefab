@@ -213,6 +213,7 @@ MonoBehaviour:
   pistolAction: {fileID: -3696092617224877608, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
   pistol: {fileID: 0}
   shotgun: {fileID: 0}
+  rocketLauncher: {fileID: 0}
   pistolMagazine: {fileID: 8055878998375066698}
   shotgunAction: {fileID: 3771910746664833475, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
   rocketAction: {fileID: 2341092251721067629, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 15
   healthText: {fileID: 75993741588999282}
+  instance: {fileID: 0}
   respawnPoint: {fileID: 0}
 --- !u!1 &3138874881671285794
 GameObject:
