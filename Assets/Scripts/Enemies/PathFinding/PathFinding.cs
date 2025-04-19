@@ -20,6 +20,8 @@ public class PathFinding : MonoBehaviour
     
     public UnityEvent newTile;
 
+    private float neighborDistance;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -60,6 +62,7 @@ public class PathFinding : MonoBehaviour
             floorTiles[floor] = i;
             i++;
         }
+        neighborDistance = floors[0].GetComponent<Renderer>().bounds.size.x/2;
         
         AStar();
     }
@@ -98,10 +101,10 @@ public class PathFinding : MonoBehaviour
         // Possible movement directions (now including up/down variations)
         Vector3[] directions = new Vector3[]
         {
-        new Vector3(10, 0, 0),  // Right
-        new Vector3(-10, 0, 0), // Left
-        new Vector3(0, 0, 10),  // Forward
-        new Vector3(0, 0, -10), // Backward
+        new Vector3(1, 0, 0),  // Right
+        new Vector3(-1, 0, 0), // Left
+        new Vector3(0, 0, 1),  // Forward
+        new Vector3(0, 0, -1), // Backward
         };
 
 
@@ -110,7 +113,7 @@ public class PathFinding : MonoBehaviour
             //Vector3 neighborPos = RoundPosition(pos + dir, 5.0f);
             
             RaycastHit hit;
-            if (Physics.Raycast(pos, dir, out hit, 5))
+            if (Physics.Raycast(pos, dir, out hit, neighborDistance))
             {
                 if (floorTiles.ContainsKey(hit.collider.gameObject) && !neighbors.Contains(hit.collider.gameObject))
                 {
@@ -216,6 +219,22 @@ public class PathFinding : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, tileLayer))
         {
             start = hit.collider.gameObject;
+        }
+        else
+        {
+            float distance = 1000;
+            GameObject startTile = null;
+            foreach (GameObject tile in GameObject.FindGameObjectsWithTag("Tile"))
+            {
+                float dist = Mathf.Abs((transform.position - tile.transform.position).magnitude);
+                if (dist < distance)
+                {
+                    distance = dist;
+                    startTile = tile;
+                }
+            }
+            start = startTile;
+            transform.position = startTile.transform.position + Vector3.up * 2;
         }
     }
 

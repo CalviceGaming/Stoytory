@@ -41,7 +41,6 @@ public class TileGenerator : MonoBehaviour
                 tile.tag = "Tile";
             }
         }
-        startEnemies.GetComponent<EnemyWaves>().tiles = tiles;
         startEnemies.SetActive(true);
     }
 

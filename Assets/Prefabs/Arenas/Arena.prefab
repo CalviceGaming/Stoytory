@@ -154,6 +154,7 @@ MonoBehaviour:
   dinossaurPrefab: {fileID: 6562003025580668944, guid: 685d58ac4e2e05643afe67d9b787d9e1, type: 3}
   bouncyBallPrefab: {fileID: 8294420072535293893, guid: ebbcf2659d0527742b4570790703f93d, type: 3}
   enemyParent: {fileID: 6313112026256544515}
+  tileGenerator: {fileID: 4310952859565188047}
   tiles: []
 --- !u!1 &4310952859565188047
 GameObject:

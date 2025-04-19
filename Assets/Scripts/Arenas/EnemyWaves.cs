@@ -11,7 +11,8 @@ public class EnemyWaves : MonoBehaviour
     [SerializeField] private GameObject dinossaurPrefab;
     [SerializeField] private GameObject bouncyBallPrefab;
     [SerializeField] private GameObject enemyParent;
-    public List<GameObject> tiles = new List<GameObject>();
+    [SerializeField] private GameObject tileGenerator;
+    public List<Vector3> tiles = new List<Vector3>();
 
     private int amountOf;
     private int amountOfSoldiers;
@@ -50,6 +51,10 @@ public class EnemyWaves : MonoBehaviour
             
             
             enemyParent.GetComponent<EndArena>().allEnemiesDied.AddListener(CheckWaves);
+            for (int i = 0; i < tileGenerator.transform.childCount; i++)
+            {
+            tiles.Add(tileGenerator.transform.GetChild(i).position);
+            }
             Waves();
     }
 
@@ -71,20 +76,20 @@ public class EnemyWaves : MonoBehaviour
         int dynosThisWave = AmountOfThisWave(amountOfDinos);
         for (int i = 0; i < greenSoldiersThisWave; i++)
         {
-            GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(greenSoldierPrefab, randomTile.transform.position + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
+            Vector3 randomTile =tiles[Random.Range(0, tiles.Count)];
+            Instantiate(greenSoldierPrefab, randomTile + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
             amountOfSoldiers--;
         }
         for (int i = 0; i < ballsThisWave; i++)
         {
-            GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(bouncyBallPrefab, randomTile.transform.position + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
+            Vector3 randomTile =tiles[Random.Range(0, tiles.Count)];
+            Instantiate(bouncyBallPrefab, randomTile + Vector3.up*2, Quaternion.identity ,enemyParent.transform);
             amountOfBalls--;
         }
         for (int i = 0; i < dynosThisWave; i++)
         {
-            GameObject randomTile =tiles[Random.Range(0, tiles.Count)];
-            Instantiate(dinossaurPrefab, randomTile.transform.position + Vector3.up*4, Quaternion.identity ,enemyParent.transform);
+            Vector3 randomTile =tiles[Random.Range(0, tiles.Count)];
+            Instantiate(dinossaurPrefab, randomTile + Vector3.up*4, Quaternion.identity ,enemyParent.transform);
             amountOfDinos--;
         }
         wave++;
