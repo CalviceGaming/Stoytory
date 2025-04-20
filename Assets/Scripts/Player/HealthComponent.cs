@@ -21,6 +21,9 @@ public class HealthComponent : MonoBehaviour
     
     private bool invincible = false;
     public Transform respawnPoint;
+    
+    [SerializeField] private GameObject healthContainer;
+    [SerializeField] private GameObject healthUI;
 
     void Awake()
     {
@@ -35,7 +38,7 @@ public class HealthComponent : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         currentHealth = maxHealth;
-        healthText.GetComponent<Text>().text = currentHealth.ToString();
+        UpdateUIHealth();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -55,7 +58,7 @@ public class HealthComponent : MonoBehaviour
             {
                 timeForHeal = 0;
                 currentHealth++;
-                healthText.GetComponent<Text>().text = currentHealth.ToString();
+                UpdateUIHealth();
             }
 
             if (currentHealth >= maxHealth)
@@ -80,14 +83,14 @@ public class HealthComponent : MonoBehaviour
             {
                 Respawn();
             }
-            healthText.GetComponent<Text>().text = currentHealth.ToString();   
+            UpdateUIHealth();
         }
     }
     
     void Respawn()
     {
         currentHealth = maxHealth;
-        healthText.GetComponent<Text>().text = currentHealth.ToString();
+        UpdateUIHealth();
         
         if (respawnPoint != null)
         {
@@ -113,7 +116,14 @@ public class HealthComponent : MonoBehaviour
         {
             invincible = !invincible;
             currentHealth = maxHealth;
-            healthText.GetComponent<Text>().text = currentHealth.ToString();
+            UpdateUIHealth();
         }
+    }
+
+    void UpdateUIHealth()
+    {
+        float percentage = (float) currentHealth / maxHealth;
+        healthUI.GetComponent<Image>().fillAmount = percentage;
+        healthText.GetComponent<Text>().text = currentHealth.ToString();
     }
 }

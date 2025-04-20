@@ -11,7 +11,7 @@ public class MovementComponent : MonoBehaviour
 {
     private float maxSpeed = 13.0f;
     [SerializeField] private float acceleration = 200.0f;
-    private Vector3 playerSpeed;
+    public Vector3 playerSpeed { get;private set; }
     private Rigidbody rb;
     
     private bool crouching = false;

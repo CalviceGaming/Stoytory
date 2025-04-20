@@ -16,8 +16,11 @@ public class BulletMovement : MonoBehaviour
     private float destroyTimer = 0f;
     
     public Vector3 directionSet { private get; set; } = Vector3.zero;
+
+    private GameObject player;
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody>();
         if (directionSet == Vector3.zero)
         {
@@ -54,6 +57,7 @@ public class BulletMovement : MonoBehaviour
             if (other.gameObject.tag == "Enemy")
             {
                 other.gameObject.GetComponent<EnemyHealthComponent>().DealDamage(damage, transform.position);
+                player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage);
             }
             else
             {
