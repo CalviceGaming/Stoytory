@@ -49,6 +49,7 @@ public class RocketShooting : MonoBehaviour
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
     {
         shooting = true;
+        Debug.Log("Shotting started");
     }
 
     private void OnReloadingStarted(InputAction.CallbackContext callbackContext)
@@ -64,22 +65,27 @@ public class RocketShooting : MonoBehaviour
 
     private void ShootingRocket()
     {
+        
         if (currentMagazine <= 0)
         {
+            Debug.Log("[Rocket] Magazine empty");
             shooting = false;
             reloading = true;
             return;
         }
-        if (shooting && shootTimer > 1f && !reloading) 
+        if (shooting && shootTimer > 0.1f && !reloading) 
         {
+            Debug.Log("[Rocket] Firing condition met!");
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
             GameObject rocketInstance = Instantiate(rocket, rocketSpawn.transform.position, rocketSpawn.transform.rotation, rocketsParent.transform);
+            Debug.Log("Attempting to fire rocket...");
+            Debug.Log("Rocket created: " + rocketInstance.name);
             rocketInstance.SetActive(true);
             rocketInstance.GetComponent<RocketMovement>().damage = 10;   
             rocketInstance.GetComponent<RocketMovement>().speed = 10;   
-
+            Debug.Log("[Rocket] Attempting to fire rocket...");
             onShootRocket.Invoke();
         }
         shooting = false;

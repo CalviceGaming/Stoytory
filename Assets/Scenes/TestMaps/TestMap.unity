@@ -394,6 +394,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226674222}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &258421357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5125338952962637963, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+  m_PrefabInstance: {fileID: 8297091788729703700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &271103728
 GameObject:
   m_ObjectHideFlags: 0
@@ -4167,7 +4172,7 @@ PrefabInstance:
     - target: {fileID: 3467089538553316962, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
       propertyPath: rocketLauncher
       value: 
-      objectReference: {fileID: 5125338952962637963, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      objectReference: {fileID: 258421357}
     - target: {fileID: 6691096912206137637, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.744194
@@ -6170,6 +6175,18 @@ PrefabInstance:
     - target: {fileID: 5125338952962637963, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710990217711925740, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.37122154
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710990217711925740, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0078
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710990217711925740, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.221
       objectReference: {fileID: 0}
     - target: {fileID: 6541555494078993480, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: rocket
