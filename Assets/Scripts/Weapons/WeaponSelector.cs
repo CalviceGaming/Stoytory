@@ -54,10 +54,12 @@ public class WeaponSelector : MonoBehaviour
             case 1: pistolMagazine.SetActive(true);
                 pistol.SetActive(true);
                 shotgun.SetActive(false);
+                rocketLauncher.SetActive(false);
                 break;
             case 2: pistol.SetActive(false); 
                 shotgun.SetActive(true);
                 pistolMagazine.SetActive(true);
+                rocketLauncher.SetActive(false);
                 break;
             case 3: pistol.SetActive(false); 
                 shotgun.SetActive(false);
@@ -65,5 +67,6 @@ public class WeaponSelector : MonoBehaviour
                 rocketLauncher.SetActive(true);
                 break;
         }
+        
     }
 }
