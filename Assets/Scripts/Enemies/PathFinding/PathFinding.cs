@@ -203,7 +203,7 @@ public class PathFinding : MonoBehaviour
         Vector3 direction = (targetPos - transform.position).normalized;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction); 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 50 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.5f);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, targetPos) < 0.1f)
