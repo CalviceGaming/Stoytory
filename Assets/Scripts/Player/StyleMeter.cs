@@ -110,6 +110,10 @@ public class StyleMeter : MonoBehaviour
             finalAmount *= GetComponent<MovementComponent>().playerSpeed.magnitude/10;
         }
         
+        //animation
+        LeanTween.rotateZ(rank, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.rotation = Quaternion.Euler(0, 0, 0));
+        LeanTween.scale(rank, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.localScale = new Vector3(1, 1, 1));
+        
         styleAmount += finalAmount;
         CheckCurrentStyle();
     }
