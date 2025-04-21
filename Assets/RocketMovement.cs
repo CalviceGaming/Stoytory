@@ -42,6 +42,7 @@ public class RocketMovement : MonoBehaviour
         {
             rb.AddForce(directionSet.normalized * speed, ForceMode.Impulse);
         }
+        Debug.Log("[Rocket] Starting rocket movement. Spawned at: " + transform.position);
     }
 
     private void OnCollisionEnter(Collision other)
