@@ -87,6 +87,10 @@ public class StyleMeter : MonoBehaviour
                 }
             }
         }
+        else if (styles[styleNames[currentStyle]] > styleAmount)
+        {
+            currentStyle--;
+        }
         SetUI();
     }
 
@@ -129,6 +133,10 @@ public class StyleMeter : MonoBehaviour
     void StyleReduction()
     {
         styleAmount -= 5 * Time.deltaTime;
+        if (styleAmount < 0)
+        {
+            styleAmount = 0;
+        }
         CheckCurrentStyle();
     }
 }
