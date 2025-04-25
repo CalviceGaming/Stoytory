@@ -30,6 +30,8 @@ public class MovementComponent : MonoBehaviour
     private bool wallRunning = false;
 
     [SerializeField] private GameObject speedText;
+
+    [SerializeField] private GameObject speedLines;
     
     //Inputs
     [SerializeField] InputActionReference movementAction;
@@ -116,6 +118,8 @@ public class MovementComponent : MonoBehaviour
         CrouchAndSlide();
 
         WallRunning();
+
+        UpdateSpeedLines();
         
         if (jumpDown && availableJump && grounded && !crouching && !sliding)
         {
@@ -466,4 +470,10 @@ public class MovementComponent : MonoBehaviour
     //     }
     //     return Vector3.zero;
     // }
+
+    void UpdateSpeedLines()
+    {
+        var emission = speedLines.GetComponent<ParticleSystem>().emission;
+        emission.rateOverTime = rb.velocity.magnitude;
+    }
 }

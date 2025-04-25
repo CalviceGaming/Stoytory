@@ -11,7 +11,7 @@ public class PathFinding : MonoBehaviour
     Dictionary<GameObject, int> floorTiles = new Dictionary<GameObject, int>();
     
     List<GameObject> path = new List<GameObject>();
-    private int currentTargetIndex = 0; 
+    public int currentTargetIndex = 0; 
     [SerializeField] private float moveSpeed = 10f; 
 
 
@@ -192,7 +192,7 @@ public class PathFinding : MonoBehaviour
         path.Reverse(); // Reverse to get start -> goal order
     }
 
-    void MoveAlongPath()
+    public void MoveAlongPath()
     {        
         if (currentTargetIndex >= path.Count) return; 
 
@@ -211,6 +211,11 @@ public class PathFinding : MonoBehaviour
             newTile.Invoke();
             currentTargetIndex++; 
         }
+    }
+
+    public Vector3 nextTile()
+    {
+        return path[currentTargetIndex].transform.position;
     }
 
     void FindStart()
@@ -246,16 +251,5 @@ public class PathFinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetComponent<EnemyShooting>())
-        {
-            if (start && finish && !GetComponent<EnemyShooting>().shooting)
-            {
-                MoveAlongPath();
-            }   
-        }
-        else if (start && finish)
-        {
-            MoveAlongPath();
-        }
     }
 }

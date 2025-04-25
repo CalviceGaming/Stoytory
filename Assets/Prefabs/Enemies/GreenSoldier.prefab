@@ -47,6 +47,9 @@ GameObject:
   - component: {fileID: 4723331529478136951}
   - component: {fileID: 3745512021171743342}
   - component: {fileID: 7470190902515319661}
+  - component: {fileID: 2320927435486792285}
+  - component: {fileID: 7254063848614588766}
+  - component: {fileID: 600532432207283044}
   m_Layer: 0
   m_Name: GreenSoldier
   m_TagString: Enemy
@@ -216,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {fileID: 0}
   finish: {fileID: 0}
+  currentTargetIndex: 0
   moveSpeed: 7
   tileLayer:
     serializedVersion: 2
@@ -223,3 +227,43 @@ MonoBehaviour:
   newTile:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2320927435486792285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347171851871253384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d236b6fd74c64440809d60be3908064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateBehaviours:
+  - {fileID: 7254063848614588766}
+  - {fileID: 600532432207283044}
+  defaultState: 0
+--- !u!114 &7254063848614588766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347171851871253384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bd3dc09fa4035439a051373e948ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &600532432207283044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347171851871253384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313838ddcae0b8a44b58b139324ff559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

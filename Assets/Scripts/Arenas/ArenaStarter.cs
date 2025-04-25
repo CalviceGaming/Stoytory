@@ -11,6 +11,8 @@ public class ArenaStarter : MonoBehaviour
     private bool playerOnArena;
 
     private bool arenaStarted;
+
+    public bool playerInside = false;
     
     [SerializeField]private GameObject wallStarter;
     [SerializeField]private GameObject enemyStarter;
@@ -31,7 +33,7 @@ public class ArenaStarter : MonoBehaviour
         Vector3 playerPos = player.transform.position;
         Vector3 middleGround = gameObject.transform.position;
         float distance = Vector3.Distance(middleGround, playerPos);
-        if (playerOnArena && distance < 20 && !arenaStarted)
+        if (playerInside && !arenaStarted)
         {
             if (!arenaSaver.GetComponent<SaveArenas>().CheckArenaComplete(gameObject.transform.parent.GetComponent<ArenaId>().arenaId))
             {

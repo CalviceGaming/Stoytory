@@ -23,7 +23,7 @@ public class EnemyShooting : MonoBehaviour
 
     void Update()
     {
-        StartShooting();
+        //StartShooting();
     }
 
     void IsPlayerInRange()
@@ -65,7 +65,7 @@ public class EnemyShooting : MonoBehaviour
         }
     }
 
-    void StartShooting()
+    public void StartShooting()
     {
         if (shooting)
         {
