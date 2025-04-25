@@ -104,7 +104,7 @@ public class StyleMeter : MonoBehaviour
 
     void CheckCurrentStyle()
     {
-        if (currentStyle < styles.Count)
+        if (currentStyle < styles.Count-1)
         {
             percentageToNext = (styleAmount - styles[styleNames[currentStyle]]) / styles[styleNames[currentStyle + 1]];
             if (styles[styleNames[currentStyle + 1]] < styleAmount)

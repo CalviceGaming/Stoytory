@@ -15,6 +15,7 @@ public class AttackingState : AStateBehaviour
     private UnityEvent newTile;
     private GameObject player;
     private EnemyShooting enemyShooting;
+    private DinossaurMelee melee;
 
     public override bool InitializeState()
     {
@@ -26,12 +27,26 @@ public class AttackingState : AStateBehaviour
         Debug.Log("CHASING");
         pathFinding = GetComponent<PathFinding>();
         player = GameObject.FindWithTag("Player");
-        enemyShooting = GetComponent<EnemyShooting>();
+        if (GetComponent<EnemyShooting>())
+        {
+            enemyShooting = GetComponent<EnemyShooting>();   
+        }
+        else
+        {
+            melee = GetComponent<DinossaurMelee>();
+        }
     }
 
     public override void OnStateUpdate()
     {
-        enemyShooting.StartShooting();
+        if (enemyShooting != null)
+        {
+            enemyShooting.StartShooting();            
+        }
+        else
+        {
+            melee.Attack();
+        }
     }
 
     public override void OnStateFixedUpdate()
@@ -46,10 +61,22 @@ public class AttackingState : AStateBehaviour
     
     public override int StateTransitionCondition()
     {
-        if (!enemyShooting.shooting)
+        if (enemyShooting != null)
         {
-            return (int)EnemyState.Chasing;
+            if (!enemyShooting.shooting)
+            {
+                return (int)EnemyState.Chasing;
+            }
+
+            return (int)EnemyState.Invalid;
         }
-        return (int)EnemyState.Invalid;
+        else
+        {
+            if (!melee.attacking)
+            {
+                return (int)EnemyState.Chasing;
+            }
+            return (int)EnemyState.Invalid;
+        }
     }
 }

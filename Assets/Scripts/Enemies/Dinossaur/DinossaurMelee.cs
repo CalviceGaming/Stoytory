@@ -8,6 +8,8 @@ public class DinossaurMelee : MonoBehaviour
     private GameObject player;
     private float attackTimer;
     [SerializeField] private float cooldown;
+    public bool attacking;
+    [SerializeField] private GameObject range;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,25 +17,16 @@ public class DinossaurMelee : MonoBehaviour
     
     void Update()
     {
-        CheckPlayerRange();
     }
+    
 
-    void CheckPlayerRange()
-    {
-        Vector3 distance = player.transform.position - transform.position;
-        if (distance.magnitude < 5)
-        {
-            Attack();
-        }
-        attackTimer += Time.deltaTime;
-    }
-
-    void Attack()
+    public void Attack()
     {
         if (attackTimer > cooldown)
         {
             attackTimer = 0;
             hitBox.SetActive(true);
         }
+        attackTimer += Time.deltaTime;
     }
 }
