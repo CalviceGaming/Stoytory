@@ -102,6 +102,10 @@ public class HealthComponent : MonoBehaviour
         else
         {
             Debug.LogWarning("Respawn point is null. Using default position.");
+            // Debug.Log("Respawning at: " + new Vector3(0, 0.3f, 0));
+            transform.position = new Vector3(0, 0.3f, 0);
+            rb.velocity = Vector3.zero;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
        
 

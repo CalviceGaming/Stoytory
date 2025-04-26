@@ -9,6 +9,11 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("FirstScene");
+        Time.timeScale = 1f;
+        if (GameObject.FindGameObjectWithTag("Player"))
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<HealthComponent>().DealDamage(1000);
+        }
     }
     
         

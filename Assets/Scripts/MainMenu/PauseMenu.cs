@@ -41,8 +41,9 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void BackToMenu()
-    {
-        Time.timeScale = 1f; 
+    { ; 
+        pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
         Debug.Log("Trying to load MainMenu...");
         SceneManager.LoadScene(0);
     }
