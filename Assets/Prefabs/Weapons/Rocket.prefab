@@ -191,7 +191,7 @@ MonoBehaviour:
   damageLayer:
     serializedVersion: 2
     m_Bits: 0
-  damage: 0
+  damage: 70
   breakEffect: {fileID: 487816218404334471, guid: 1514e7d56dbebc041bb7d74737fa9fbe, type: 3}
   rocketObjects: {fileID: 7488980480761914482}
   speed: 10

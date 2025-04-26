@@ -55,17 +55,21 @@ public class RocketMovement : MonoBehaviour
             rocketObjects.SetActive(false);         
             GetComponent<CapsuleCollider>().enabled = false; 
             
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, damageLayer);
-            foreach (Collider hit in hitColliders)
+            float explosionRadius = 5f;
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+            foreach (var hitCollider in hitColliders)
             {
-                if (hit.CompareTag("Enemy"))
+                if (hitCollider.CompareTag("Enemy"))
                 {
-                    hit.GetComponent<EnemyHealthComponent>()?.DealDamage(damage, transform.position);
+                    var enemyHealth = hitCollider.GetComponent<EnemyHealthComponent>();
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.DealDamage(damage, transform.position);
+                    }
                 }
             }
             
             Instantiate(breakEffect, transform.position, Quaternion.identity);
-
             toDestroy = true;  
         }
     }
@@ -73,7 +77,7 @@ public class RocketMovement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        Gizmos.DrawWireSphere(transform.position, 5f);
     }
 
     void Update()

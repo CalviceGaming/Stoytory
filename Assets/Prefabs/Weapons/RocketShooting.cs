@@ -78,7 +78,6 @@ public class RocketShooting : MonoBehaviour
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
             GameObject rocketInstance = Instantiate(rocket, rocketSpawn.transform.position, rocketSpawn.transform.rotation, rocketsParent.transform);
             rocketInstance.SetActive(true);
-            rocketInstance.GetComponent<RocketMovement>().damage = 10;   
             rocketInstance.GetComponent<RocketMovement>().speed = 10;   
             onShootRocket.Invoke();
         }

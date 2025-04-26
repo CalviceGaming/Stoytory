@@ -4161,6 +4161,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1172722672435945021, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
+      propertyPath: meleeForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1172722672435945021, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
+      propertyPath: meleeRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3467089538553316962, guid: f40f4b26961c1c24291bc0fe706bd940, type: 3}
       propertyPath: pistol
       value: 

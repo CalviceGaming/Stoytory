@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 2009644784878051637}
   - component: {fileID: 3554300813897573790}
   - component: {fileID: 6466109897544192255}
+  - component: {fileID: 1172722672435945021}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -294,6 +295,7 @@ MonoBehaviour:
   pistolMagazine: {fileID: 8055878998375066698}
   shotgunAction: {fileID: 3771910746664833475, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
   rocketAction: {fileID: 2341092251721067629, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
+  rocketMagazine: {fileID: 0}
 --- !u!114 &5306563136214007502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +389,20 @@ MonoBehaviour:
   rankImage: {fileID: 754516767242541213}
   canvas: {fileID: 2547570620043277876}
   pointsPrefab: {fileID: 3003930104694079624, guid: f55aba8a010e75449a461815dd27d8a3, type: 3}
+--- !u!114 &1172722672435945021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993201519631221255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd5bf1c85e8bbb41a5d14fc45100c32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeRadius: 5
+  meleeForce: 500
 --- !u!1 &3138874881671285794
 GameObject:
   m_ObjectHideFlags: 0
