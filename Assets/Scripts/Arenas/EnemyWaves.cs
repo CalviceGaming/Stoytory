@@ -27,7 +27,7 @@ public class EnemyWaves : MonoBehaviour
     void Start()
     {
         amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*2) * 3);
-        amountOfWaves = amountOf/5;
+        amountOfWaves = amountOf/3;
             if (dificultyLevel > 7)
             {
                 for (int i = 0; i < Random.Range(1,2); i++)
