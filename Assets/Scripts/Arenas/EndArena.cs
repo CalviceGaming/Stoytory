@@ -12,12 +12,15 @@ public class EndArena : MonoBehaviour
     public UnityEvent allEnemiesDied;
 
     private GameObject arenaSaver;
+
+    public int enemyAmount;
     // Start is called before the first frame update
     void Start()
     {
         enemyDied.AddListener(CheckEnemies);
         arenaSaver = GameObject.FindGameObjectWithTag("ArenaSaver");
-    }
+        endArena.AddListener(SaveArena);
+    } 
 
     // Update is called once per frame
     void Update()
@@ -27,10 +30,15 @@ public class EndArena : MonoBehaviour
 
     private void CheckEnemies()
     {
-        if (transform.childCount <= 1)
+        enemyAmount--;
+        if (enemyAmount < 1)
         {
             allEnemiesDied.Invoke();
         }
+    }
+
+    private void SaveArena()
+    {
         arenaSaver.GetComponent<SaveArenas>().FinishArena(gameObject.transform.parent.GetComponent<ArenaId>().arenaId);
     }
 }

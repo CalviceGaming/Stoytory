@@ -68,7 +68,7 @@ public class RocketMovement : MonoBehaviour
                     if (enemyHealth != null)
                     {
                         enemyHealth.DealDamage(damage, transform.position);
-                        player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage/2);
+                        player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage/3);
                     }
                 }
             }

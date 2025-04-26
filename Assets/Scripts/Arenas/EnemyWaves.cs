@@ -27,7 +27,7 @@ public class EnemyWaves : MonoBehaviour
     void Start()
     {
         amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*2) * 3);
-        amountOfWaves = amountOf/3;
+        amountOfWaves = amountOf/5;
             if (dificultyLevel > 7)
             {
                 for (int i = 0; i < Random.Range(1,2); i++)
@@ -61,7 +61,7 @@ public class EnemyWaves : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (waveTimer > 30 && wave != amountOfWaves)
+        if (waveTimer > 10 && wave != amountOfWaves)
         {
             waveTimer = 0;
             Waves();
@@ -93,6 +93,7 @@ public class EnemyWaves : MonoBehaviour
             amountOfDinos--;
         }
         wave++;
+        enemyParent.GetComponent<EndArena>().enemyAmount += greenSoldiersThisWave + ballsThisWave + dynosThisWave;
     }
 
     void CheckWaves()

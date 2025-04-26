@@ -8,6 +8,7 @@ public class EnemyHealthComponent : MonoBehaviour
     private float currentHealth;
     [SerializeField] private GameObject damageText;
     private EndArena endArena;
+    private bool isDead = false;
 
     void Start()
     {
@@ -19,10 +20,11 @@ public class EnemyHealthComponent : MonoBehaviour
     {
         currentHealth -= damage;
         Instantiate(damageText).GetComponent<DamageTextScript>().DamageText(damage, hitPoint);
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
             Destroy(gameObject);
             endArena.enemyDied.Invoke();
+            isDead = true;
         }
     }
 }

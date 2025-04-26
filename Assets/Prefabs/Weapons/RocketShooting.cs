@@ -14,7 +14,7 @@ public class RocketShooting : MonoBehaviour
     [SerializeField] private float maxMagazine = 2;         
     private float currentMagazine;                          
     public UnityEvent onReloadRocket;                         
-    //private bool reloadingAnimation = false;       mesma merda aqui           
+    private bool reloadingAnimation = false;        
     [SerializeField] private Text magazineText;               
     
     // Inputs
@@ -22,6 +22,8 @@ public class RocketShooting : MonoBehaviour
     [SerializeField] private bool shooting;
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
+    
+    private static GameObject instance;
 
     private void OnEnable()
     {
@@ -37,6 +39,19 @@ public class RocketShooting : MonoBehaviour
     {
         shootingAction.action.started -= OnShootingStarted;
         reloadAction.action.started -= OnReloadingStarted;
+    }
+    
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = gameObject;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void Start()
@@ -64,11 +79,10 @@ public class RocketShooting : MonoBehaviour
 
     private void ShootingRocket()
     {
-        
         if (currentMagazine <= 0)
         {
             shooting = false;
-           // reloading = true; para dar uncoment quando tiver animaçao
+            reloading = true; 
             return;
         }
         if (shooting && shootTimer > 0.1f && !reloading) 
@@ -76,6 +90,7 @@ public class RocketShooting : MonoBehaviour
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
+            rocketsParent = GameObject.FindGameObjectWithTag("BulletParent");
             GameObject rocketInstance = Instantiate(rocket, rocketSpawn.transform.position, rocketSpawn.transform.rotation, rocketsParent.transform);
             rocketInstance.SetActive(true);
             rocketInstance.GetComponent<RocketMovement>().speed = 10;   
@@ -87,30 +102,17 @@ public class RocketShooting : MonoBehaviour
 
     private void Reload()
     {
-       // if (reloading && !shooting && !reloadingAnimation)
-       // {
-          //  if (currentMagazine < maxMagazine)
-         //   {
-          //      onReloadRocket.Invoke();
-          //      reloadingAnimation = true;
-                
-         //   }
-         //   else
-         //   {
-         //       reloading = false;
-           // }
-       // }
-       
-       if (reloading)
+       if (reloading && !shooting && !reloadingAnimation)
        {
            if (currentMagazine < maxMagazine)
            {
-               currentMagazine = maxMagazine;
-               magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-               onReloadRocket.Invoke(); 
+               onReloadRocket.Invoke();
+               reloadingAnimation = true;
            }
-
-           reloading = false;
+           else
+           {
+               reloading = false;
+           }
        }
     }
 
@@ -119,7 +121,7 @@ public class RocketShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
         reloading = false;
-        //reloadingAnimation = false;
+        reloadingAnimation = false;
     }
 }
 

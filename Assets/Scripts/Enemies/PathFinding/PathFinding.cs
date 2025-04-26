@@ -213,11 +213,6 @@ public class PathFinding : MonoBehaviour
         }
     }
 
-    public Vector3 nextTile()
-    {
-        return path[currentTargetIndex].transform.position;
-    }
-
     void FindStart()
     {
         RaycastHit hit;

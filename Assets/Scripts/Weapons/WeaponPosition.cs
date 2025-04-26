@@ -23,6 +23,12 @@ public class WeaponPosition : MonoBehaviour
             GetComponent<ShotgunShooting>().onShootShootgun.AddListener(GunRecoil);
             GetComponent<ShotgunShooting>().onReloadShootgun.AddListener(GunReload);    
         }
+
+        if (GetComponent<RocketShooting>())
+        {
+            GetComponent<RocketShooting>().onShootRocket.AddListener(GunRecoil);
+            GetComponent<RocketShooting>().onReloadRocket.AddListener(GunReload);
+        }
     }
     private void Update()
     {
