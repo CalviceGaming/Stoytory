@@ -21,8 +21,8 @@ public class EnemyHealthComponent : MonoBehaviour
         Instantiate(damageText).GetComponent<DamageTextScript>().DamageText(damage, hitPoint);
         if (currentHealth <= 0)
         {
-            endArena.enemyDied.Invoke();
             Destroy(gameObject);
+            endArena.enemyDied.Invoke();
         }
     }
 }

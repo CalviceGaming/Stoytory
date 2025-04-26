@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934506fe0ae0a57469ad039d642997c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 40
   damageText: {fileID: 7121824852175691214, guid: 5a24b8dc5af0c504aad04ff8c7e30edc, type: 3}
 --- !u!114 &5533576640013794130
 MonoBehaviour:
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 6159723167438330830}
   - component: {fileID: 5940237486500170556}
   - component: {fileID: 3393313345659619677}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bfcffb19b413424aa85b81e347e5952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 6562003025580668944}
 --- !u!1 &8649035856318754150
 GameObject:
   m_ObjectHideFlags: 0

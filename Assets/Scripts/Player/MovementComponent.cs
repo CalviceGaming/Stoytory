@@ -46,6 +46,9 @@ public class MovementComponent : MonoBehaviour
     public bool activeGrapple;
     public bool activeSwing;
     public float swingSpeed;
+    
+    //Cheats
+    private bool fly = false;
 
     private void OnEnable()
     {
@@ -93,8 +96,7 @@ public class MovementComponent : MonoBehaviour
     void Update()
     {
         //speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
-        
-        
+        Cheats();
     }
 
     private void FixedUpdate()
@@ -121,11 +123,16 @@ public class MovementComponent : MonoBehaviour
 
         UpdateSpeedLines();
         
-        if (jumpDown && availableJump && grounded && !crouching && !sliding)
+        if (jumpDown && availableJump && grounded && !crouching && !sliding && !fly)
         {
             jumpDown = false;
             rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
             availableJump = false;
+        }
+        else if (fly && jumpDown)
+        {
+            jumpDown = false;
+            rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
         }
     }
     
@@ -474,6 +481,27 @@ public class MovementComponent : MonoBehaviour
     void UpdateSpeedLines()
     {
         var emission = speedLines.GetComponent<ParticleSystem>().emission;
-        emission.rateOverTime = rb.velocity.magnitude;
+        if (rb.velocity.magnitude > 8)
+        {
+            emission.rateOverTime = rb.velocity.magnitude;   
+        }
+        else
+        {
+            emission.rateOverTime = 0;
+        }
+        // float distance = 2.5f;
+        // Vector3 position = transform.position + (playerSpeed.normalized * distance);
+        // speedLines.transform.position = position;
+        // Vector3 direction = position - transform.position;
+        // speedLines.transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    //Cheats
+    void Cheats()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            fly = !fly;
+        }
     }
 }

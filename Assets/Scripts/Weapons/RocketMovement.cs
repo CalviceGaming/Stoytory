@@ -17,8 +17,11 @@ public class RocketMovement : MonoBehaviour
     [SerializeField] public float speed = 10f;
     public Vector3 directionSet { private get; set; } = Vector3.zero;
 
+    private GameObject player;
+
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         
@@ -65,6 +68,7 @@ public class RocketMovement : MonoBehaviour
                     if (enemyHealth != null)
                     {
                         enemyHealth.DealDamage(damage, transform.position);
+                        player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage/2);
                     }
                 }
             }

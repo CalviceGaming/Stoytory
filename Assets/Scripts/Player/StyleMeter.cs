@@ -106,7 +106,6 @@ public class StyleMeter : MonoBehaviour
     {
         if (currentStyle < styles.Count-1)
         {
-            percentageToNext = (styleAmount - styles[styleNames[currentStyle]]) / styles[styleNames[currentStyle + 1]];
             if (styles[styleNames[currentStyle + 1]] < styleAmount)
             {
                 currentStyle++;
@@ -119,10 +118,15 @@ public class StyleMeter : MonoBehaviour
                     currentStyle--;
                 }
             }
+            percentageToNext = (styleAmount - styles[styleNames[currentStyle]]) / (styles[styleNames[currentStyle + 1]] - styles[styleNames[currentStyle]]);
         }
-        else if (styles[styleNames[currentStyle]] > styleAmount)
+        else
         {
-            currentStyle--;
+            percentageToNext = (styleAmount - styles[styleNames[currentStyle]]) / (styles[styleNames[currentStyle]] * 3) ;
+            if (styles[styleNames[currentStyle]] > styleAmount)
+            {
+                currentStyle--;
+            }
         }
         SetUI();
     }
@@ -169,7 +173,7 @@ public class StyleMeter : MonoBehaviour
 
     void StyleReduction()
     {
-        styleAmount -= 5 * Time.deltaTime;
+        styleAmount -= 5 * currentStyle * Time.deltaTime;
         if (styleAmount < 0)
         {
             styleAmount = 0;

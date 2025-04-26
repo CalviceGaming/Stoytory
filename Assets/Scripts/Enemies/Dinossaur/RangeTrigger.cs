@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class RangeTrigger : MonoBehaviour
 {
+    [SerializeField] private GameObject main;
     private DinossaurMelee dinossaurMelee;
     // Start is called before the first frame update
     void Start()
     {
-        dinossaurMelee = GetComponent<DinossaurMelee>();
+        dinossaurMelee = main.GetComponent<DinossaurMelee>();
     }
 
     private void OnTriggerEnter(Collider other)

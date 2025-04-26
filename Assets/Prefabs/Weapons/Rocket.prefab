@@ -187,11 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737c362ab99dde04ca9562f3c4d52d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionRadius: 6
+  explosionRadius: 8
   damageLayer:
     serializedVersion: 2
-    m_Bits: 0
-  damage: 70
+    m_Bits: 4294967295
+  damage: 15
   breakEffect: {fileID: 487816218404334471, guid: 1514e7d56dbebc041bb7d74737fa9fbe, type: 3}
   rocketObjects: {fileID: 7488980480761914482}
   speed: 10

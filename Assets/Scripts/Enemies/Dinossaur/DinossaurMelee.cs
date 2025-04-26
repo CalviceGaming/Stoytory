@@ -26,6 +26,9 @@ public class DinossaurMelee : MonoBehaviour
         {
             attackTimer = 0;
             hitBox.SetActive(true);
+            Vector3 direction = player.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
         attackTimer += Time.deltaTime;
     }
