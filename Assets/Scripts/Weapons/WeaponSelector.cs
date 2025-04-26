@@ -14,6 +14,7 @@ public class WeaponSelector : MonoBehaviour
     [SerializeField] private GameObject pistolMagazine;
     [SerializeField] private InputActionReference shotgunAction;
     [SerializeField] private InputActionReference rocketAction;
+    [SerializeField] private GameObject rocketMagazine;
     public int swapIndex {get;private set;}
     
     
@@ -55,15 +56,18 @@ public class WeaponSelector : MonoBehaviour
                 pistol.SetActive(true);
                 shotgun.SetActive(false);
                 rocketLauncher.SetActive(false);
+                rocketMagazine.SetActive(false);
                 break;
             case 2: pistol.SetActive(false); 
                 shotgun.SetActive(true);
                 pistolMagazine.SetActive(true);
                 rocketLauncher.SetActive(false);
+                rocketMagazine.SetActive(false);
                 break;
             case 3: pistol.SetActive(false); 
                 shotgun.SetActive(false);
                 pistolMagazine.SetActive(false);
+                rocketMagazine.SetActive(true);
                 rocketLauncher.SetActive(true);
                 break;
         }
