@@ -17,7 +17,8 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private GameObject instance;
 
     private Rigidbody rb;
-    
+
+    private List<GameObject> checkpoints = new List<GameObject>();
     
     private bool invincible = false;
     public Transform respawnPoint;
@@ -40,6 +41,10 @@ public class HealthComponent : MonoBehaviour
         currentHealth = maxHealth;
         UpdateUIHealth();
         rb = GetComponent<Rigidbody>();
+        foreach (GameObject checkpoint in GameObject.FindGameObjectsWithTag("Checkpoints"))
+        {
+            checkpoints.Add(checkpoint);
+        }
     }
 
     // Update is called once per frame
@@ -48,6 +53,12 @@ public class HealthComponent : MonoBehaviour
         CheckHealth();
 
         InvinsibleCheat();
+    }
+    
+    public void SetRespawnPoint(Transform newRespawnPoint)
+    {
+        respawnPoint = newRespawnPoint;
+        Debug.Log("Respawn point updated to: " + respawnPoint.position);
     }
 
     void CheckHealth()
@@ -91,23 +102,20 @@ public class HealthComponent : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateUIHealth();
-        
+
         if (respawnPoint != null)
         {
-            Debug.Log("Respawning at: " + respawnPoint.position);
-            transform.position = respawnPoint.position;
+            transform.position = respawnPoint.position; 
             rb.velocity = Vector3.zero;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
         }
         else
         {
             Debug.LogWarning("Respawn point is null. Using default position.");
-            // Debug.Log("Respawning at: " + new Vector3(0, 0.3f, 0));
-            transform.position = new Vector3(0, 0.3f, 0);
+            transform.position = new Vector3(0, 0.3f, 0);  // Default respawn position 
             rb.velocity = Vector3.zero;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
         }
-       
 
         // Reset timers
         timeSinceLastDamage = 0;

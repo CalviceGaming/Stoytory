@@ -333,7 +333,7 @@ MonoBehaviour:
   player: {fileID: 6691096912206137637}
   WhatIsGrappeble:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   SwingKey: 324
   Orientation: {fileID: 270532269566594160}
   rb: {fileID: 4733440906635647603}
@@ -403,6 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeRadius: 5
   meleeForce: 500
+  meleeCooldown: 3
+  meleeDamage: 3
 --- !u!1 &3138874881671285794
 GameObject:
   m_ObjectHideFlags: 0

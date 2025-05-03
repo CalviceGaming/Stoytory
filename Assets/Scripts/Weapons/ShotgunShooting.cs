@@ -24,8 +24,21 @@ public class ShotgunShooting : MonoBehaviour
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
     
-    private static GameObject instance;
 
+    private static GameObject instance;
+    
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = gameObject;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
+    }
 
     private void OnEnable()
     {
@@ -45,18 +58,6 @@ public class ShotgunShooting : MonoBehaviour
         //reloadAction.action.Disable();
     }
     
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject); 
-            return;
-        }
-
-        instance = gameObject;
-        DontDestroyOnLoad(gameObject);
-        gameObject.SetActive(false);
-    }
 
     private void Start()
     {

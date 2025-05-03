@@ -16,6 +16,7 @@ TagManager:
   - Barrel
   - ArenaParent
   - ArenaSaver
+  - Checkpoints
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - TileLayer
   - Water
   - UI
-  - 
+  - Grapable
   - 
   - 
   - 

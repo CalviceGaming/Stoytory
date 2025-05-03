@@ -16,8 +16,6 @@ public class WeaponSelector : MonoBehaviour
     [SerializeField] private InputActionReference rocketAction;
     [SerializeField] private GameObject rocketMagazine;
     public int swapIndex {get;private set;}
-    
-    
 
     private void OnEnable()
     {

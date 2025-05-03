@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class RocketMovement : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private LayerMask damageLayer;
           
     [SerializeField] public float damage;                   

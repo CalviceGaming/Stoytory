@@ -26,6 +26,20 @@ public class PistolShooting : MonoBehaviour
     [SerializeField] private bool reloading;
     
     private static GameObject instance;
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = gameObject;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
+    }
+
+
     
     
     private void OnEnable()
@@ -49,18 +63,7 @@ public class PistolShooting : MonoBehaviour
         // reloadAction.action.Disable();
     }
 
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject); 
-            return;
-        }
-
-        instance = gameObject;
-        DontDestroyOnLoad(gameObject);
-        gameObject.SetActive(false);
-    }
+  
 
     private void Start()
     {

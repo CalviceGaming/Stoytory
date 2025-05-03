@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 8272885316528936964}
   m_Layer: 2
   m_Name: Cheackpoint
-  m_TagString: Untagged
+  m_TagString: Checkpoints
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6755c88f34810240bf8f82dcc449df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointNumber: 1
 --- !u!65 &8272885316528936964
 BoxCollider:
   m_ObjectHideFlags: 0
