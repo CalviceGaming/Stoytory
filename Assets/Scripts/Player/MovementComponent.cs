@@ -484,6 +484,7 @@ public class MovementComponent : MonoBehaviour
         if (rb.velocity.magnitude > 8)
         {
             emission.rateOverTime = rb.velocity.magnitude;   
+            speedLines.GetComponent<ParticleSystem>().startSpeed = -rb.velocity.magnitude;
         }
         else
         {

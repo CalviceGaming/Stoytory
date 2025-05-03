@@ -10,10 +10,7 @@ public class StartWalls : MonoBehaviour
     {
         foreach (Transform child in transform) 
         {
-            if (child.CompareTag("Wall")) 
-            {
-                walls.Add(child.gameObject);
-            }
+            walls.Add(child.gameObject);
         }
     }
 

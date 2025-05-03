@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject settingsMenuUI;
     private bool isPaused = false;
     
 
@@ -27,6 +28,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+        settingsMenuUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
         isPaused = false;
@@ -47,6 +49,13 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Trying to load MainMenu...");
         //Destroy(GameObject.FindGameObjectWithTag("Player"));
         SceneManager.LoadScene(0);
+    }
+
+    public void Setttings()
+    {
+        pauseMenuUI.SetActive(false);
+        settingsMenuUI.SetActive(true);
+
     }
 
     public void QuitGame()

@@ -15,9 +15,7 @@ public class StyleMeter : MonoBehaviour
     private int currentStyle;
     
     public UnityEvent<float> AddStyleEvent;
-
-    private int lastWeapon;
-    private int sameWeapontAmount;
+    
 
     private float multiplier = 10;
 
@@ -134,17 +132,6 @@ public class StyleMeter : MonoBehaviour
     void AddStyle(float amount)
     {
         float finalAmount = amount;
-        if (lastWeapon == GetComponent<WeaponSelector>().swapIndex)
-        {
-            sameWeapontAmount = 0;
-            finalAmount *= multiplier;
-        }
-        else
-        {
-            sameWeapontAmount++;
-            lastWeapon = GetComponent<WeaponSelector>().swapIndex;
-            finalAmount *= multiplier * Mathf.Sqrt(sameWeapontAmount);
-        }
 
         if (GetComponent<MovementComponent>().playerSpeed.magnitude > 5)
         {

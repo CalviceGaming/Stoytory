@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene("FirstScene");
         Time.timeScale = 1f;
     }

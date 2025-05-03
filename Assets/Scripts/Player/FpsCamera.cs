@@ -7,7 +7,7 @@ public class FpsCamera : MonoBehaviour
     
     [SerializeField] private Transform playerTransform;
 
-    private float mouseSensitivity = 400f;
+    public float mouseSensitivity = 400f;
     
     private float mouseX;
     private float mouseY;
