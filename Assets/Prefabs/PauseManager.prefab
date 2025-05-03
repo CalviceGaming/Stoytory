@@ -80,9 +80,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'W,A,S,D to Move.
 
-    Right click - Shoot
+    Left click - Shoot
 
-    Left click - Graplling
+    Right click - Graplling
     Hook.
 
     1 - Pistol
