@@ -9,7 +9,7 @@ using Button = UnityEngine.UIElements.Button;
 
 public class MovementComponent : MonoBehaviour
 {
-    private float maxSpeed = 13.0f;
+    [SerializeField]  private float maxSpeed = 13.0f;
     [SerializeField] private float acceleration = 200.0f;
     public Vector3 playerSpeed { get;private set; }
     private Rigidbody rb;
@@ -134,7 +134,6 @@ public class MovementComponent : MonoBehaviour
             rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
         }
     }
-    
 
     private void PlayerMovement()
     {
@@ -479,7 +478,7 @@ public class MovementComponent : MonoBehaviour
     void UpdateSpeedLines()
     {
         var emission = speedLines.GetComponent<ParticleSystem>().emission;
-        if (rb.velocity.magnitude > 8)
+        if (rb.velocity.magnitude > 10)
         {
             emission.rateOverTime = rb.velocity.magnitude;   
             speedLines.GetComponent<ParticleSystem>().startSpeed = -rb.velocity.magnitude;
