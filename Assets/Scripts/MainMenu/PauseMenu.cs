@@ -47,8 +47,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Debug.Log("Trying to load MainMenu...");
-        //Destroy(GameObject.FindGameObjectWithTag("Player"));
-        SceneManager.LoadScene(0);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Setttings()
