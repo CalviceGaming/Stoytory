@@ -48,6 +48,7 @@ public class ShotgunShooting : MonoBehaviour
         
         shootingAction.action.started += OnShootingStarted;
         reloadAction.action.started += OnReloadingStarted;
+        bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
     private void OnDisable()
     {
@@ -64,7 +65,6 @@ public class ShotgunShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
-        bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
     
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
