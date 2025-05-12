@@ -64,6 +64,7 @@ public class ShotgunShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
+        bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
     
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
@@ -96,7 +97,6 @@ public class ShotgunShooting : MonoBehaviour
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
             for (int i = 0; i < 5; i++)
             {
-                bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
                 GameObject bull = Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletsParent.transform);
                 bull.GetComponent<BulletMovement>().directionSet = DirectionForBullet();
                 bull.GetComponent<BulletMovement>().damage = 2;

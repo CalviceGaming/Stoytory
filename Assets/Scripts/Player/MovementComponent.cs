@@ -113,7 +113,6 @@ public class MovementComponent : MonoBehaviour
         
         playerSpeed = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         
-        speedText.GetComponent<Text>().text = $"Speed: {playerSpeed.magnitude.ToString("F1")}";
 
         PlayerMovement();
         
@@ -135,7 +134,6 @@ public class MovementComponent : MonoBehaviour
             rb.AddForce(Vector3.up * 80, ForceMode.Impulse);
         }
     }
-    
     
 
     private void PlayerMovement()
@@ -345,7 +343,7 @@ public class MovementComponent : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.right, out hitright, gameObject.transform.lossyScale.x / 2 + 1f))
         {
             Debug.DrawRay(transform.position, transform.right * hitright.distance, Color.yellow);
-            if (hitright.collider.gameObject.tag == "Wall")
+            if (hitright.collider.gameObject.CompareTag("Wall"))
             {
                 wallCollidingWith = hitright.collider.gameObject;
                 collidingWithWall = true;
@@ -355,7 +353,7 @@ public class MovementComponent : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.right, out hitleft, gameObject.transform.lossyScale.x / 2 + 1f))
         {
             Debug.DrawRay(transform.position, -transform.right * hitleft.distance, Color.yellow); 
-            if (hitleft.collider.gameObject.tag == "Wall")
+            if (hitleft.collider.gameObject.CompareTag("Wall"))
             {
                 wallCollidingWith = hitleft.collider.gameObject;
                 collidingWithWall = true;

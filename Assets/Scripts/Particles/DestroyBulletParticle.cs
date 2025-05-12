@@ -5,6 +5,8 @@ using UnityEngine;
 public class DestroyBulletParticle : MonoBehaviour
 {
     public GameObject bullet;
+    private ParticleSystem particle;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -14,12 +16,13 @@ public class DestroyBulletParticle : MonoBehaviour
         
         transform.position = bullet.transform.position + (dir * 0.1f);
         
+        particle = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GetComponent<ParticleSystem>().IsAlive())
+        if (!particle.IsAlive())
         {
             Destroy(gameObject);
         }

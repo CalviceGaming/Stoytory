@@ -6,7 +6,7 @@ public class JumpPad : MonoBehaviour
     private float bounceforce = 200f;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector2.up * bounceforce, ForceMode.Impulse);
         }

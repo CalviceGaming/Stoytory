@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyShooting : MonoBehaviour
 {
     private GameObject player;
+    private TilePlayerOn tilePlayerOn;
     [SerializeField] private float range;
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject bulletSpawn;
@@ -17,6 +18,7 @@ public class EnemyShooting : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        tilePlayerOn = player.GetComponent<TilePlayerOn>();
         GetComponent<PathFinding>().newTile.AddListener(IsPlayerInRange);
         bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
@@ -38,7 +40,7 @@ public class EnemyShooting : MonoBehaviour
         {
             if (shooting)
             {
-                player.GetComponent<TilePlayerOn>().playerChangedTile.Invoke();
+                tilePlayerOn.playerChangedTile.Invoke();
             }
             shooting = false;
         }
@@ -50,7 +52,7 @@ public class EnemyShooting : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, range))
         {
-            if (hit.collider.tag == "Player" || hit.collider.tag == "Bullet")
+            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Bullet"))
             {
                 shooting = true;
             }
@@ -58,7 +60,7 @@ public class EnemyShooting : MonoBehaviour
             {
                 if (shooting)
                 {
-                    player.GetComponent<TilePlayerOn>().playerChangedTile.Invoke();
+                    tilePlayerOn.playerChangedTile.Invoke();
                 }
                 shooting = false;
             }

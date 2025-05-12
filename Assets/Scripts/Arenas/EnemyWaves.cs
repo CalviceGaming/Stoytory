@@ -11,6 +11,7 @@ public class EnemyWaves : MonoBehaviour
     [SerializeField] private GameObject dinossaurPrefab;
     [SerializeField] private GameObject bouncyBallPrefab;
     [SerializeField] private GameObject enemyParent;
+    private EndArena endArea;
     [SerializeField] private GameObject tileGenerator;
     public List<Vector3> tiles = new List<Vector3>();
 
@@ -26,6 +27,7 @@ public class EnemyWaves : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        endArea = enemyParent.GetComponent<EndArena>();
         amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel*2) * 3);
         amountOfWaves = amountOf/3;
             if (dificultyLevel > 7)
@@ -93,7 +95,7 @@ public class EnemyWaves : MonoBehaviour
             amountOfDinos--;
         }
         wave++;
-        enemyParent.GetComponent<EndArena>().enemyAmount += greenSoldiersThisWave + ballsThisWave + dynosThisWave;
+        endArea.enemyAmount += greenSoldiersThisWave + ballsThisWave + dynosThisWave;
     }
 
     void CheckWaves()

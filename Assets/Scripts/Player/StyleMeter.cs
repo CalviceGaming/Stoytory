@@ -31,8 +31,10 @@ public class StyleMeter : MonoBehaviour
     [SerializeField] private Sprite SSS;
 
     [SerializeField] private GameObject meter;
+    private Image meterImage;
     [SerializeField] private GameObject rank;
-    [SerializeField] private GameObject rankImage;
+    private Text rankText;
+    //[SerializeField] private GameObject rankImage;
     [SerializeField] private GameObject canvas;
     private Vector3 imageScale;
     
@@ -43,7 +45,9 @@ public class StyleMeter : MonoBehaviour
         SetStyles();
         currentStyle = 0;
         AddStyleEvent.AddListener(AddStyle);
-        imageScale = rankImage.transform.localScale;
+        rankText = rank.GetComponent<Text>();
+        meterImage = meter.gameObject.GetComponent<Image>();
+        //imageScale = rankImage.transform.localScale;
     }
 
     // Update is called once per frame
@@ -139,8 +143,8 @@ public class StyleMeter : MonoBehaviour
         }
         
         //animation
-        LeanTween.rotateZ(rankImage, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>rankImage.transform.rotation = Quaternion.Euler(0, 0, 0));
-        LeanTween.scale(rankImage, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>rankImage.transform.localScale = imageScale);
+        LeanTween.rotateZ(rank, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.rotation = Quaternion.Euler(0, 0, 0));
+        LeanTween.scale(rank, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.localScale = new Vector3(1, 1, 1));
         
         GameObject points = Instantiate(pointsPrefab, meter.transform.position + new Vector3(0, 5, 0), Quaternion.identity, canvas.transform);
         points.GetComponent<Text>().text = $"+{Mathf.Round(finalAmount)}";
@@ -151,11 +155,10 @@ public class StyleMeter : MonoBehaviour
 
     void SetUI()
     {
-        // rank.GetComponent<Text>().text = styleNames[currentStyle];
-        // rank.GetComponent<Text>().color = stylesColor[styleNames[currentStyle]];
-        rankImage.GetComponent<Image>().sprite = styleSprites[currentStyle];
-        meter.gameObject.GetComponent<Image>().fillAmount = percentageToNext;
-        meter.gameObject.GetComponent<Image>().color = stylesColor[styleNames[currentStyle]];
+        rankText.text = styleNames[currentStyle];
+        rankText.color = stylesColor[styleNames[currentStyle]];
+        meterImage.fillAmount = percentageToNext;
+        meterImage.color = stylesColor[styleNames[currentStyle]];
     }
 
     void StyleReduction()

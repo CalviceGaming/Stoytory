@@ -7,21 +7,23 @@ using UnityEngine.UI;
 public class DamageTextScript : MonoBehaviour
 {
     [SerializeField] TextMesh damageText;
-    
+
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         //damageText = GetComponent<Text>();
         textAnimation();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Vector3 dir = (player.transform.position - transform.position).normalized;
+        Vector3 dir = (transform.position - player.transform.position).normalized;
         float angle = Mathf.Acos(Vector3.Dot(dir, -transform.forward));
-        transform.RotateAround(transform.position, Vector3.up, angle);
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        transform.rotation = targetRotation;
     }
 
     public void DamageText(float damage, Vector3 hitPoint)

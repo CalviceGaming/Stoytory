@@ -12,7 +12,8 @@ public class HealthComponent : MonoBehaviour
     private float timeSinceLastDamage;
     private float timeForHeal;
 
-    [SerializeField] private GameObject healthText;
+    [SerializeField] private GameObject healthTextGameObject;
+    private Text healthText;
 
     [SerializeField] private GameObject instance;
 
@@ -25,6 +26,7 @@ public class HealthComponent : MonoBehaviour
     
     [SerializeField] private GameObject healthContainer;
     [SerializeField] private GameObject healthUI;
+    private Image healthUIImage;
 
     void Awake()
     {
@@ -37,6 +39,8 @@ public class HealthComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthText = healthTextGameObject.GetComponent<Text>();
+        healthUIImage = healthUI.GetComponent<Image>();
         DontDestroyOnLoad(gameObject);
         currentHealth = maxHealth;
         UpdateUIHealth();
@@ -135,7 +139,7 @@ public class HealthComponent : MonoBehaviour
     void UpdateUIHealth()
     {
         float percentage = (float) currentHealth / maxHealth;
-        healthUI.GetComponent<Image>().fillAmount = percentage;
-        healthText.GetComponent<Text>().text = currentHealth.ToString();
+        healthUIImage.fillAmount = percentage;
+        healthText.text = currentHealth.ToString();
     }
 }

@@ -28,7 +28,7 @@ public class DinossaurAttackHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<HealthComponent>().DealDamage(damage);
             timer = 0;

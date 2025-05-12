@@ -23,7 +23,7 @@ public class TileWallChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wall")
+        if (other.CompareTag("Wall"))
         {
             wall = true;
             foundWall.Invoke();

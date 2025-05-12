@@ -16,7 +16,7 @@ public class RangeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             dinossaurMelee.attacking = true;
         }
@@ -24,7 +24,7 @@ public class RangeTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             dinossaurMelee.attacking = false;
         }

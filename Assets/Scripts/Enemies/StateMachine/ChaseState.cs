@@ -56,7 +56,7 @@ public class ChaseState : AStateBehaviour
     
     public override int StateTransitionCondition()
     {
-        if (enemyShooting != null)
+        if (enemyShooting)
         {
             if (enemyShooting.shooting)
             {

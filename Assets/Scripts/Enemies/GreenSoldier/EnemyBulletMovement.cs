@@ -27,12 +27,12 @@ public class EnemyBulletMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Enemy" && other.gameObject.tag != "Weapon" && toDestroy == false)
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Weapon") && toDestroy == false)
         {
             rb.velocity = Vector3.zero;
             bulletObjects.SetActive(false);
             toDestroy = true;
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.CompareTag("Player"))
             {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<HealthComponent>().DealDamage(damage);
             }

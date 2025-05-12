@@ -19,7 +19,7 @@ public class KillBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             player.GetComponent<HealthComponent>().DealDamage(999999999);
         }

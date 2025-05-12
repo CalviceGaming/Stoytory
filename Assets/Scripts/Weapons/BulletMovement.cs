@@ -48,13 +48,13 @@ public class BulletMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
+        if (!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("Weapon") && !other.gameObject.CompareTag("Bullets"))
         {
             rb.velocity = Vector3.zero;
             bulletObjects.SetActive(false);
             GetComponent<CapsuleCollider>().enabled = false;
 
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.CompareTag("Enemy"))
             {
                 other.gameObject.GetComponent<EnemyHealthComponent>().DealDamage(damage, transform.position);
                 player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage);

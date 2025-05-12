@@ -70,6 +70,7 @@ public class PistolShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
+        bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
     }
     
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
@@ -97,7 +98,6 @@ public class PistolShooting : MonoBehaviour
         }
         if (shooting && shootTimer > 0.5f && !reloading)
         {
-            bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
             shootTimer = 0f;
             currentMagazine--;
             magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";

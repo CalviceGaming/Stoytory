@@ -17,14 +17,24 @@ public class ArenaStarter : MonoBehaviour
     [SerializeField]private GameObject wallStarter;
     [SerializeField]private GameObject enemyStarter;
     [SerializeField]private GameObject tileStarter;
+    private StartWalls startWalls;
+    private StartEnemies startEnemies;
+    private TileGenerator tileGenerator;
     
 
     private GameObject arenaSaver;
+    private SaveArenas saveArenas;
+    private ArenaId arenaId;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         arenaSaver = GameObject.FindGameObjectWithTag("ArenaSaver");
+        startWalls = wallStarter.GetComponent<StartWalls>();
+        startEnemies = enemyStarter.GetComponent<StartEnemies>();
+        tileGenerator = tileStarter.GetComponent<TileGenerator>();
+        saveArenas = arenaSaver.GetComponent<SaveArenas>();
+        arenaId = gameObject.transform.parent.GetComponent<ArenaId>();
     }
 
     // Update is called once per frame
@@ -35,7 +45,7 @@ public class ArenaStarter : MonoBehaviour
         float distance = Vector3.Distance(middleGround, playerPos);
         if (playerInside && !arenaStarted)
         {
-            if (!arenaSaver.GetComponent<SaveArenas>().CheckArenaComplete(gameObject.transform.parent.GetComponent<ArenaId>().arenaId))
+            if (!saveArenas.CheckArenaComplete(arenaId.arenaId))
             {
                 arenaStarted = true;
                 startExtras();   
@@ -60,8 +70,8 @@ public class ArenaStarter : MonoBehaviour
 
     private void startExtras()
     {
-        wallStarter.GetComponent<StartWalls>().SpawnWalls();
-        enemyStarter.GetComponent<StartEnemies>().SpawnEnemies();
-        tileStarter.GetComponent<TileGenerator>().GenerateTiles();
+        startWalls.SpawnWalls();
+        startEnemies.SpawnEnemies();
+        tileGenerator.GenerateTiles();
     }
 }
