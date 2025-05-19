@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,13 @@ public class DinossaurMelee : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
-    
-    
+
+    private void Update()
+    {
+        attackTimer -= Time.deltaTime;
+    }
+
+
     public void Attack()
     {
         if (attackTimer <= 0)
@@ -26,6 +32,5 @@ public class DinossaurMelee : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
-        attackTimer -= Time.deltaTime;
     }
 }
