@@ -14,6 +14,7 @@ public class FpsCamera : MonoBehaviour
 
     private float yRotation;
     private float xRotation;
+    
     // Start is called before the first frame update
     void Start()
     { 
@@ -31,6 +32,7 @@ public class FpsCamera : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         
         yRotation += mouseX;
+        
         
         gameObject.transform.localRotation = Quaternion.Euler(xRotation, gameObject.transform.localRotation.eulerAngles.y, gameObject.transform.localRotation.eulerAngles.z);
         playerTransform.localRotation = Quaternion.Euler(playerTransform.localRotation.eulerAngles.x, yRotation, playerTransform.localRotation.eulerAngles.z);

@@ -12,7 +12,7 @@ public class Checkpoint : MonoBehaviour
             if (healthComponent != null)
             {
                 //  respawn point Update
-                healthComponent.SetRespawnPoint(this.transform);
+                healthComponent.SetRespawnPoint(checkpointNumber);
             }
         }
     }

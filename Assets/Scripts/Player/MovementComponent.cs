@@ -493,7 +493,6 @@ public class MovementComponent : MonoBehaviour
         // Vector3 direction = position - transform.position;
         // speedLines.transform.rotation = Quaternion.LookRotation(direction);
     }
-
     //Cheats
     void Cheats()
     {

@@ -15,25 +15,26 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private GameObject healthTextGameObject;
     private Text healthText;
 
-    [SerializeField] private GameObject instance;
-
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
     private List<GameObject> checkpoints = new List<GameObject>();
     
     private bool invincible = false;
-    public Transform respawnPoint;
+    private int respawnNumber;
     
     [SerializeField] private GameObject healthContainer;
     [SerializeField] private GameObject healthUI;
     private Image healthUIImage;
-
+    
+    private static GameObject instance;
     void Awake()
     {
-        if (GameObject.FindGameObjectsWithTag("Player").Length > 1)
+        if (instance != null && instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); 
+            return;
         }
+        instance = gameObject;
     }
     
     // Start is called before the first frame update
@@ -45,10 +46,6 @@ public class HealthComponent : MonoBehaviour
         currentHealth = maxHealth;
         UpdateUIHealth();
         rb = GetComponent<Rigidbody>();
-        foreach (GameObject checkpoint in GameObject.FindGameObjectsWithTag("Checkpoints"))
-        {
-            checkpoints.Add(checkpoint);
-        }
     }
 
     // Update is called once per frame
@@ -59,10 +56,12 @@ public class HealthComponent : MonoBehaviour
         InvinsibleCheat();
     }
     
-    public void SetRespawnPoint(Transform newRespawnPoint)
+    public void SetRespawnPoint(int newRespawnPoint)
     {
-        respawnPoint = newRespawnPoint;
-        Debug.Log("Respawn point updated to: " + respawnPoint.position);
+        if (respawnNumber < newRespawnPoint)
+        {
+            respawnNumber = newRespawnPoint;
+        }
     }
 
     void CheckHealth()
@@ -106,20 +105,18 @@ public class HealthComponent : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateUIHealth();
-
-        if (respawnPoint != null)
-        {
-            transform.position = respawnPoint.position; 
+        
+            transform.position = checkpoints[respawnNumber].transform.position; 
             rb.velocity = Vector3.zero;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
-        }
-        else
-        {
-            Debug.LogWarning("Respawn point is null. Using default position.");
-            transform.position = new Vector3(0, 0.3f, 0);  // Default respawn position 
-            rb.velocity = Vector3.zero;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
-        }
+        
+        // else
+        // {
+        //     Debug.LogWarning("Respawn point is null. Using default position.");
+        //     transform.position = new Vector3(0, 0.3f, 0);  // Default respawn position 
+        //     rb.velocity = Vector3.zero;
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
+        // }
 
         // Reset timers
         timeSinceLastDamage = 0;
@@ -141,5 +138,24 @@ public class HealthComponent : MonoBehaviour
         float percentage = (float) currentHealth / maxHealth;
         healthUIImage.fillAmount = percentage;
         healthText.text = currentHealth.ToString();
+    }
+
+    public void BackFromMenu()
+    {
+        checkpoints.Clear();
+        GameObject[] allCheckpoints = GameObject.FindGameObjectsWithTag("Checkpoints");
+        for(int i = 0; i < allCheckpoints.Length; i++)
+        {
+            foreach (GameObject checkpoint in allCheckpoints)
+            {
+                if (checkpoint.GetComponent<Checkpoint>().checkpointNumber == i)
+                {
+                    checkpoints.Add(checkpoint);
+                }
+            }
+        }
+        rb.velocity = Vector3.zero;
+        rb.position = checkpoints[respawnNumber].transform.position;
+        //transform.position = checkpoints[respawnNumber].transform.position;
     }
 }

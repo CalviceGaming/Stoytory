@@ -55,7 +55,6 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         settingsMenuUI.SetActive(true);
-
     }
 
     public void QuitGame()
