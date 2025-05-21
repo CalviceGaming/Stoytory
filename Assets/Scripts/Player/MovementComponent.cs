@@ -478,7 +478,7 @@ public class MovementComponent : MonoBehaviour
     void UpdateSpeedLines()
     {
         var emission = speedLines.GetComponent<ParticleSystem>().emission;
-        if (rb.velocity.magnitude > 10)
+        if (rb.velocity.magnitude > 12)
         {
             emission.rateOverTime = rb.velocity.magnitude;   
             speedLines.GetComponent<ParticleSystem>().startSpeed = -rb.velocity.magnitude;
