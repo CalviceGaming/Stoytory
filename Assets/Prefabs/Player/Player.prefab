@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a18c497a47aa44694deff16df49e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 13
   acceleration: 150
   freeze: 0
   speedText: {fileID: 1031191061696591687}
@@ -341,6 +342,8 @@ MonoBehaviour:
   forwordThurtsForce: 3200
   ExtendeCableSpeed: 10
   pm: {fileID: 8312070993259772337}
+  predictionShpereRadius: 0
+  hitShpere: {fileID: 4235664327524735630, guid: b082deca56e3d5c43aa9d75781f0bb00, type: 3}
 --- !u!114 &3554300813897573790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 15
-  healthText: {fileID: 75993741588999282}
+  healthTextGameObject: {fileID: 0}
   instance: {fileID: 0}
   respawnPoint: {fileID: 0}
   healthContainer: {fileID: 1144585975786448242}
@@ -386,7 +389,6 @@ MonoBehaviour:
   SSS: {fileID: 21300000, guid: d10e1b3a1e2b53148b6e97eb1bdc559a, type: 3}
   meter: {fileID: 6100291971199832402}
   rank: {fileID: 7605181556323561973}
-  rankImage: {fileID: 754516767242541213}
   canvas: {fileID: 2547570620043277876}
   pointsPrefab: {fileID: 3003930104694079624, guid: f55aba8a010e75449a461815dd27d8a3, type: 3}
 --- !u!114 &1172722672435945021
@@ -514,6 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 6691096912206137637}
+  mouseSensitivity: 400
 --- !u!1 &4861586548270469689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5779,11 +5782,6 @@ PrefabInstance:
       addedObject: {fileID: 7850918527394936082}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0592b4bad5a310445a2ad379a6537453, type: 3}
---- !u!1 &75993741588999282 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7447610552586729651, guid: 0592b4bad5a310445a2ad379a6537453, type: 3}
-  m_PrefabInstance: {fileID: 7374294407445566657}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1031191061696591687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7501105269427594118, guid: 0592b4bad5a310445a2ad379a6537453, type: 3}

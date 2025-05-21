@@ -22,13 +22,17 @@ public class BetterGrappler : MonoBehaviour
     public float forwordThurtsForce;
     public float ExtendeCableSpeed;
     public MovementComponent pm;
+
+    public RaycastHit predictionHit;
+    public float predictionShpereRadius;
+    public Transform hitShpere;
     
     void StartSwing()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, MaxSwingDistance, WhatIsGrappeble))
+        
+        if (predictionHit.point == Vector3.zero) return;
         {
-            Swingpoint = hit.point;
+            Swingpoint = predictionHit.point;
             Joint = player.gameObject.AddComponent<SpringJoint>();
             Joint.autoConfigureConnectedAnchor = false;
             Joint.connectedAnchor = Swingpoint;
@@ -77,6 +81,7 @@ public class BetterGrappler : MonoBehaviour
 
     void Update()
     {
+        CheackForHit();
         if (Input.GetKeyDown(SwingKey))StartSwing();
         if (Input.GetKeyUp(SwingKey))StopSwing();
         if (Joint != null) GrapplePull();
@@ -100,5 +105,45 @@ public class BetterGrappler : MonoBehaviour
     {
         lineRenderer.positionCount = 0;
         Destroy(Joint);
+    }
+
+    private void CheackForHit()
+    {
+        if( Joint != null ) return;
+
+        RaycastHit sphereCastHit;
+        Physics.SphereCast(cam.position, predictionShpereRadius, cam.forward, out sphereCastHit, MaxSwingDistance, WhatIsGrappeble);
+
+        RaycastHit raycastHit;
+        Physics.Raycast( cam.position, cam.forward, out raycastHit, MaxSwingDistance, WhatIsGrappeble);
+
+        Vector3 Realhitpoint;
+
+        if (raycastHit.point != Vector3.zero)
+        {
+            Realhitpoint = raycastHit.point;
+        }
+        else if (sphereCastHit.point != Vector3.zero)
+        {
+            Realhitpoint = sphereCastHit.point;
+        }
+        else
+        {
+            Realhitpoint = Vector3.zero;
+        }
+
+        if (Realhitpoint != Vector3.zero)
+        {
+            Debug.Log("im hitting it");
+            hitShpere.gameObject.SetActive(true);
+            hitShpere.position = Realhitpoint;
+        }
+        else
+        {
+            Debug.Log("no hitting it");
+            hitShpere.gameObject.SetActive(false);
+        }
+        
+        predictionHit = raycastHit.point == Vector3.zero ? sphereCastHit : raycastHit;
     }
 }

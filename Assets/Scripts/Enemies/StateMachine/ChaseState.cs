@@ -24,7 +24,7 @@ public class ChaseState : AStateBehaviour
 
     public override void OnStateStart()
     {
-        Debug.Log("CHASING");
+       // Debug.Log("CHASING");
         pathFinding = GetComponent<PathFinding>();
         player = GameObject.FindWithTag("Player");
         if (GetComponent<EnemyShooting>())
