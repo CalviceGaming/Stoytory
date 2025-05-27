@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &828496293314317532
 Transform:
   m_ObjectHideFlags: 0
@@ -187,7 +187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737c362ab99dde04ca9562f3c4d52d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionRadius: 8
   damageLayer:
     serializedVersion: 2
     m_Bits: 4294967295

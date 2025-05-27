@@ -326,6 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd5bf1c85e8bbb41a5d14fc45100c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slashPrefab: {fileID: 4217911909339915527, guid: 983d131191123544c8808c17dc8a7528, type: 3}
+  spawnPoint: {fileID: 0}
+  deactivateDelay: 0.5
+  animator: {fileID: 7602172898993794415, guid: 983d131191123544c8808c17dc8a7528, type: 3}
   meleeRadius: 5
   meleeForce: 500
   meleeCooldown: 3

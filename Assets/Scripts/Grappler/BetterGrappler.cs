@@ -134,13 +134,13 @@ public class BetterGrappler : MonoBehaviour
 
         if (Realhitpoint != Vector3.zero)
         {
-            Debug.Log("im hitting it");
+            
             hitShpere.gameObject.SetActive(true);
             hitShpere.position = Realhitpoint;
         }
         else
         {
-            Debug.Log("no hitting it");
+            
             hitShpere.gameObject.SetActive(false);
         }
         
