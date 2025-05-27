@@ -212,14 +212,14 @@ public class MovementComponent : MonoBehaviour
                     wallRunning = true;
                     rb.useGravity = false;
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    rb.AddForce(Vector3.up * 30, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * 15, ForceMode.Impulse);
                 }
             }
             if (jumpDown && wallRunning)
             {
                 jumpDown = false;
                 //transform.position = new Vector3(transform.position.x + wallNormal.x, transform.position.y, transform.position.z + wallNormal.z);
-                rb.AddForce(new Vector3(wallNormal.x, 0.4f, wallNormal.z) * 125, ForceMode.Impulse);
+                rb.AddForce(new Vector3(wallNormal.x, 0.3f, wallNormal.z) * 125, ForceMode.Impulse);
                 wallRunning = false;
                 rb.useGravity = true;
             }

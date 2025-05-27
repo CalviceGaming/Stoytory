@@ -6,6 +6,7 @@ public class FpsCamera : MonoBehaviour
 {
     
     [SerializeField] private Transform playerTransform;
+    private Rigidbody playerRb;
 
     public float mouseSensitivity = 400f;
     
@@ -19,6 +20,7 @@ public class FpsCamera : MonoBehaviour
     void Start()
     { 
         Cursor.lockState = CursorLockMode.Locked;
+        playerRb = GameObject.Find("Player").GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -36,5 +38,6 @@ public class FpsCamera : MonoBehaviour
         
         gameObject.transform.localRotation = Quaternion.Euler(xRotation, gameObject.transform.localRotation.eulerAngles.y, gameObject.transform.localRotation.eulerAngles.z);
         playerTransform.localRotation = Quaternion.Euler(playerTransform.localRotation.eulerAngles.x, yRotation, playerTransform.localRotation.eulerAngles.z);
+        playerRb.rotation = Quaternion.Euler(playerTransform.localRotation.eulerAngles.x, yRotation, playerTransform.localRotation.eulerAngles.z);
     }
 }
