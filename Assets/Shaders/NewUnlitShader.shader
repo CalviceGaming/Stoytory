@@ -1,63 +1,59 @@
-Shader "Custom/URP_InvertedHullOutline"
+Shader "Custom/BlackOutlineOnly"
 {
     Properties
     {
-        _OutlineColor ("Outline Color", Color) = (0,250,0,1)
-        _OutlineWidth ("Outline Width", Range(0.0, 0.1)) = 0.03
+        _OutlineThickness ("Outline Thickness", Float) = 0.05
     }
+
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry+1" }
-        Cull Front
-        ZWrite On
-        ZTest LEqual
+        Tags { "RenderType"="Opaque" "Queue"="Geometry-1" }
+        LOD 100
 
         Pass
         {
+            Name "Outline"
+            Cull Front 
+            ZWrite On
+            ZTest LEqual
+            ColorMask RGB
+            Blend Off
+
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #include "UnityCG.cginc"
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            float _OutlineThickness;
 
-            struct Attributes
+            struct appdata
             {
-                float3 positionOS : POSITION;
-                float3 normalOS : NORMAL;
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
             };
 
-            struct Varyings
+            struct v2f
             {
-                float4 positionCS : SV_POSITION;
+                float4 pos : SV_POSITION;
             };
 
-            float4 _OutlineColor;
-            float _OutlineWidth;
-
-            Varyings vert(Attributes input)
+            v2f vert(appdata v)
             {
-                Varyings output;
-
-                // Normalize the normal in object space
-                float3 normal = normalize(input.normalOS);
-
-                // Offset position along normal
-                float3 posOffset = input.positionOS + normal * _OutlineWidth;
-
-                // Transform to clip space (HClip = Homogeneous Clip Space)
-                output.positionCS = TransformObjectToHClip(posOffset);
-
-                return output;
+                v2f o;
+                float3 norm = normalize(v.normal);
+                
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                worldPos += norm * _OutlineThickness;
+                o.pos = UnityWorldToClipPos(float4(worldPos, 1.0));
+                return o; 
             }
 
-            half4 frag(Varyings input) : SV_Target
+            float4 frag(v2f i) : SV_Target
             {
-                return _OutlineColor;
+                return float4(0, 0, 0, 1); // Solid black
             }
-
             ENDHLSL
         }
     }
-    FallBack "Universal Forward"
+    FallBack Off
 }
-
