@@ -22,11 +22,11 @@ public class MeleeAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && cooldownTimer >= meleeCooldown)
         {
-            Debug.Log("Cooldown met. Performing melee.");
+            //Debug.Log("Cooldown met. Performing melee.");
             PerformMelee();
             cooldownTimer = 0f; 
             SpawnSlash();
-            Debug.Log("F key was pressed!");
+           // Debug.Log("F key was pressed!");
         }
     }
     
@@ -53,7 +53,7 @@ public class MeleeAttack : MonoBehaviour
                     enemyHealth.DealDamage(meleeDamage, transform.position);
                 }
                 hitSomething = true;
-                Debug.Log("Melee hit enemy: " + hitCollider.name);
+               // Debug.Log("Melee hit enemy: " + hitCollider.name);
             }
             
         }
@@ -64,7 +64,7 @@ public class MeleeAttack : MonoBehaviour
 
     void SpawnSlash()
     {
-        Debug.Log("SpawnSlash called");
+        //Debug.Log("SpawnSlash called");
 
         if (slashPrefab == null)
         {
@@ -94,12 +94,12 @@ public class MeleeAttack : MonoBehaviour
         Animator anim = currentSlash.GetComponent<Animator>();
         if (anim != null)
         {
-            Debug.Log("Playing slash animation");
+           // Debug.Log("Playing slash animation");
             anim.Play("Slash state", 0, 0f); // Make sure "Slash" is the animation state name
         }
         else
         {
-            Debug.LogWarning("Animator not found on slash prefab!");
+           // Debug.LogWarning("Animator not found on slash prefab!");
         }
 
         StartCoroutine(DisableAfterDelay(deactivateDelay));

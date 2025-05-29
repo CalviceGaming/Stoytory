@@ -4,10 +4,12 @@ using UnityEngine;
 public class RocketMovement : MonoBehaviour
 {
     [SerializeField] private LayerMask damageLayer;
-          
+    [SerializeField] public int demagetoplayer;
+
     [SerializeField] public float damage;                   
     [SerializeField] private GameObject breakEffect;         
-    [SerializeField] private GameObject rocketObjects;       
+    [SerializeField] private GameObject rocketObjects;  
+    
     
     private Rigidbody rb;
     private float despawnTimer = 0f;                         
@@ -51,7 +53,7 @@ public class RocketMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
+        if (other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullets")
         {
             rb.velocity = Vector3.zero;
             rocketObjects.SetActive(false);         
@@ -68,6 +70,15 @@ public class RocketMovement : MonoBehaviour
                     {
                         enemyHealth.DealDamage(damage, transform.position);
                         player.GetComponent<StyleMeter>().AddStyleEvent.Invoke(damage/3);
+                    }
+                }
+
+                if (hitCollider.CompareTag("Player"))
+                {
+                    var playerhealth = hitCollider.GetComponent<HealthComponent>();
+                    if (playerhealth != null)
+                    {
+                        playerhealth.DealDamage(demagetoplayer);
                     }
                 }
             }
