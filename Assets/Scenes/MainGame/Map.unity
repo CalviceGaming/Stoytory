@@ -214,10 +214,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: furniturv2 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2786534777698132407, guid: d1262d36e1a08b047b6485dd18790f4e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e73560528027334ca8e800cfb603b28, type: 2}
     - target: {fileID: 6105759465970056707, guid: d1262d36e1a08b047b6485dd18790f4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.02
       objectReference: {fileID: 0}
+    - target: {fileID: 7339356831882890532, guid: d1262d36e1a08b047b6485dd18790f4e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339356831882890532, guid: d1262d36e1a08b047b6485dd18790f4e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e73560528027334ca8e800cfb603b28, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

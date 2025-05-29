@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1755910927554841189}
+  - {fileID: 2373171268373585508}
   m_Father: {fileID: 6578284176320125416}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6562003025580668944
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 8
---- !u!1001 &2293606346884345230
+--- !u!1001 &2838828850902694287
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -502,15 +502,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7a7ae6593f0028746bb103b6fb1e2653, type: 3}
       propertyPath: m_Name
-      value: dino new
+      value: dino new (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a7ae6593f0028746bb103b6fb1e2653, type: 3}
---- !u!4 &1755910927554841189 stripped
+--- !u!4 &2373171268373585508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a7ae6593f0028746bb103b6fb1e2653, type: 3}
-  m_PrefabInstance: {fileID: 2293606346884345230}
+  m_PrefabInstance: {fileID: 2838828850902694287}
   m_PrefabAsset: {fileID: 0}
