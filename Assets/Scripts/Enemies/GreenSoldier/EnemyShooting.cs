@@ -52,7 +52,7 @@ public class EnemyShooting : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, range))
         {
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Bullet"))
+            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Bullets"))
             {
                 shooting = true;
             }

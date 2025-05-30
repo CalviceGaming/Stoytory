@@ -40,6 +40,7 @@ public class HealthComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BackFromMenu();
         healthText = healthTextGameObject.GetComponent<Text>();
         healthUIImage = healthUI.GetComponent<Image>();
         DontDestroyOnLoad(gameObject);
