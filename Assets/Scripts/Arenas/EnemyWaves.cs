@@ -29,7 +29,7 @@ public class EnemyWaves : MonoBehaviour
     {
         endArea = enemyParent.GetComponent<EndArena>();
         amountOf = Mathf.RoundToInt(Mathf.Sqrt(dificultyLevel) * 3);
-        amountOfWaves = (amountOf/3) + 1;
+        amountOfWaves = (amountOf/3);
             if (dificultyLevel > 7)
             {
                 for (int i = 0; i < Random.Range(1,2); i++)
