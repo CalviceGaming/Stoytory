@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileGenerator : MonoBehaviour
 {
@@ -11,10 +13,22 @@ public class TileGenerator : MonoBehaviour
     private List<GameObject> tiles = new List<GameObject>();
     
     [SerializeField] private GameObject startEnemies;
+
+    private bool start;
+    private float arenaTimer = 4;
+    private float animationTimer = 1;
+    
+    private GameManager gameManager;
+
+    private GameObject timerHolder;
+    private Text timerText;
     // Start is called before the first frame update
     void Start()
     {
         enemies.GetComponent<EndArena>().endArena.AddListener(RemoveTiles);
+        gameManager = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        timerHolder = gameManager.arenaTimer;
+        timerText = timerHolder.GetComponent<Text>();
     }
 
     public void GenerateTiles()
@@ -41,7 +55,8 @@ public class TileGenerator : MonoBehaviour
                 tile.tag = "Tile";
             }
         }
-        startEnemies.SetActive(true);
+
+        start = true;
     }
 
     private void RemoveTiles()
@@ -49,6 +64,53 @@ public class TileGenerator : MonoBehaviour
         foreach (GameObject tile in tiles)
         {
             Destroy(tile);
+        }
+    }
+
+    private void Update()
+    {
+        if (start)
+        {
+           Timer();
+           TimerAnimation();
+        }
+    }
+
+    private void Timer()
+    {
+        string text = "";
+        arenaTimer -= Time.deltaTime;
+        switch (arenaTimer)
+        {
+            case >3:
+                text = "3";
+                break;
+            case >2:
+                text = "2";
+                break;
+            case >1:
+                text = "1";
+                break;
+            case >0:
+                startEnemies.SetActive(true);
+                text = "GO";
+                break;
+            case <0:
+                text = "";
+                start = false;
+                break;
+        }
+        timerText.text = text;
+    }
+
+    private void TimerAnimation()
+    {
+        animationTimer -= Time.deltaTime;
+        if (animationTimer <= 0)
+        {
+            LeanTween.rotateZ(timerHolder, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>timerHolder.transform.rotation = Quaternion.Euler(0, 0, 0));
+            LeanTween.scale(timerHolder, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>timerHolder.transform.localScale = new Vector3(1, 1, 1));
+            animationTimer = 1;
         }
     }
 }

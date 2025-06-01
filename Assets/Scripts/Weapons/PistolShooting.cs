@@ -25,6 +25,13 @@ public class PistolShooting : MonoBehaviour
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
     
+    
+    //Audio
+    [SerializeField] private AudioClip pew1;
+    [SerializeField] private AudioClip pew2;
+    [SerializeField] private AudioClip pew3;
+    [SerializeField] private AudioSource audioSource;
+    
     private static GameObject instance;
     private void Awake()
     {
@@ -106,6 +113,8 @@ public class PistolShooting : MonoBehaviour
             bull.GetComponent<BulletMovement>().damage = 4;
             bull.SetActive(true);
             onShoot.Invoke();
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(RandomPew());
         }
         shooting = false;
         shootTimer += Time.deltaTime;
@@ -133,5 +142,24 @@ public class PistolShooting : MonoBehaviour
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
         reloading = false;
         reloadingAnimation = false;
+    }
+
+    private AudioClip RandomPew()
+    {
+        int randomint = UnityEngine.Random.Range(0, 2);
+        if (randomint == 0)
+        {
+            return pew1;
+        }
+        
+        if (randomint == 1)
+        {
+            return pew2;
+        }
+
+        else 
+        {
+            return pew3;
+        }
     }
 }
