@@ -146,4 +146,6 @@ public class BetterGrappler : MonoBehaviour
         
         predictionHit = raycastHit.point == Vector3.zero ? sphereCastHit : raycastHit;
     }
+    
+    
 }
