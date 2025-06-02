@@ -26,16 +26,16 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private GameObject healthUI;
     private Image healthUIImage;
     
-    private static GameObject instance;
-    void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject); 
-            return;
-        }
-        instance = gameObject;
-    }
+    // private static GameObject instance;
+    // void Awake()
+    // {
+    //     if (instance != null && instance != this)
+    //     {
+    //         Destroy(gameObject); 
+    //         return;
+    //     }
+    //     instance = gameObject;
+    // }
     
     // Start is called before the first frame update
     void Start()
@@ -43,7 +43,6 @@ public class HealthComponent : MonoBehaviour
         BackFromMenu();
         healthText = healthTextGameObject.GetComponent<Text>();
         healthUIImage = healthUI.GetComponent<Image>();
-        DontDestroyOnLoad(gameObject);
         currentHealth = maxHealth;
         UpdateUIHealth();
         rb = GetComponent<Rigidbody>();
@@ -63,6 +62,7 @@ public class HealthComponent : MonoBehaviour
         {
             respawnNumber = newRespawnPoint;
         }
+        currentHealth = maxHealth;
     }
 
     void CheckHealth()
@@ -107,9 +107,9 @@ public class HealthComponent : MonoBehaviour
         currentHealth = maxHealth;
         UpdateUIHealth();
         
-            transform.position = checkpoints[respawnNumber].transform.position; 
-            rb.velocity = Vector3.zero;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
+        transform.position = checkpoints[respawnNumber].transform.position; 
+        rb.velocity = Vector3.zero;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
         
         // else
         // {
