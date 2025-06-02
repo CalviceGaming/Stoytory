@@ -16,6 +16,8 @@ public class ChaseState : AStateBehaviour
     private GameObject player;
     private EnemyShooting enemyShooting;
     private DinossaurMelee melee;
+    
+    [SerializeField] private Animator animator;
 
     public override bool InitializeState()
     {
@@ -35,6 +37,7 @@ public class ChaseState : AStateBehaviour
         {
             melee = GetComponent<DinossaurMelee>();
         }
+        animator.SetBool("Walking", true);
     }   
 
     public override void OnStateUpdate()
@@ -60,6 +63,7 @@ public class ChaseState : AStateBehaviour
         {
             if (enemyShooting.shooting)
             {
+                animator.SetBool("Walking", false);
                 return (int)EnemyState.Attacking;
             }
             return (int)EnemyState.Invalid;
@@ -68,6 +72,7 @@ public class ChaseState : AStateBehaviour
         {
             if (melee.attacking)
             {
+                animator.SetBool("Walking", false);
                 return (int)EnemyState.Attacking;
             }
             return (int)EnemyState.Invalid;

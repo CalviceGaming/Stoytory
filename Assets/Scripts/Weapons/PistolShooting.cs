@@ -97,6 +97,10 @@ public class PistolShooting : MonoBehaviour
 
     private void ShootingBullet()
     {
+        if (bulletsParent == null)
+        {
+            bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
+        }
         if (currentMagazine <= 0)
         {
             shooting = false;

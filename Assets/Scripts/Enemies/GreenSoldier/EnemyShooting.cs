@@ -12,6 +12,7 @@ public class EnemyShooting : MonoBehaviour
     private float shootingTimer;
     [SerializeField] private int shotAmount;
     [SerializeField] private GameObject bulletsParent;
+    [SerializeField] private Animator animator;
 
     public bool shooting = false;
 
@@ -73,6 +74,7 @@ public class EnemyShooting : MonoBehaviour
         {
             Vector3 direction = (player.transform.position - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(direction); 
+            //targetRotation = new Quaternion(targetRotation.x,0,targetRotation.z,1);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 100 * Time.deltaTime);
 
             if (shootingTimer >= 1.5)
@@ -80,6 +82,7 @@ public class EnemyShooting : MonoBehaviour
                 IsPlayerInRange();
                 shootingTimer = 0;
                 Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity, bulletsParent.transform);
+                animator.SetTrigger("Attacking");
             }
         }
         shootingTimer += Time.deltaTime;

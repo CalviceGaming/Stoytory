@@ -58,11 +58,12 @@ public class HealthComponent : MonoBehaviour
     
     public void SetRespawnPoint(int newRespawnPoint)
     {
+        currentHealth = maxHealth;
+        UpdateUIHealth();
         if (respawnNumber < newRespawnPoint)
         {
             respawnNumber = newRespawnPoint;
         }
-        currentHealth = maxHealth;
     }
 
     void CheckHealth()
