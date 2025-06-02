@@ -90,7 +90,7 @@ public class ShotgunShooting : MonoBehaviour
             reloading = true;
             return;
         }
-        if (shooting && shootTimer > 0.5f && !reloading)
+        if (shooting && shootTimer > 0.5f && !reloading  && Time.timeScale==1)
         {
             shootTimer = 0f;
             currentMagazine--;

@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        SceneManager.LoadScene("FirstScene");
+        SceneManager.LoadScene("Map");
         Time.timeScale = 1f;
         if (player)
         {

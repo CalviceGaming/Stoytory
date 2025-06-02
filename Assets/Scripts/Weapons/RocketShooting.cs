@@ -86,7 +86,7 @@ public class RocketShooting : MonoBehaviour
             reloading = true; 
             return;
         }
-        if (shooting && shootTimer > 0.1f && !reloading) 
+        if (shooting && shootTimer > 0.1f && !reloading  && Time.timeScale==1) 
         {
             shootTimer = 0f;
             currentMagazine--;
