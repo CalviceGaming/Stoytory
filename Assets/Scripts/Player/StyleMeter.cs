@@ -11,7 +11,7 @@ public class StyleMeter : MonoBehaviour
     private List<string> styleNames = new List<string>();
     private List<Sprite> styleSprites = new List<Sprite>();
 
-    [SerializeField] private float styleAmount;
+    [SerializeField] public float styleAmount;
     private int currentStyle;
     
     public UnityEvent<float> AddStyleEvent;
@@ -34,9 +34,9 @@ public class StyleMeter : MonoBehaviour
     private Image meterImage;
     [SerializeField] private GameObject rank;
     private Text rankText;
-    //[SerializeField] private GameObject rankImage;
+    [SerializeField] private GameObject rankImage;
+    private Vector3 rankImageScale;
     [SerializeField] private GameObject canvas;
-    private Vector3 imageScale;
     
     [SerializeField] private GameObject pointsPrefab;
     // Start is called before the first frame update
@@ -47,7 +47,7 @@ public class StyleMeter : MonoBehaviour
         AddStyleEvent.AddListener(AddStyle);
         rankText = rank.GetComponent<Text>();
         meterImage = meter.gameObject.GetComponent<Image>();
-        //imageScale = rankImage.transform.localScale;
+        rankImageScale = rankImage.transform.localScale;
     }
 
     // Update is called once per frame
@@ -63,42 +63,37 @@ public class StyleMeter : MonoBehaviour
         styleNames.Add("F");
         stylesColor.Add("F", Color.grey);
 
-        styles.Add("E", 100);
-        styleSprites.Add(E);
-        styleNames.Add("E");
-        stylesColor.Add("E", Color.white);
-
-        styles.Add("D", 300);
+        styles.Add("D", 100);
         styleSprites.Add(D);
         styleNames.Add("D");
         stylesColor.Add("D", Color.cyan);
 
-        styles.Add("C", 500);
+        styles.Add("C", 300);
         styleSprites.Add(C);
         styleNames.Add("C");
-        stylesColor.Add("C", Color.blue);
+        stylesColor.Add("C", new Color32(41, 171, 226, 255));
 
-        styles.Add("B", 800);
+        styles.Add("B", 500);
         styleSprites.Add(B);
         styleNames.Add("B");
-        stylesColor.Add("B", new Color32(252, 77, 27, 255));
+        stylesColor.Add("B", new Color32(0, 113, 188, 255));
 
-        styles.Add("A", 1100);
+        styles.Add("A", 800);
         styleSprites.Add(A);
         styleNames.Add("A");
-        stylesColor.Add("A", new Color32(252, 183, 27, 255));
+        stylesColor.Add("A", new Color32(252, 0, 0, 255));
 
-        styles.Add("S", 1500);
+        styles.Add("S", 1100);
         styleSprites.Add(S);
         styleNames.Add("S");
         stylesColor.Add("S", Color.yellow);
 
-        styles.Add("SS", 2000);
+        styles.Add("SS", 1500);
         styleSprites.Add(SS);
         styleNames.Add("SS");
         stylesColor.Add("SS", Color.yellow);
 
-        styles.Add("SSS", 3000);
+        styles.Add("SSS", 2000);
         styleSprites.Add(SSS);
         styleNames.Add("SSS");
         stylesColor.Add("SSS", Color.yellow);
@@ -140,11 +135,12 @@ public class StyleMeter : MonoBehaviour
         if (GetComponent<MovementComponent>().playerSpeed.magnitude > 5)
         {
             finalAmount *= GetComponent<MovementComponent>().playerSpeed.magnitude/5;
+            finalAmount *= multiplier;
         }
         
         //animation
-        LeanTween.rotateZ(rank, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.rotation = Quaternion.Euler(0, 0, 0));
-        LeanTween.scale(rank, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>rank.transform.localScale = new Vector3(1, 1, 1));
+        LeanTween.rotateZ(rankImage, 10, 0.1f).setLoopPingPong(1).setOnComplete(()=>rankImage.transform.rotation = Quaternion.Euler(0, 0, 0));
+        LeanTween.scale(rankImage, new Vector3(1.5f, 1.5f, 1.5f), 0.1f).setLoopPingPong(1).setOnComplete(()=>rankImage.transform.localScale = rankImageScale);
         
         GameObject points = Instantiate(pointsPrefab, meter.transform.position + new Vector3(0, 5, 0), Quaternion.identity, canvas.transform);
         points.GetComponent<Text>().text = $"+{Mathf.Round(finalAmount)}";
@@ -157,6 +153,7 @@ public class StyleMeter : MonoBehaviour
     {
         rankText.text = styleNames[currentStyle];
         rankText.color = stylesColor[styleNames[currentStyle]];
+        rankImage.GetComponent<Image>().sprite = styleSprites[currentStyle];
         meterImage.fillAmount = percentageToNext;
         meterImage.color = stylesColor[styleNames[currentStyle]];
     }

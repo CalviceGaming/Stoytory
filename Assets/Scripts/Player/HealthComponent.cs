@@ -14,6 +14,8 @@ public class HealthComponent : MonoBehaviour
 
     [SerializeField] private GameObject healthTextGameObject;
     private Text healthText;
+    
+    private StyleMeter styleMeter;
 
     [SerializeField] private Rigidbody rb;
 
@@ -46,6 +48,7 @@ public class HealthComponent : MonoBehaviour
         currentHealth = maxHealth;
         UpdateUIHealth();
         rb = GetComponent<Rigidbody>();
+        styleMeter = GetComponent<StyleMeter>();
     }
 
     // Update is called once per frame
@@ -111,6 +114,8 @@ public class HealthComponent : MonoBehaviour
         transform.position = checkpoints[respawnNumber].transform.position; 
         rb.velocity = Vector3.zero;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the scene
+        styleMeter.styleAmount = 0;
+        styleMeter.AddStyleEvent.Invoke(0);
         
         // else
         // {
