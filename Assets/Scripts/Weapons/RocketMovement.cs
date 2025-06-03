@@ -10,6 +10,8 @@ public class RocketMovement : MonoBehaviour
     [SerializeField] private GameObject breakEffect;         
     [SerializeField] private GameObject rocketObjects;  
     
+    [SerializeField] private AudioClip explosionSound;
+    [SerializeField] private AudioSource audioSource;
     
     private Rigidbody rb;
     private float despawnTimer = 0f;                         
@@ -84,6 +86,7 @@ public class RocketMovement : MonoBehaviour
             }
             
             Instantiate(breakEffect, transform.position, Quaternion.identity);
+            FindObjectOfType<AudioManager>().PlaySound(explosionSound, UnityEngine.Random.Range(1.1f, 1.1f));
             toDestroy = true;  
         }
     }

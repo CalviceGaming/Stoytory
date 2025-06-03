@@ -164,6 +164,8 @@ MonoBehaviour:
   shooting: 0
   reloadAction: {fileID: 348972326677774519, guid: 2c06eda7992c75a4191acec5028eadb8, type: 3}
   reloading: 0
+  rocketLaunchSound: {fileID: 8300000, guid: ceac852c86f86c145bd0e05d24d4712d, type: 3}
+  audioSource: {fileID: 0}
 --- !u!1 &5184266259541975624
 GameObject:
   m_ObjectHideFlags: 0

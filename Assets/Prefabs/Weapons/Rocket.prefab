@@ -194,6 +194,8 @@ MonoBehaviour:
   damage: 15
   breakEffect: {fileID: 487816218404334471, guid: 1514e7d56dbebc041bb7d74737fa9fbe, type: 3}
   rocketObjects: {fileID: 7488980480761914482}
+  explosionSound: {fileID: 8300000, guid: 3a0a24f16af2f604e8e29e6d26526ede, type: 3}
+  audioSource: {fileID: 889419330176495560, guid: 7fecf9ab33c40504980964b6d4002cc8, type: 3}
   speed: 10
 --- !u!54 &3805959161769041243
 Rigidbody:

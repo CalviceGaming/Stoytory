@@ -23,6 +23,10 @@ public class RocketShooting : MonoBehaviour
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
     
+    //Audio
+    [SerializeField] private AudioClip rocketLaunchSound;
+    [SerializeField] private AudioSource audioSource;
+    
     private static GameObject instance;
     
     private void Awake()
@@ -96,6 +100,7 @@ public class RocketShooting : MonoBehaviour
             rocketInstance.SetActive(true);
             rocketInstance.GetComponent<RocketMovement>().speed = 10;   
             onShootRocket.Invoke();
+            FindObjectOfType<AudioManager>().PlaySound(rocketLaunchSound, UnityEngine.Random.Range(1.2f, 1.1f));
         }
         shooting = false;
         shootTimer += Time.deltaTime;
