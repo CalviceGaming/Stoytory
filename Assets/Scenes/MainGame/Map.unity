@@ -8410,6 +8410,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 206369671798217893, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624355998862989229, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1835313114673704429, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824438027584105754, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4440099704774616522, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
       propertyPath: weaponPos
       value: 
@@ -8421,6 +8437,10 @@ PrefabInstance:
     - target: {fileID: 4984467182123229223, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
       propertyPath: m_PlayOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6838140265338266602, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7813094909755077223, guid: 6c2cc23814f5f054dbde50047d1d5b09, type: 3}
       propertyPath: m_LocalScale.x
@@ -28449,6 +28469,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 447820635894365827, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 448177496515485984, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -28505,6 +28529,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3808536288112523114, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4405890560700697320, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: weaponPos
       value: 
@@ -28512,6 +28540,14 @@ PrefabInstance:
     - target: {fileID: 5125338952962637963, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: m_Name
       value: RocketLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125338952962637963, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184266259541975624, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6541555494078993480, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
       propertyPath: audioSource
@@ -28521,6 +28557,14 @@ PrefabInstance:
       propertyPath: magazineText
       value: 
       objectReference: {fileID: 1954790514}
+    - target: {fileID: 8068216810293538686, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352976496013849626, guid: f6fe3c8a9b9196b44a44e5013de6d77e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29672,6 +29716,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 322356569437599985, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178809295723406952, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439251733535560296, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626171128376210669, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163536923860837950, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4204178975456492293, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
       propertyPath: weaponPos
       value: 
@@ -29736,9 +29800,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8969097569626666696, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 9057687266591189504, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 9057687266591189504, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9057687266591189504, guid: 3b6c9511aa992174194ccb14151ab673, type: 3}
       propertyPath: m_IsActive
@@ -42458,6 +42530,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 536259363}
     m_Modifications:
+    - target: {fileID: 3329470490290830271, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751589785815159831, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.711208
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751589785815159831, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6369
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751589785815159831, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.0318334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751589785815159831, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5345
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751589785815159831, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.0324
+      objectReference: {fileID: 0}
     - target: {fileID: 6298532550190665254, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
       propertyPath: arenaId
       value: 5
@@ -42468,11 +42564,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6970916464375763403, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.44
+      value: -18.65
       objectReference: {fileID: 0}
     - target: {fileID: 6970916464375763403, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60.068153
+      value: 64.72
       objectReference: {fileID: 0}
     - target: {fileID: 6970916464375763403, guid: fb60989024c86ed41ab8bf104cdbd4a7, type: 3}
       propertyPath: m_LocalRotation.w
