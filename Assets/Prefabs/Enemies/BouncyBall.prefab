@@ -576,6 +576,8 @@ MonoBehaviour:
   cooldown: 1
   attacking: 0
   range: {fileID: 2798529721221339138}
+  animator: {fileID: 1888173626501476833}
+  animator2: {fileID: 2522616736680147708}
 --- !u!114 &1119609564828581635
 MonoBehaviour:
   m_ObjectHideFlags: 0

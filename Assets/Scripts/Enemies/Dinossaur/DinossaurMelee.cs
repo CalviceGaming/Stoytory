@@ -11,6 +11,10 @@ public class DinossaurMelee : MonoBehaviour
     [SerializeField] private float cooldown;
     public bool attacking;
     [SerializeField] private GameObject range;
+    
+    
+    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator2;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -26,6 +30,11 @@ public class DinossaurMelee : MonoBehaviour
     {
         if (attackTimer <= 0)
         {
+            animator.SetTrigger("Attack");
+            if (animator2)
+            {
+                animator2.SetTrigger("Attack");
+            }
             attackTimer = cooldown;
             hitBox.SetActive(true);
             Vector3 direction = player.transform.position - transform.position;
