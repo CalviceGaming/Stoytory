@@ -25,7 +25,7 @@ public class PathFinding : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        //StartFindingPath();
+        StartFindingPath();
         player.GetComponent<TilePlayerOn>().playerChangedTile.AddListener(StartFindingPath);
     }
 
@@ -62,7 +62,7 @@ public class PathFinding : MonoBehaviour
             floorTiles[floor] = i;
             i++;
         }
-        neighborDistance = floors[0].GetComponent<Renderer>().bounds.size.x/2;
+        neighborDistance = (floors[0].GetComponent<Renderer>().bounds.size.x/2) + 0.1f;
         
         AStar();
     }
@@ -133,15 +133,14 @@ public class PathFinding : MonoBehaviour
         Dictionary<GameObject, GameObject> cameFrom = new Dictionary<GameObject, GameObject>();
         Dictionary<GameObject, float> costSoFar = new Dictionary<GameObject, float>();
         PriorityQueue<GameObject> priorityQueue = new PriorityQueue<GameObject>();
-        Queue<GameObject> queue = new Queue<GameObject>();
         priorityQueue.Enqueue(start, 0);
         cameFrom[start] = null;
         costSoFar[start] = 0;
-        
 
+        GameObject current = start;
         while (priorityQueue.Count > 0)
         {
-            GameObject current = priorityQueue.Dequeue();
+            current = priorityQueue.Dequeue();
             
 
             if (ReferenceEquals(current, finish))
@@ -162,17 +161,20 @@ public class PathFinding : MonoBehaviour
                     costSoFar[neighbor] = newCost;
                     cameFrom[neighbor] = current;
                     
-                    priorityQueue.EnqueueOrUpdate(neighbor, newCost);
+                    float priority = newCost + + GetDistance(neighbor);
+                    priorityQueue.EnqueueOrUpdate(neighbor, priority);
                 }
             }
         }
-
+        // cameFrom[finish] = current;
+        //ReconstructPath(cameFrom, current);
+        // return;
         Debug.Log("No path found!");
     }
 
     private float GetCost(GameObject obj)
     {
-        return obj.GetComponent<TileCost>().ReturnCost() + GetDistance(obj);
+        return obj.GetComponent<TileCost>().ReturnCost();
     }
 
     private float GetDistance(GameObject obj)
