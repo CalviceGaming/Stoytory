@@ -40,9 +40,7 @@ public class ArenaStarter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 playerPos = player.transform.position;
         Vector3 middleGround = gameObject.transform.position;
-        float distance = Vector3.Distance(middleGround, playerPos);
         if (playerInside && !arenaStarted)
         {
             if (!saveArenas.CheckArenaComplete(arenaId.arenaId))
