@@ -15,6 +15,10 @@ public class WeaponSelector : MonoBehaviour
     [SerializeField] private InputActionReference shotgunAction;
     [SerializeField] private InputActionReference rocketAction;
     [SerializeField] private GameObject rocketMagazine;
+    
+    public bool shotgunUnlocked = false;
+    public bool rocketUnlocked = false;
+    
     public int swapIndex { get; private set; } = 1;
 
     private void OnEnable()
@@ -56,19 +60,35 @@ public class WeaponSelector : MonoBehaviour
                 rocketLauncher.SetActive(false);
                 rocketMagazine.SetActive(false);
                 break;
-            case 2: pistol.SetActive(false); 
+            case 2:
+                if (!shotgunUnlocked)
+                {
+                    swapIndex = 1;
+                    break;
+                }
+                pistol.SetActive(false); 
                 shotgun.SetActive(true);
                 pistolMagazine.SetActive(true);
                 rocketLauncher.SetActive(false);
                 rocketMagazine.SetActive(false);
                 break;
-            case 3: pistol.SetActive(false); 
+            case 3:
+                if (!rocketUnlocked)
+                {
+                    swapIndex = 1;
+                    break;
+                }
+                pistol.SetActive(false); 
                 shotgun.SetActive(false);
                 pistolMagazine.SetActive(false);
                 rocketMagazine.SetActive(true);
                 rocketLauncher.SetActive(true);
                 break;
         }
+    }
+
+    private void CheckIfUnlocked()
+    {
         
     }
 }

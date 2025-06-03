@@ -6,6 +6,7 @@ using UnityEngine;
 public class PianoKey : MonoBehaviour
 {
     [SerializeField] private AudioClip keyNote;
+    [SerializeField] private float pitch = 1;
     private AudioManager audioManager;
 
     private void Start()
@@ -17,7 +18,7 @@ public class PianoKey : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            audioManager.PlaySound(keyNote, 1f);
+            audioManager.PlaySound(keyNote, pitch);
         }
     }
 }
