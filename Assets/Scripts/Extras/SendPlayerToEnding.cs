@@ -8,6 +8,21 @@ public class SendPlayerToEnding : MonoBehaviour
     [SerializeField] private GameObject[] thingsToDestroy;
     private bool change = false;
     private int frames = 0;
+    private static GameObject instance;
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+        instance = gameObject;
+    }
+
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -25,7 +40,7 @@ public class SendPlayerToEnding : MonoBehaviour
     {
         if (change)
         {
-            if (frames > 0)
+            if (frames > 1)
             {
                 SceneManager.LoadScene("Ending");
             }

@@ -31,6 +31,7 @@ public class PistolShooting : MonoBehaviour
     [SerializeField] private AudioClip pew2;
     [SerializeField] private AudioClip pew3;
     [SerializeField] private AudioSource audioSource;
+    private AudioManager audioManager;
     
     private static GameObject instance;
     private void Awake()
@@ -61,6 +62,7 @@ public class PistolShooting : MonoBehaviour
         shooting = false;
         reloading = false;
         bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
+        audioManager = FindObjectOfType<AudioManager>();
     }
     private void OnDisable()
     {
@@ -117,8 +119,7 @@ public class PistolShooting : MonoBehaviour
             bull.GetComponent<BulletMovement>().damage = 4;
             bull.SetActive(true);
             onShoot.Invoke();
-            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-            audioSource.PlayOneShot(RandomPew());
+            PlayAudio();
         }
         shooting = false;
         shootTimer += Time.deltaTime;
@@ -165,5 +166,14 @@ public class PistolShooting : MonoBehaviour
         {
             return pew3;
         }
+    }
+
+    private void PlayAudio()
+    {
+        if (!audioManager)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+        audioManager.PlaySound(RandomPew(), UnityEngine.Random.Range(0.9f, 1.1f));
     }
 }
