@@ -10,8 +10,12 @@ public class Settings : MonoBehaviour
     private Slider sensitivitySlider;
     [SerializeField] private GameObject sensitivityTextGameObject;
     private Text sensitivityText;
+    [SerializeField] private Slider audioSlider;
+    [SerializeField] private Text audioText;
 
     private FpsCamera camera;
+    
+    private AudioManager audioManager;
 
 
     void Start()
@@ -20,6 +24,7 @@ public class Settings : MonoBehaviour
         sensitivitySlider = sensitivitySliderGameObject.GetComponent<Slider>();
         sensitivityText = sensitivityTextGameObject.GetComponent<Text>();
         sensitivitySlider.value = camera.mouseSensitivity/100;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -27,6 +32,12 @@ public class Settings : MonoBehaviour
     {
         camera.mouseSensitivity = sensitivitySlider.value * 100;
         sensitivityText.text = System.Math.Round(sensitivitySlider.value, 2).ToString();
+        if (!audioManager)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+        audioManager.volume = audioSlider.value;
+        audioText.text =  System.Math.Round(audioSlider.value, 2).ToString();
     }
 
     public void Back()

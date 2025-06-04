@@ -62,7 +62,6 @@ public class PistolShooting : MonoBehaviour
         shooting = false;
         reloading = false;
         bulletsParent = GameObject.FindGameObjectWithTag("BulletParent");
-        audioManager = FindObjectOfType<AudioManager>();
     }
     private void OnDisable()
     {
@@ -80,6 +79,7 @@ public class PistolShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
+        audioManager = FindObjectOfType<AudioManager>();
     }
     
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
@@ -119,7 +119,13 @@ public class PistolShooting : MonoBehaviour
             bull.GetComponent<BulletMovement>().damage = 4;
             bull.SetActive(true);
             onShoot.Invoke();
-            PlayAudio();
+            if (!audioManager)
+            {
+                audioManager = FindObjectOfType<AudioManager>();
+            }
+            audioSource.volume = audioManager.volume;
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(RandomPew());
         }
         shooting = false;
         shootTimer += Time.deltaTime;
@@ -166,14 +172,5 @@ public class PistolShooting : MonoBehaviour
         {
             return pew3;
         }
-    }
-
-    private void PlayAudio()
-    {
-        if (!audioManager)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-        }
-        audioManager.PlaySound(RandomPew(), UnityEngine.Random.Range(0.9f, 1.1f));
     }
 }
