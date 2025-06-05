@@ -17,6 +17,7 @@ TagManager:
   - ArenaParent
   - ArenaSaver
   - Checkpoints
+  - EndBox
   layers:
   - Default
   - TransparentFX
