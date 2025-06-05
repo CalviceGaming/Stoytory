@@ -43,6 +43,7 @@ public class SendPlayerToEnding : MonoBehaviour
             if (frames > 1)
             {
                 SceneManager.LoadScene("Ending");
+                Destroy(gameObject);
             }
             frames++;
         }

@@ -15,9 +15,9 @@ public class MainMenu : MonoBehaviour
         if (player)
         {
             player.SetActive(false);
+            weapon = GameObject.FindGameObjectWithTag("Weapon");
+            weapon.SetActive(false);
         }
-        weapon = GameObject.FindGameObjectWithTag("Weapon");
-        weapon.SetActive(false);
     }
     public void StartGame()
     {

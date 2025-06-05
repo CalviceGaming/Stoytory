@@ -10,24 +10,28 @@ public class WeaponPosition : MonoBehaviour
     private float recoil;
     private float reloadRecoil;
     public UnityEvent endReload;
+    private float timer = 1f;
 
     void Start()
     {
         if (GetComponent<PistolShooting>())
         {
             GetComponent<PistolShooting>().onShoot.AddListener(GunRecoil);
-            GetComponent<PistolShooting>().onReload.AddListener(GunReload);    
+            GetComponent<PistolShooting>().onReload.AddListener(GunReload);
+            timer = 1f;
         }
         if (GetComponent<ShotgunShooting>())
         {
             GetComponent<ShotgunShooting>().onShootShootgun.AddListener(GunRecoil);
-            GetComponent<ShotgunShooting>().onReloadShootgun.AddListener(GunReload);    
+            GetComponent<ShotgunShooting>().onReloadShootgun.AddListener(GunReload);
+            timer = 2f;
         }
 
         if (GetComponent<RocketShooting>())
         {
             GetComponent<RocketShooting>().onShootRocket.AddListener(GunRecoil);
             GetComponent<RocketShooting>().onReloadRocket.AddListener(GunReload);
+            timer = 5f;
         }
     }
     private void Update()
@@ -43,7 +47,7 @@ public class WeaponPosition : MonoBehaviour
 
     private void GunReload()
     {
-        LeanTween.value(gameObject, RotationReload, 0, 360, 1f).setOnComplete(InvokeEndReload);
+        LeanTween.value(gameObject, RotationReload, 0, 360, timer).setOnComplete(InvokeEndReload);
     }
 
     private void Rotation(float rotation)
