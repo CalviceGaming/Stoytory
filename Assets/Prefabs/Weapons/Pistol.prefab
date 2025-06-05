@@ -54,6 +54,8 @@ MonoBehaviour:
   endReload:
     m_PersistentCalls:
       m_Calls: []
+  reloadAudio: {fileID: 8300000, guid: c4940d049c7541c4b9fd6539738c3620, type: 3}
+  audioSource: {fileID: 4984467182123229223}
 --- !u!114 &9137506699125525036
 MonoBehaviour:
   m_ObjectHideFlags: 0

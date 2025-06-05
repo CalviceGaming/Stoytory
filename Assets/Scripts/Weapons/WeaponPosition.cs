@@ -11,6 +11,11 @@ public class WeaponPosition : MonoBehaviour
     private float reloadRecoil;
     public UnityEvent endReload;
     private float timer = 1f;
+    
+    //Audio
+    [SerializeField] private AudioClip reloadAudio;
+    [SerializeField] private AudioSource audioSource;
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -47,6 +52,13 @@ public class WeaponPosition : MonoBehaviour
 
     private void GunReload()
     {
+        if (!audioManager)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+        audioSource.volume = audioManager.volume;
+        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(reloadAudio);
         LeanTween.value(gameObject, RotationReload, 0, 360, timer).setOnComplete(InvokeEndReload);
     }
 

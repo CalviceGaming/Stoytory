@@ -85,10 +85,16 @@ public class WeaponSelector : MonoBehaviour
                 rocketLauncher.SetActive(true);
                 break;
         }
+
+        CheatUnlock();
     }
 
-    private void CheckIfUnlocked()
+    private void CheatUnlock()
     {
-        
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            shotgunUnlocked = true;
+            rocketUnlocked = true;
+        }
     }
 }

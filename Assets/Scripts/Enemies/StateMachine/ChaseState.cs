@@ -17,8 +17,16 @@ public class ChaseState : AStateBehaviour
     private EnemyShooting enemyShooting;
     private DinossaurMelee melee;
     
+    //Animations
     [SerializeField] private Animator animator;
     [SerializeField] private Animator animator2;
+    
+    //Audio
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip moveSound;
+    [SerializeField] private float audioTimer;
+    private float audioTimerCount;
+    private AudioManager audioManager;
 
     public override bool InitializeState()
     {
@@ -43,12 +51,20 @@ public class ChaseState : AStateBehaviour
         {
             animator2.SetBool("Walking", true);
         }
+
+        audioManager = FindObjectOfType<AudioManager>();
     }   
 
     public override void OnStateUpdate()
     {
-            
-        // fov.suspicionLevel = lowerSuspicion(fov.suspicionLevel);
+        audioTimerCount += Time.deltaTime;
+        if (audioTimerCount >= audioTimer)
+        {
+            audioTimerCount = 0;
+            audioSource.volume = audioManager.volume/2;
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(moveSound);
+        }
     }
 
     public override void OnStateFixedUpdate()

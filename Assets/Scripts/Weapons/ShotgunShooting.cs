@@ -24,6 +24,12 @@ public class ShotgunShooting : MonoBehaviour
     [SerializeField] private InputActionReference reloadAction;
     [SerializeField] private bool reloading;
     
+    
+    //Audio
+    [SerializeField] private AudioClip shotgunShotSound;
+    [SerializeField] private AudioSource audioSource;
+    private AudioManager audioManager;
+    
 
     private static GameObject instance;
     
@@ -65,6 +71,7 @@ public class ShotgunShooting : MonoBehaviour
         currentMagazine = maxMagazine;
         GetComponent<WeaponPosition>().endReload.AddListener(EndReload);
         magazineText.GetComponent<Text>().text = $"{currentMagazine}/{maxMagazine}";
+        audioManager = FindObjectOfType<AudioManager>();
     }
     
     private void OnShootingStarted(InputAction.CallbackContext callbackContext)
@@ -103,6 +110,13 @@ public class ShotgunShooting : MonoBehaviour
                 bull.SetActive(true);
             }
             onShootShootgun.Invoke();
+            if (!audioManager)
+            {
+                audioManager = FindObjectOfType<AudioManager>();
+            }
+            audioSource.volume = audioManager.volume;
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(shotgunShotSound);
         }
         shooting = false;
         shootTimer += Time.deltaTime;
