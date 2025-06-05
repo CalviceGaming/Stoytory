@@ -43014,6 +43014,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player+Hud
       objectReference: {fileID: 0}
+    - target: {fileID: 3655534260676516852, guid: a8607fc229b8de947af610647f5785bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4574240403684160085, guid: a8607fc229b8de947af610647f5785bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.067
@@ -52539,7 +52543,7 @@ Transform:
   m_GameObject: {fileID: 2009937993}
   serializedVersion: 2
   m_LocalRotation: {x: 0.20176294, y: -0.25310978, z: 0.054062214, w: 0.9446187}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 1.4, y: -46.2, z: -24.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
